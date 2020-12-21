@@ -13,12 +13,13 @@ Friendly reminder, we have a [bug bounty program](https://hackerone.com/tendermi
 - Apps
 
   - [abci/counter] \#6684 Delete counter example app
+  - [abci] \#5783 Make length delimiter encoding consistent (`uint64`) between ABCI and P2P wire-level protocols
 
 - P2P Protocol
 
 - Go API
 
-    - [all] [#9144] Change spelling from British English to American (@cmwaters)
+    - [all] \#9144 Change spelling from British English to American (@cmwaters)
         - Rename "Subscription.Cancelled()" to "Subscription.Canceled()" in libs/pubsub
 
 - Blockchain Protocol
