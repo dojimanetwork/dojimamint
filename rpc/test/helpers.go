@@ -8,18 +8,18 @@ import (
 	"strings"
 	"time"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 
-	cfg "github.com/tendermint/tendermint/config"
-	tmnet "github.com/tendermint/tendermint/libs/net"
-	nm "github.com/tendermint/tendermint/node"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/privval"
-	"github.com/tendermint/tendermint/proxy"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	core_grpc "github.com/tendermint/tendermint/rpc/grpc"
-	rpcclient "github.com/tendermint/tendermint/rpc/jsonrpc/client"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
+	nm "github.com/dojimanetwork/dojimamint/node"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	"github.com/dojimanetwork/dojimamint/privval"
+	"github.com/dojimanetwork/dojimamint/proxy"
+	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
+	core_grpc "github.com/dojimanetwork/dojimamint/rpc/grpc"
+	rpcclient "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/client"
 )
 
 // Options helps with specifying some parameters for our RPC testing for greater

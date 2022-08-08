@@ -9,21 +9,21 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	cryptoenc "github.com/tendermint/tendermint/crypto/encoding"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	"github.com/tendermint/tendermint/libs/log"
-	mmock "github.com/tendermint/tendermint/mempool/mock"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
-	"github.com/tendermint/tendermint/proxy"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/state/mocks"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
-	"github.com/tendermint/tendermint/version"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
+	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	mmock "github.com/dojimanetwork/dojimamint/mempool/mock"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/proxy"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/state/mocks"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 var (
@@ -88,12 +88,12 @@ func TestBeginBlockValidators(t *testing.T) {
 
 	testCases := []struct {
 		desc                     string
-		lastCommitSigs           []types.CommitSig
+		lastCommitSigs           []*types.CommitSig
 		expectedAbsentValidators []int
 	}{
-		{"none absent", []types.CommitSig{commitSig0, commitSig1}, []int{}},
-		{"one absent", []types.CommitSig{commitSig0, absentSig}, []int{1}},
-		{"multiple absent", []types.CommitSig{absentSig, absentSig}, []int{0, 1}},
+		{"none absent", []*types.CommitSig{commitSig0, commitSig1}, []int{}},
+		{"one absent", []*types.CommitSig{commitSig0, absentSig}, []int{1}},
+		{"multiple absent", []*types.CommitSig{absentSig, absentSig}, []int{0, 1}},
 	}
 
 	for _, tc := range testCases {
@@ -159,7 +159,7 @@ func TestBeginBlockByzantineValidators(t *testing.T) {
 		ConflictingBlock: &types.LightBlock{
 			SignedHeader: &types.SignedHeader{
 				Header: header,
-				Commit: types.NewCommit(10, 0, makeBlockID(header.Hash(), 100, []byte("partshash")), []types.CommitSig{{
+				Commit: types.NewCommit(10, 0, makeBlockID(header.Hash(), 100, []byte("partshash")), []*types.CommitSig{{
 					BlockIDFlag:      types.BlockIDFlagNil,
 					ValidatorAddress: crypto.AddressHash([]byte("validator_address")),
 					Timestamp:        defaultEvidenceTime,

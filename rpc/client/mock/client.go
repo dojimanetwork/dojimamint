@@ -18,13 +18,13 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/tendermint/tendermint/libs/bytes"
-	"github.com/tendermint/tendermint/libs/service"
-	"github.com/tendermint/tendermint/rpc/client"
-	"github.com/tendermint/tendermint/rpc/core"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	rpctypes "github.com/tendermint/tendermint/rpc/jsonrpc/types"
-	"github.com/tendermint/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/libs/bytes"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/dojimanetwork/dojimamint/rpc/client"
+	"github.com/dojimanetwork/dojimamint/rpc/core"
+	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
+	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 // Client wraps arbitrary implementations of the various interfaces.
@@ -47,7 +47,6 @@ var _ client.Client = Client{}
 
 // Call is used by recorders to save a call and response.
 // It can also be used to configure mock responses.
-//
 type Call struct {
 	Name     string
 	Args     interface{}

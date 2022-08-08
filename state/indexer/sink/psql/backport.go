@@ -17,10 +17,10 @@ import (
 	"context"
 	"errors"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/pubsub/query"
-	"github.com/tendermint/tendermint/state/txindex"
-	"github.com/tendermint/tendermint/types"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	"github.com/dojimanetwork/dojimamint/state/txindex"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 const (

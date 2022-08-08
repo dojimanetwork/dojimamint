@@ -13,22 +13,22 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	cfg "github.com/tendermint/tendermint/config"
-	tmcon "github.com/tendermint/tendermint/consensus"
-	cstypes "github.com/tendermint/tendermint/consensus/types"
-	"github.com/tendermint/tendermint/crypto"
-	tmevents "github.com/tendermint/tendermint/libs/events"
-	"github.com/tendermint/tendermint/libs/fail"
-	tmjson "github.com/tendermint/tendermint/libs/json"
-	"github.com/tendermint/tendermint/libs/log"
-	tmmath "github.com/tendermint/tendermint/libs/math"
-	tmos "github.com/tendermint/tendermint/libs/os"
-	"github.com/tendermint/tendermint/libs/service"
-	"github.com/tendermint/tendermint/p2p"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	tmcon "github.com/dojimanetwork/dojimamint/consensus"
+	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	tmevents "github.com/dojimanetwork/dojimamint/libs/events"
+	"github.com/dojimanetwork/dojimamint/libs/fail"
+	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
+	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
 // State handles execution of the consensus algorithm.
@@ -236,7 +236,9 @@ func (cs *State) handleMsg(mi msgInfo) {
 
 // Enter (CreateEmptyBlocks): from enterNewRound(height,round)
 // Enter (CreateEmptyBlocks, CreateEmptyBlocksInterval > 0 ):
-// 		after enterNewRound(height,round), after timeout of CreateEmptyBlocksInterval
+//
+//	after enterNewRound(height,round), after timeout of CreateEmptyBlocksInterval
+//
 // Enter (!CreateEmptyBlocks) : after enterNewRound(height,round), once txs are in the mempool
 func (cs *State) enterPropose(height int64, round int32) {
 	logger := cs.Logger.With("height", height, "round", round)
@@ -1094,7 +1096,9 @@ func (cs *State) handleTxsAvailable() {
 // Used internally by handleTimeout and handleMsg to make state transitions
 
 // Enter: `timeoutNewHeight` by startTime (commitTime+timeoutCommit),
-// 	or, if SkipTimeoutCommit==true, after receiving all precommits from (height,round-1)
+//
+//	or, if SkipTimeoutCommit==true, after receiving all precommits from (height,round-1)
+//
 // Enter: `timeoutPrecommits` after any +2/3 precommits from (height,round-1)
 // Enter: +2/3 precommits for nil at (height,round-1)
 // Enter: +2/3 prevotes any or +2/3 precommits for block or any from (height, round)

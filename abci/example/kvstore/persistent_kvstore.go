@@ -9,11 +9,11 @@ import (
 
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/tendermint/tendermint/abci/example/code"
-	"github.com/tendermint/tendermint/abci/types"
-	cryptoenc "github.com/tendermint/tendermint/crypto/encoding"
-	"github.com/tendermint/tendermint/libs/log"
-	pc "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	"github.com/dojimanetwork/dojimamint/abci/example/code"
+	"github.com/dojimanetwork/dojimamint/abci/types"
+	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	pc "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 )
 
 const (
@@ -168,6 +168,18 @@ func (app *PersistentKVStoreApplication) OfferSnapshot(
 func (app *PersistentKVStoreApplication) ApplySnapshotChunk(
 	req types.RequestApplySnapshotChunk) types.ResponseApplySnapshotChunk {
 	return types.ResponseApplySnapshotChunk{Result: types.ResponseApplySnapshotChunk_ABORT}
+}
+
+//
+// Side channel functions
+//
+
+func (app *PersistentKVStoreApplication) BeginSideBlock(req types.RequestBeginSideBlock) types.ResponseBeginSideBlock {
+	return app.app.BeginSideBlock(req)
+}
+
+func (app *PersistentKVStoreApplication) DeliverSideTx(req types.RequestDeliverSideTx) types.ResponseDeliverSideTx {
+	return app.app.DeliverSideTx(req)
 }
 
 //---------------------------------------------

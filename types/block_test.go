@@ -15,16 +15,16 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	"github.com/tendermint/tendermint/libs/bits"
-	"github.com/tendermint/tendermint/libs/bytes"
-	tmrand "github.com/tendermint/tendermint/libs/rand"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
-	tmtime "github.com/tendermint/tendermint/types/time"
-	"github.com/tendermint/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/merkle"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	"github.com/dojimanetwork/dojimamint/libs/bits"
+	"github.com/dojimanetwork/dojimamint/libs/bytes"
+	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 func TestMain(m *testing.M) {
@@ -200,7 +200,7 @@ func makeBlockID(hash []byte, partSetSize uint32, partSetHash []byte) BlockID {
 
 var nilBytes []byte
 
-// This follows RFC-6962, i.e. `echo -n '' | sha256sum`
+// This follows RFC-6962, i.e. `echo -n ” | sha256sum`
 var emptyBytes = []byte{0xe3, 0xb0, 0xc4, 0x42, 0x98, 0xfc, 0x1c, 0x14, 0x9a, 0xfb, 0xf4, 0xc8,
 	0x99, 0x6f, 0xb9, 0x24, 0x27, 0xae, 0x41, 0xe4, 0x64, 0x9b, 0x93, 0x4c, 0xa4, 0x95, 0x99, 0x1b,
 	0x78, 0x52, 0xb8, 0x55}
@@ -262,7 +262,7 @@ func TestMaxCommitBytes(t *testing.T) {
 	// year int, month Month, day, hour, min, sec, nsec int, loc *Location
 	timestamp := time.Date(math.MaxInt64, 0, 0, 0, 0, 0, math.MaxInt64, time.UTC)
 
-	cs := CommitSig{
+	cs := &CommitSig{
 		BlockIDFlag:      BlockIDFlagNil,
 		ValidatorAddress: crypto.AddressHash([]byte("validator_address")),
 		Timestamp:        timestamp,
@@ -284,7 +284,7 @@ func TestMaxCommitBytes(t *testing.T) {
 				Hash:  tmhash.Sum([]byte("blockID_part_set_header_hash")),
 			},
 		},
-		Signatures: []CommitSig{cs},
+		Signatures: []*CommitSig{cs},
 	}
 
 	pb := commit.ToProto()
@@ -629,7 +629,7 @@ func TestBlockIDValidateBasic(t *testing.T) {
 func TestBlockProtoBuf(t *testing.T) {
 	h := tmrand.Int63()
 	c1 := randCommit(time.Now())
-	b1 := MakeBlock(h, []Tx{Tx([]byte{1})}, &Commit{Signatures: []CommitSig{}}, []Evidence{})
+	b1 := MakeBlock(h, []Tx{Tx([]byte{1})}, &Commit{Signatures: []*CommitSig{}}, []Evidence{})
 	b1.ProposerAddress = tmrand.Bytes(crypto.AddressSize)
 
 	b2 := MakeBlock(h, []Tx{Tx([]byte{1})}, c1, []Evidence{})

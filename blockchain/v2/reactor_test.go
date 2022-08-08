@@ -13,21 +13,21 @@ import (
 	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/behaviour"
-	bc "github.com/tendermint/tendermint/blockchain"
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/libs/service"
-	"github.com/tendermint/tendermint/mempool/mock"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/p2p/conn"
-	bcproto "github.com/tendermint/tendermint/proto/tendermint/blockchain"
-	"github.com/tendermint/tendermint/proxy"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/store"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/behaviour"
+	bc "github.com/dojimanetwork/dojimamint/blockchain"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/dojimanetwork/dojimamint/mempool/mock"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	"github.com/dojimanetwork/dojimamint/p2p/conn"
+	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
+	"github.com/dojimanetwork/dojimamint/proxy"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/store"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
 type mockPeer struct {
@@ -536,7 +536,7 @@ func newReactorStore(
 				panic(err)
 			}
 			lastCommit = types.NewCommit(vote.Height, vote.Round,
-				lastBlockMeta.BlockID, []types.CommitSig{vote.CommitSig()})
+				lastBlockMeta.BlockID, []*types.CommitSig{vote.CommitSig()})
 		}
 
 		thisBlock := makeBlock(blockHeight, state, lastCommit)

@@ -13,17 +13,17 @@ import (
 
 	dbm "github.com/tendermint/tm-db"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/log"
-	"github.com/tendermint/tendermint/mempool/mock"
-	"github.com/tendermint/tendermint/p2p"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"github.com/tendermint/tendermint/proxy"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/store"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/dojimanetwork/dojimamint/mempool/mock"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/proxy"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/store"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
 var config *cfg.Config
@@ -130,7 +130,7 @@ func newBlockchainReactor(
 			lastBlock := blockStore.LoadBlock(blockHeight - 1)
 
 			vote := makeVote(t, &lastBlock.Header, lastBlockMeta.BlockID, state.Validators, privVals[0])
-			lastCommit = types.NewCommit(vote.Height, vote.Round, lastBlockMeta.BlockID, []types.CommitSig{vote.CommitSig()})
+			lastCommit = types.NewCommit(vote.Height, vote.Round, lastBlockMeta.BlockID, []*types.CommitSig{vote.CommitSig()})
 		}
 
 		thisBlock := makeBlock(blockHeight, state, lastCommit)

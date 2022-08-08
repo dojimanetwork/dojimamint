@@ -2,7 +2,7 @@
 
 # events
 
-`import "github.com/tendermint/tendermint/libs/events"`
+`import "github.com/dojimanetwork/dojimamint/libs/events"`
 
 * [Overview](#pkg-overview)
 * [Index](#pkg-index)

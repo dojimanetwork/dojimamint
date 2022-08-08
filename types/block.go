@@ -6,20 +6,22 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"encoding/hex"
 
 	"github.com/gogo/protobuf/proto"
 	gogotypes "github.com/gogo/protobuf/types"
+	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	"github.com/tendermint/tendermint/libs/bits"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	tmmath "github.com/tendermint/tendermint/libs/math"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
-	"github.com/tendermint/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/merkle"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	"github.com/dojimanetwork/dojimamint/libs/bits"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 const (
@@ -597,11 +599,13 @@ type CommitSig struct {
 	ValidatorAddress Address     `json:"validator_address"`
 	Timestamp        time.Time   `json:"timestamp"`
 	Signature        []byte      `json:"signature"`
+
+	SideTxResults []SideTxResult `json:"side_tx_results"` // side-tx result [dojimamint]
 }
 
 // NewCommitSigForBlock returns new CommitSig with BlockIDFlagCommit.
-func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) CommitSig {
-	return CommitSig{
+func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) *CommitSig {
+	return &CommitSig{
 		BlockIDFlag:      BlockIDFlagCommit,
 		ValidatorAddress: valAddr,
 		Timestamp:        ts,
@@ -617,10 +621,11 @@ func MaxCommitBytes(valCount int) int64 {
 
 // NewCommitSigAbsent returns new CommitSig with BlockIDFlagAbsent. Other
 // fields are all empty.
-func NewCommitSigAbsent() CommitSig {
-	return CommitSig{
+func NewCommitSigAbsent() *CommitSig {
+	 return &CommitSig{
 		BlockIDFlag: BlockIDFlagAbsent,
 	}
+
 }
 
 // ForBlock returns true if CommitSig is for the block.
@@ -640,11 +645,22 @@ func (cs CommitSig) Absent() bool {
 // 3. block ID flag
 // 4. timestamp
 func (cs CommitSig) String() string {
-	return fmt.Sprintf("CommitSig{%X by %X on %v @ %s}",
+	sideTxResults := "Proposals "
+	if len(cs.SideTxResults) > 0 {
+		for _, s := range cs.SideTxResults {
+			sideTxResults += s.String()
+		}
+	} else {
+		sideTxResults = "no-proposals"
+	}
+
+	return fmt.Sprintf("CommitSig{%X by %X on %v @ %s [%s]}",
 		tmbytes.Fingerprint(cs.Signature),
 		tmbytes.Fingerprint(cs.ValidatorAddress),
 		cs.BlockIDFlag,
-		CanonicalTime(cs.Timestamp))
+		CanonicalTime(cs.Timestamp),
+		sideTxResults,
+	)
 }
 
 // BlockID returns the Commit's BlockID if CommitSig indicates signing,
@@ -685,6 +701,24 @@ func (cs CommitSig) ValidateBasic() error {
 		if len(cs.Signature) != 0 {
 			return errors.New("signature is present")
 		}
+
+	if len(cs.SideTxResults) > 0 {
+		for _, s := range cs.SideTxResults {
+			// side-tx response sig should be empty or valid 65 bytes
+			if len(s.Sig) != 0 && len(s.Sig) != 65 {
+				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+			}
+
+			if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+			}
+
+			// tx-hash must be 32 bytes
+			if len(s.TxHash) != 32 {
+				return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+			}
+		}
+	}
 	default:
 		if len(cs.ValidatorAddress) != crypto.AddressSize {
 			return fmt.Errorf("expected ValidatorAddress size to be %d bytes, got %d bytes",
@@ -742,7 +776,7 @@ type Commit struct {
 	Height     int64       `json:"height"`
 	Round      int32       `json:"round"`
 	BlockID    BlockID     `json:"block_id"`
-	Signatures []CommitSig `json:"signatures"`
+	Signatures []*CommitSig `json:"signatures"`
 
 	// Memoized in first call to corresponding method.
 	// NOTE: can't memoize in constructor because constructor isn't used for
@@ -752,7 +786,7 @@ type Commit struct {
 }
 
 // NewCommit returns a new Commit.
-func NewCommit(height int64, round int32, blockID BlockID, commitSigs []CommitSig) *Commit {
+func NewCommit(height int64, round int32, blockID BlockID, commitSigs []*CommitSig) *Commit {
 	return &Commit{
 		Height:     height,
 		Round:      round,
@@ -971,7 +1005,7 @@ func CommitFromProto(cp *tmproto.Commit) (*Commit, error) {
 		return nil, err
 	}
 
-	sigs := make([]CommitSig, len(cp.Signatures))
+	sigs := make([]*CommitSig, len(cp.Signatures))
 	for i := range cp.Signatures {
 		if err := sigs[i].FromProto(cp.Signatures[i]); err != nil {
 			return nil, err

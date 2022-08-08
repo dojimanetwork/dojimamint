@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
-	"github.com/tendermint/tendermint/version"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 // Rollback overwrites the current Tendermint state (height n) with the most

@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"encoding/hex"
 
-	"github.com/tendermint/tendermint/crypto"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	"github.com/tendermint/tendermint/libs/protoio"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	"github.com/dojimanetwork/dojimamint/libs/protoio"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
 const (
@@ -56,10 +58,12 @@ type Vote struct {
 	ValidatorAddress Address               `json:"validator_address"`
 	ValidatorIndex   int32                 `json:"validator_index"`
 	Signature        []byte                `json:"signature"`
+
+	SideTxResults []SideTxResult `json:"side_tx_results"` // side-tx result [dojimamint]
 }
 
 // CommitSig converts the Vote to a CommitSig.
-func (vote *Vote) CommitSig() CommitSig {
+func (vote *Vote) CommitSig() *CommitSig {
 	if vote == nil {
 		return NewCommitSigAbsent()
 	}
@@ -74,7 +78,7 @@ func (vote *Vote) CommitSig() CommitSig {
 		panic(fmt.Sprintf("Invalid vote %v - expected BlockID to be either empty or complete", vote))
 	}
 
-	return CommitSig{
+	return &CommitSig{
 		BlockIDFlag:      blockIDFlag,
 		ValidatorAddress: vote.ValidatorAddress,
 		Timestamp:        vote.Timestamp,
@@ -131,7 +135,16 @@ func (vote *Vote) String() string {
 		panic("Unknown vote type")
 	}
 
-	return fmt.Sprintf("Vote{%v:%X %v/%02d/%v(%v) %X %X @ %s}",
+	sideTxResults := "Proposals "
+	if len(vote.SideTxResults) > 0 {
+		for _, s := range vote.SideTxResults {
+			sideTxResults += s.String()
+		}
+	} else {
+		sideTxResults = "no-proposals"
+	}
+
+	return fmt.Sprintf("Vote{%v:%X %v/%02d/%v(%v) %X %X @ %s [%s]}",
 		vote.ValidatorIndex,
 		tmbytes.Fingerprint(vote.ValidatorAddress),
 		vote.Height,
@@ -141,6 +154,7 @@ func (vote *Vote) String() string {
 		tmbytes.Fingerprint(vote.BlockID.Hash),
 		tmbytes.Fingerprint(vote.Signature),
 		CanonicalTime(vote.Timestamp),
+		sideTxResults,
 	)
 }
 
@@ -196,6 +210,24 @@ func (vote *Vote) ValidateBasic() error {
 
 	if len(vote.Signature) > MaxSignatureSize {
 		return fmt.Errorf("signature is too big (max: %d)", MaxSignatureSize)
+	}
+
+	if len(vote.SideTxResults) > 0 {
+		for _, s := range vote.SideTxResults {
+			// side-tx response sig should be empty or valid 65 bytes
+			if len(s.Sig) != 0 && len(s.Sig) != 65 {
+				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+			}
+
+			if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+			}
+
+			// tx-hash must be 32 bytes
+			if len(s.TxHash) != 32 {
+				return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+			}
+		}
 	}
 
 	return nil

@@ -11,16 +11,16 @@ import (
 
 	dbm "github.com/tendermint/tm-db"
 
-	"github.com/tendermint/tendermint/evidence"
-	"github.com/tendermint/tendermint/evidence/mocks"
-	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
-	sm "github.com/tendermint/tendermint/state"
-	smmocks "github.com/tendermint/tendermint/state/mocks"
-	"github.com/tendermint/tendermint/store"
-	"github.com/tendermint/tendermint/types"
-	"github.com/tendermint/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/evidence"
+	"github.com/dojimanetwork/dojimamint/evidence/mocks"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	smmocks "github.com/dojimanetwork/dojimamint/state/mocks"
+	"github.com/dojimanetwork/dojimamint/store"
+	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 func TestMain(m *testing.M) {
@@ -418,7 +418,7 @@ func initializeBlockStore(db dbm.DB, state sm.State, valAddr []byte) *store.Bloc
 }
 
 func makeCommit(height int64, valAddr []byte) *types.Commit {
-	commitSigs := []types.CommitSig{{
+	commitSigs := []*types.CommitSig{{
 		BlockIDFlag:      types.BlockIDFlagCommit,
 		ValidatorAddress: valAddr,
 		Timestamp:        defaultEvidenceTime,
@@ -439,7 +439,7 @@ func defaultTestPool(height int64) (*evidence.Pool, types.MockPV) {
 		panic("test evidence pool could not be created")
 	}
 	pool.SetLogger(log.TestingLogger())
-	return pool, val
+	return pool, *val
 }
 
 func createState(height int64, valSet *types.ValidatorSet) sm.State {

@@ -6,13 +6,13 @@ import (
 	"math"
 	"time"
 
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/clist"
-	"github.com/tendermint/tendermint/libs/log"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	"github.com/tendermint/tendermint/p2p"
-	protomem "github.com/tendermint/tendermint/proto/tendermint/mempool"
-	"github.com/tendermint/tendermint/types"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	"github.com/dojimanetwork/dojimamint/libs/clist"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	protomem "github.com/dojimanetwork/dojimamint/proto/tendermint/mempool"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 const (

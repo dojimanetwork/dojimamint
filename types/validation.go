@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
 // ValidateTime does a basic time validation ensuring time does not drift too

@@ -3,12 +3,12 @@ package proxy
 import (
 	"fmt"
 
-	abcicli "github.com/tendermint/tendermint/abci/client"
-	"github.com/tendermint/tendermint/abci/example/counter"
-	"github.com/tendermint/tendermint/abci/example/kvstore"
-	"github.com/tendermint/tendermint/abci/types"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	e2e "github.com/tendermint/tendermint/test/e2e/app"
+	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
+	"github.com/dojimanetwork/dojimamint/abci/example/counter"
+	"github.com/dojimanetwork/dojimamint/abci/example/kvstore"
+	"github.com/dojimanetwork/dojimamint/abci/types"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	e2e "github.com/dojimanetwork/dojimamint/test/e2e/app"
 )
 
 // ClientCreator creates new ABCI clients.

@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	tmjson "github.com/tendermint/tendermint/libs/json"
-	tmos "github.com/tendermint/tendermint/libs/os"
-	"github.com/tendermint/tendermint/libs/tempfile"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"github.com/tendermint/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	"github.com/dojimanetwork/dojimamint/libs/tempfile"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 // *******************************************************************************************************************
@@ -149,6 +149,11 @@ func (lss *FilePVLastSignState) Save() {
 type FilePV struct {
 	Key           FilePVKey
 	LastSignState FilePVLastSignState
+}
+
+// SignSideTxResult implements types.PrivValidator
+func (*FilePV) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
+	panic("unimplemented")
 }
 
 // GenFilePV generates a new validator with randomly generated private key

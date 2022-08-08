@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tendermint/tendermint/light/provider"
-	"github.com/tendermint/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/light/provider"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 type Mock struct {

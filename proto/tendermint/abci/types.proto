@@ -1,7 +1,7 @@
 syntax = "proto3";
 package tendermint.abci;
 
-option go_package = "github.com/tendermint/tendermint/abci/types";
+option go_package = "github.com/dojimanetwork/dojimamint/abci/types";
 
 // For more information on gogo.proto, see:
 // https://github.com/gogo/protobuf/blob/master/extensions.md
@@ -36,6 +36,9 @@ message Request {
     RequestOfferSnapshot      offer_snapshot       = 13;
     RequestLoadSnapshotChunk  load_snapshot_chunk  = 14;
     RequestApplySnapshotChunk apply_snapshot_chunk = 15;
+
+    RequestBeginSideBlock begin_side_block = 21;
+    RequestDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -125,6 +128,21 @@ message RequestApplySnapshotChunk {
   string sender = 3;
 }
 
+//
+// Side channel requests
+//
+
+message RequestBeginSideBlock {
+  bytes hash = 1;
+  tendermint.types.Header header = 2 [(gogoproto.nullable)=false];
+  repeated tendermint.types.SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
+}
+
+message RequestDeliverSideTx {
+  bytes tx = 1;
+}
+
+
 //----------------------------------------
 // Response types
 
@@ -146,6 +164,9 @@ message Response {
     ResponseOfferSnapshot      offer_snapshot       = 14;
     ResponseLoadSnapshotChunk  load_snapshot_chunk  = 15;
     ResponseApplySnapshotChunk apply_snapshot_chunk = 16;
+
+    ResponseBeginSideBlock begin_side_block = 21;
+    ResponseDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -276,6 +297,21 @@ message ResponseApplySnapshotChunk {
   }
 }
 
+//
+// Side channel response
+//
+
+message ResponseBeginSideBlock {
+  repeated Event events = 1 [(gogoproto.nullable)=false, (gogoproto.jsontag)="events,omitempty"];
+}
+
+message ResponseDeliverSideTx {
+  uint32 code = 1;
+  string codespace = 2;
+  tendermint.types.SideTxResultType result = 4;
+  bytes data = 3;
+}
+
 //----------------------------------------
 // Misc.
 
@@ -329,8 +365,6 @@ message TxResult {
   ResponseDeliverTx result = 4 [(gogoproto.nullable) = false];
 }
 
-//----------------------------------------
-// Blockchain Types
 
 // Validator
 message Validator {
@@ -370,7 +404,7 @@ message Evidence {
   ];
   // Total voting power of the validator set in case the ABCI application does
   // not store historical validators.
-  // https://github.com/tendermint/tendermint/issues/4581
+  // https://github.com/dojimanetwork/dojimamint/issues/4581
   int64 total_voting_power = 5;
 }
 
@@ -404,4 +438,7 @@ service ABCIApplication {
   rpc OfferSnapshot(RequestOfferSnapshot) returns (ResponseOfferSnapshot);
   rpc LoadSnapshotChunk(RequestLoadSnapshotChunk) returns (ResponseLoadSnapshotChunk);
   rpc ApplySnapshotChunk(RequestApplySnapshotChunk) returns (ResponseApplySnapshotChunk);
+
+  rpc BeginSideBlock(RequestBeginSideBlock) returns (ResponseBeginSideBlock);
+  rpc DeliverSideTx(RequestDeliverSideTx) returns (ResponseDeliverSideTx);
 }

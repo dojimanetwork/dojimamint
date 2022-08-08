@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	e2e "github.com/tendermint/tendermint/test/e2e/pkg"
+	e2e "github.com/dojimanetwork/dojimamint/test/e2e/pkg"
 )
 
 var (

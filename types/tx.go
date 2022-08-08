@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/crypto/merkle"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
 // Tx is an arbitrary byte array.

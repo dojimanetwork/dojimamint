@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/tendermint/tendermint/crypto/merkle"
-	"github.com/tendermint/tendermint/libs/bits"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	tmjson "github.com/tendermint/tendermint/libs/json"
-	tmmath "github.com/tendermint/tendermint/libs/math"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/crypto/merkle"
+	"github.com/dojimanetwork/dojimamint/libs/bits"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
 var (

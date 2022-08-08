@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/tendermint/tendermint/p2p"
-	tmState "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	tmState "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/types"
 )
 
 // pcBlock is a test helper structure with simple types. Its purpose is to help with test readability.

@@ -16,7 +16,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/tendermint/tendermint/libs/log"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 )
 
 func TestWSClientReconnectWithJitter(t *testing.T) {

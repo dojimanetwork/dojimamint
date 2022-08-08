@@ -1,9 +1,9 @@
 package abcicli
 
 import (
-	types "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/service"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	types "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 )
 
 var _ Client = (*localClient)(nil)
@@ -320,6 +320,48 @@ func (app *localClient) ApplySnapshotChunkSync(
 	defer app.mtx.Unlock()
 
 	res := app.Application.ApplySnapshotChunk(req)
+	return &res, nil
+}
+
+//
+// Side channel
+//
+
+func (app *localClient) DeliverSideTxAsync(params types.RequestDeliverSideTx) *ReqRes {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	res := app.Application.DeliverSideTx(params)
+	return app.callback(
+		types.ToRequestDeliverSideTx(params),
+		types.ToResponseDeliverSideTx(res),
+	)
+}
+
+func (app *localClient) BeginSideBlockAsync(req types.RequestBeginSideBlock) *ReqRes {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	res := app.Application.BeginSideBlock(req)
+	return app.callback(
+		types.ToRequestBeginSideBlock(req),
+		types.ToResponseBeginSideBlock(res),
+	)
+}
+
+func (app *localClient) DeliverSideTxSync(req types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	res := app.Application.DeliverSideTx(req)
+	return &res, nil
+}
+
+func (app *localClient) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	res := app.Application.BeginSideBlock(req)
 	return &res, nil
 }
 

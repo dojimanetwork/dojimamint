@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/service"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 )
 
 const (
@@ -56,6 +56,11 @@ type Client interface {
 	OfferSnapshotSync(types.RequestOfferSnapshot) (*types.ResponseOfferSnapshot, error)
 	LoadSnapshotChunkSync(types.RequestLoadSnapshotChunk) (*types.ResponseLoadSnapshotChunk, error)
 	ApplySnapshotChunkSync(types.RequestApplySnapshotChunk) (*types.ResponseApplySnapshotChunk, error)
+
+	BeginSideBlockAsync(types.RequestBeginSideBlock) *ReqRes
+	BeginSideBlockSync(types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error)
+	DeliverSideTxAsync(types.RequestDeliverSideTx) *ReqRes
+	DeliverSideTxSync(types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error)
 }
 
 //----------------------------------------

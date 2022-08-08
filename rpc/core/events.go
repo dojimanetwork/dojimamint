@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
-	tmquery "github.com/tendermint/tendermint/libs/pubsub/query"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
-	rpctypes "github.com/tendermint/tendermint/rpc/jsonrpc/types"
+	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
+	tmquery "github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
+	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
 )
 
 // Subscribe for events via WebSocket.

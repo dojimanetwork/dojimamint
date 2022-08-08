@@ -10,11 +10,11 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/tendermint/tendermint/abci/types"
-	tmnet "github.com/tendermint/tendermint/libs/net"
-	"github.com/tendermint/tendermint/libs/service"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	"github.com/tendermint/tendermint/libs/timer"
+	"github.com/dojimanetwork/dojimamint/abci/types"
+	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/dojimanetwork/dojimamint/libs/timer"
 )
 
 const (
@@ -415,6 +415,30 @@ func (cli *socketClient) ApplySnapshotChunkSync(
 		return nil, err
 	}
 	return reqres.Response.GetApplySnapshotChunk(), cli.Error()
+}
+
+//
+// Side channel
+//
+
+func (cli *socketClient) BeginSideBlockAsync(req types.RequestBeginSideBlock) *ReqRes {
+	return cli.queueRequest(types.ToRequestBeginSideBlock(req))
+}
+
+func (cli *socketClient) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	reqres := cli.queueRequest(types.ToRequestBeginSideBlock(req))
+	cli.FlushSync()
+	return reqres.Response.GetBeginSideBlock(), cli.Error()
+}
+
+func (cli *socketClient) DeliverSideTxAsync(req types.RequestDeliverSideTx) *ReqRes {
+	return cli.queueRequest(types.ToRequestDeliverSideTx(req))
+}
+
+func (cli *socketClient) DeliverSideTxSync(req types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
+	reqres := cli.queueRequest(types.ToRequestDeliverSideTx(req))
+	cli.FlushSync()
+	return reqres.Response.GetDeliverSideTx(), cli.Error()
 }
 
 //----------------------------------------

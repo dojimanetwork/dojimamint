@@ -18,40 +18,40 @@ import (
 
 	dbm "github.com/tendermint/tm-db"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	bcv0 "github.com/tendermint/tendermint/blockchain/v0"
-	bcv1 "github.com/tendermint/tendermint/blockchain/v1"
-	bcv2 "github.com/tendermint/tendermint/blockchain/v2"
-	cfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/consensus"
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/evidence"
-	tmjson "github.com/tendermint/tendermint/libs/json"
-	"github.com/tendermint/tendermint/libs/log"
-	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
-	"github.com/tendermint/tendermint/libs/service"
-	"github.com/tendermint/tendermint/light"
-	mempl "github.com/tendermint/tendermint/mempool"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/p2p/pex"
-	"github.com/tendermint/tendermint/privval"
-	"github.com/tendermint/tendermint/proxy"
-	rpccore "github.com/tendermint/tendermint/rpc/core"
-	grpccore "github.com/tendermint/tendermint/rpc/grpc"
-	rpcserver "github.com/tendermint/tendermint/rpc/jsonrpc/server"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/state/indexer"
-	blockidxkv "github.com/tendermint/tendermint/state/indexer/block/kv"
-	blockidxnull "github.com/tendermint/tendermint/state/indexer/block/null"
-	"github.com/tendermint/tendermint/state/txindex"
-	"github.com/tendermint/tendermint/state/txindex/kv"
-	"github.com/tendermint/tendermint/state/txindex/null"
-	"github.com/tendermint/tendermint/statesync"
-	"github.com/tendermint/tendermint/store"
-	cs "github.com/tendermint/tendermint/test/maverick/consensus"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
-	"github.com/tendermint/tendermint/version"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	bcv0 "github.com/dojimanetwork/dojimamint/blockchain/v0"
+	bcv1 "github.com/dojimanetwork/dojimamint/blockchain/v1"
+	bcv2 "github.com/dojimanetwork/dojimamint/blockchain/v2"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	"github.com/dojimanetwork/dojimamint/consensus"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/evidence"
+	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/dojimanetwork/dojimamint/light"
+	mempl "github.com/dojimanetwork/dojimamint/mempool"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	"github.com/dojimanetwork/dojimamint/p2p/pex"
+	"github.com/dojimanetwork/dojimamint/privval"
+	"github.com/dojimanetwork/dojimamint/proxy"
+	rpccore "github.com/dojimanetwork/dojimamint/rpc/core"
+	grpccore "github.com/dojimanetwork/dojimamint/rpc/grpc"
+	rpcserver "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/server"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/state/indexer"
+	blockidxkv "github.com/dojimanetwork/dojimamint/state/indexer/block/kv"
+	blockidxnull "github.com/dojimanetwork/dojimamint/state/indexer/block/null"
+	"github.com/dojimanetwork/dojimamint/state/txindex"
+	"github.com/dojimanetwork/dojimamint/state/txindex/kv"
+	"github.com/dojimanetwork/dojimamint/state/txindex/null"
+	"github.com/dojimanetwork/dojimamint/statesync"
+	"github.com/dojimanetwork/dojimamint/store"
+	cs "github.com/dojimanetwork/dojimamint/test/maverick/consensus"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/dojimanetwork/dojimamint/version"
 )
 
 //------------------------------------------------------------------------------
@@ -172,12 +172,12 @@ type fastSyncReactor interface {
 // WARNING: using any name from the below list of the existing reactors will
 // result in replacing it with the custom one.
 //
-//  - MEMPOOL
-//  - BLOCKCHAIN
-//  - CONSENSUS
-//  - EVIDENCE
-//  - PEX
-//  - STATESYNC
+//   - MEMPOOL
+//   - BLOCKCHAIN
+//   - CONSENSUS
+//   - EVIDENCE
+//   - PEX
+//   - STATESYNC
 func CustomReactors(reactors map[string]p2p.Reactor) Option {
 	return func(n *Node) {
 		for name, reactor := range reactors {

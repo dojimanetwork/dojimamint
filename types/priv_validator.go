@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/crypto/ed25519"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
 // PrivValidator defines the functionality of a local Tendermint validator
@@ -17,6 +17,7 @@ type PrivValidator interface {
 
 	SignVote(chainID string, vote *tmproto.Vote) error
 	SignProposal(chainID string, proposal *tmproto.Proposal) error
+	SignSideTxResult(sideTxResult *SideTxResultWithData) error
 }
 
 type PrivValidatorsByAddress []PrivValidator
@@ -53,8 +54,8 @@ type MockPV struct {
 	breakVoteSigning     bool
 }
 
-func NewMockPV() MockPV {
-	return MockPV{ed25519.GenPrivKey(), false, false}
+func NewMockPV() *MockPV {
+	return &MockPV{ed25519.GenPrivKey(), false, false}
 }
 
 // NewMockPVWithParams allows one to create a MockPV instance, but with finer
@@ -108,6 +109,16 @@ func (pv MockPV) ExtractIntoValidator(votingPower int64) *Validator {
 		PubKey:      pubKey,
 		VotingPower: votingPower,
 	}
+}
+
+// SignSideTxResult implements PrivValidator.
+func (pv MockPV) SignSideTxResult(sideTxResult *SideTxResultWithData) error {
+	sig, err := pv.PrivKey.Sign(sideTxResult.GetBytes())
+	if err != nil {
+		return err
+	}
+	sideTxResult.Sig = sig
+	return nil
 }
 
 // String returns a string representation of the MockPV.

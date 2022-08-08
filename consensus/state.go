@@ -12,22 +12,22 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	cfg "github.com/tendermint/tendermint/config"
-	cstypes "github.com/tendermint/tendermint/consensus/types"
-	"github.com/tendermint/tendermint/crypto"
-	tmevents "github.com/tendermint/tendermint/libs/events"
-	"github.com/tendermint/tendermint/libs/fail"
-	tmjson "github.com/tendermint/tendermint/libs/json"
-	"github.com/tendermint/tendermint/libs/log"
-	tmmath "github.com/tendermint/tendermint/libs/math"
-	tmos "github.com/tendermint/tendermint/libs/os"
-	"github.com/tendermint/tendermint/libs/service"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
-	"github.com/tendermint/tendermint/p2p"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	sm "github.com/tendermint/tendermint/state"
-	"github.com/tendermint/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
+	"github.com/dojimanetwork/dojimamint/crypto"
+	tmevents "github.com/dojimanetwork/dojimamint/libs/events"
+	"github.com/dojimanetwork/dojimamint/libs/fail"
+	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
+	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	"github.com/dojimanetwork/dojimamint/libs/service"
+	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	sm "github.com/dojimanetwork/dojimamint/state"
+	"github.com/dojimanetwork/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
 // Consensus sentinel errors
@@ -970,7 +970,9 @@ func (cs *State) handleTxsAvailable() {
 // Used internally by handleTimeout and handleMsg to make state transitions
 
 // Enter: `timeoutNewHeight` by startTime (commitTime+timeoutCommit),
-// 	or, if SkipTimeoutCommit==true, after receiving all precommits from (height,round-1)
+//
+//	or, if SkipTimeoutCommit==true, after receiving all precommits from (height,round-1)
+//
 // Enter: `timeoutPrecommits` after any +2/3 precommits from (height,round-1)
 // Enter: +2/3 precommits for nil at (height,round-1)
 // Enter: +2/3 prevotes any or +2/3 precommits for block or any from (height, round)
@@ -1055,7 +1057,9 @@ func (cs *State) needProofBlock(height int64) bool {
 
 // Enter (CreateEmptyBlocks): from enterNewRound(height,round)
 // Enter (CreateEmptyBlocks, CreateEmptyBlocksInterval > 0 ):
-// 		after enterNewRound(height,round), after timeout of CreateEmptyBlocksInterval
+//
+//	after enterNewRound(height,round), after timeout of CreateEmptyBlocksInterval
+//
 // Enter (!CreateEmptyBlocks) : after enterNewRound(height,round), once txs are in the mempool
 func (cs *State) enterPropose(height int64, round int32) {
 	logger := cs.Logger.With("height", height, "round", round)
@@ -2194,6 +2198,22 @@ func (cs *State) signVote(
 		Timestamp:        cs.voteTime(),
 		Type:             msgType,
 		BlockID:          types.BlockID{Hash: hash, PartSetHeader: header},
+	}
+
+	if len(cs.state.SideTxResponses) > 0 {
+		cs.Logger.Debug("[peppermint] Setting side tx results to vote")
+		sideTxResults := make([]types.SideTxResult, 0)
+		for _, sideTxResponse := range cs.state.SideTxResponses {
+			// sign if data is available on side tx response
+			if len(sideTxResponse.Data) > 0 {
+				err := cs.privValidator.SignSideTxResult(sideTxResponse)
+				if err != nil {
+					return nil, err
+				}
+			}
+			sideTxResults = append(sideTxResults, sideTxResponse.SideTxResult)
+		}
+		vote.SideTxResults = sideTxResults
 	}
 
 	v := vote.ToProto()

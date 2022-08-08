@@ -1,8 +1,8 @@
 package proxy
 
 import (
-	abcicli "github.com/tendermint/tendermint/abci/client"
-	"github.com/tendermint/tendermint/abci/types"
+	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
+	"github.com/dojimanetwork/dojimamint/abci/types"
 )
 
 //go:generate mockery --case underscore --name AppConnConsensus|AppConnMempool|AppConnQuery|AppConnSnapshot
@@ -20,6 +20,9 @@ type AppConnConsensus interface {
 	DeliverTxAsync(types.RequestDeliverTx) *abcicli.ReqRes
 	EndBlockSync(types.RequestEndBlock) (*types.ResponseEndBlock, error)
 	CommitSync() (*types.ResponseCommit, error)
+
+	BeginSideBlockSync(types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error)
+	DeliverSideTxAsync(types.RequestDeliverSideTx) *abcicli.ReqRes
 }
 
 type AppConnMempool interface {
@@ -50,6 +53,14 @@ type AppConnSnapshot interface {
 	OfferSnapshotSync(types.RequestOfferSnapshot) (*types.ResponseOfferSnapshot, error)
 	LoadSnapshotChunkSync(types.RequestLoadSnapshotChunk) (*types.ResponseLoadSnapshotChunk, error)
 	ApplySnapshotChunkSync(types.RequestApplySnapshotChunk) (*types.ResponseApplySnapshotChunk, error)
+}
+
+func (app *appConnConsensus) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	return app.appConn.BeginSideBlockSync(req)
+}
+
+func (app *appConnConsensus) DeliverSideTxAsync(req types.RequestDeliverSideTx) *abcicli.ReqRes {
+	return app.appConn.DeliverSideTxAsync(req)
 }
 
 //-----------------------------------------------------------------------------------------
