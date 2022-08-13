@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	abci "github.com/tendermint/tendermint/abci/types"
 )
 
 const (

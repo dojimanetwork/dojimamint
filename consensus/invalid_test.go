@@ -3,12 +3,12 @@ package consensus
 import (
 	"testing"
 
-	"github.com/dojimanetwork/dojimamint/libs/bytes"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/libs/bytes"
+	"github.com/tendermint/tendermint/libs/log"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
+	"github.com/tendermint/tendermint/p2p"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 //----------------------------------------------

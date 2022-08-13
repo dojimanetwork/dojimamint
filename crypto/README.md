@@ -5,10 +5,10 @@ crypto is the cryptographic package adapted for Tendermint's uses
 ## Importing it
 
 To get the interfaces,
-`import "github.com/dojimanetwork/dojimamint/crypto"`
+`import "github.com/tendermint/tendermint/crypto"`
 
 For any specific algorithm, use its specific module e.g.
-`import "github.com/dojimanetwork/dojimamint/crypto/ed25519"`
+`import "github.com/tendermint/tendermint/crypto/ed25519"`
 
 ## Binary encoding
 

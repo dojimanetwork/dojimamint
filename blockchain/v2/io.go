@@ -3,11 +3,11 @@ package v2
 import (
 	"fmt"
 
-	bc "github.com/dojimanetwork/dojimamint/blockchain"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
-	"github.com/dojimanetwork/dojimamint/state"
-	"github.com/dojimanetwork/dojimamint/types"
+	bc "github.com/tendermint/tendermint/blockchain"
+	"github.com/tendermint/tendermint/p2p"
+	bcproto "github.com/tendermint/tendermint/proto/tendermint/blockchain"
+	"github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
 )
 
 type iIO interface {

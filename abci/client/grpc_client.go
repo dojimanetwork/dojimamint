@@ -9,10 +9,10 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/tendermint/tendermint/abci/types"
+	tmnet "github.com/tendermint/tendermint/libs/net"
+	"github.com/tendermint/tendermint/libs/service"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
 )
 
 var _ Client = (*grpcClient)(nil)
@@ -450,4 +450,3 @@ func (cli *grpcClient) DeliverSideTxSync(params types.RequestDeliverSideTx) (*ty
 	reqres := cli.DeliverSideTxAsync(params)
 	return reqres.Response.GetDeliverSideTx(), cli.Error()
 }
-

@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	tmflags "github.com/dojimanetwork/dojimamint/libs/cli/flags"
-	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmflags "github.com/tendermint/tendermint/libs/cli/flags"
+	"github.com/tendermint/tendermint/libs/log"
 )
 
 const (

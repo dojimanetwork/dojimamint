@@ -1,12 +1,12 @@
 package consensus
 
 import (
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/clist"
-	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	"github.com/dojimanetwork/dojimamint/proxy"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/clist"
+	mempl "github.com/tendermint/tendermint/mempool"
+	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
+	"github.com/tendermint/tendermint/proxy"
+	"github.com/tendermint/tendermint/types"
 )
 
 //-----------------------------------------------------------------------------

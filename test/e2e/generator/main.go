@@ -10,7 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/tendermint/tendermint/libs/log"
 )
 
 const (

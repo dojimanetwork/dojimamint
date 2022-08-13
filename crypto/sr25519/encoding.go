@@ -1,8 +1,8 @@
 package sr25519
 
 import (
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	"github.com/tendermint/tendermint/crypto"
+	tmjson "github.com/tendermint/tendermint/libs/json"
 )
 
 var _ crypto.PrivKey = PrivKey{}

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
-	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	rpctypes "github.com/tendermint/tendermint/rpc/jsonrpc/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 // BroadcastEvidence broadcasts evidence of the misbehavior.

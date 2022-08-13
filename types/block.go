@@ -2,26 +2,26 @@ package types
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
 	"time"
-	"encoding/hex"
 
 	"github.com/gogo/protobuf/proto"
 	gogotypes "github.com/gogo/protobuf/types"
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tenderTypes "github.com/tendermint/tendermint/proto/tendermint/types"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/dojimanetwork/dojimamint/crypto/merkle"
-	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
-	"github.com/dojimanetwork/dojimamint/libs/bits"
-	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
-	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
-	"github.com/dojimanetwork/dojimamint/version"
+	"github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/crypto/merkle"
+	"github.com/tendermint/tendermint/crypto/tmhash"
+	"github.com/tendermint/tendermint/libs/bits"
+	tmbytes "github.com/tendermint/tendermint/libs/bytes"
+	tmmath "github.com/tendermint/tendermint/libs/math"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
+	"github.com/tendermint/tendermint/version"
 )
 
 const (

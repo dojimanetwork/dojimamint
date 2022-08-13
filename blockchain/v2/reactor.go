@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/behaviour"
-	bc "github.com/dojimanetwork/dojimamint/blockchain"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
-	"github.com/dojimanetwork/dojimamint/state"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/behaviour"
+	bc "github.com/tendermint/tendermint/blockchain"
+	"github.com/tendermint/tendermint/libs/log"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/p2p"
+	bcproto "github.com/tendermint/tendermint/proto/tendermint/blockchain"
+	"github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
 )
 
 const (

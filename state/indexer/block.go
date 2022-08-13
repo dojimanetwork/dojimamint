@@ -3,8 +3,8 @@ package indexer
 import (
 	"context"
 
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/libs/pubsub/query"
+	"github.com/tendermint/tendermint/types"
 )
 
 // BlockIndexer defines an interface contract for indexing block events.

@@ -9,12 +9,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/light/provider"
-	"github.com/dojimanetwork/dojimamint/light/store"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/libs/log"
+	tmmath "github.com/tendermint/tendermint/libs/math"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/light/provider"
+	"github.com/tendermint/tendermint/light/store"
+	"github.com/tendermint/tendermint/types"
 )
 
 type mode byte

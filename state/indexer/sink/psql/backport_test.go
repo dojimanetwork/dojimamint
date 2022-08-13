@@ -1,8 +1,8 @@
 package psql
 
 import (
-	"github.com/dojimanetwork/dojimamint/state/indexer"
-	"github.com/dojimanetwork/dojimamint/state/txindex"
+	"github.com/tendermint/tendermint/state/indexer"
+	"github.com/tendermint/tendermint/state/txindex"
 )
 
 var (

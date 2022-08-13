@@ -5,9 +5,9 @@ package state
 
 import (
 	fmt "fmt"
-	types "github.com/dojimanetwork/dojimamint/abci/types"
-	types1 "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	version "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	types "github.com/tendermint/tendermint/abci/types"
+	types1 "github.com/tendermint/tendermint/proto/tendermint/types"
+	version "github.com/tendermint/tendermint/proto/tendermint/version"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"

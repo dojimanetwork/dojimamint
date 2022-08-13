@@ -1,7 +1,7 @@
 package version
 
 import (
-	"github.com/dojimanetwork/dojimamint/version"
+	"github.com/tendermint/tendermint/version"
 )
 
 // TODO: eliminate this after some version refactor

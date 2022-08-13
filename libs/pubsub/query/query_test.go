@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	"tendermint/tendermint/libs/pubsub/query"
 )
 
 func TestMatches(t *testing.T) {

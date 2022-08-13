@@ -5,9 +5,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	"github.com/dojimanetwork/dojimamint/privval"
+	tmjson "github.com/tendermint/tendermint/libs/json"
+	tmos "github.com/tendermint/tendermint/libs/os"
+	"github.com/tendermint/tendermint/privval"
 )
 
 // ShowValidatorCmd adds capabilities for showing the validator info.

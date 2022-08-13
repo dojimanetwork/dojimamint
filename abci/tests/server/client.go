@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
+	abcicli "github.com/tendermint/tendermint/abci/client"
+	"github.com/tendermint/tendermint/abci/types"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
 )
 
 func InitChain(client abcicli.Client) error {

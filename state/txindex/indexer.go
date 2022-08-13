@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/pubsub/query"
 )
 
 // XXX/TODO: These types should be moved to the indexer package.

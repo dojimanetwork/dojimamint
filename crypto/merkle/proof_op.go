@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	tmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 )
 
 //----------------------------------------

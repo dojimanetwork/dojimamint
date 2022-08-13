@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	cmn "github.com/dojimanetwork/dojimamint/libs/bytes"
+	cmn "github.com/tendermint/tendermint/libs/bytes"
 )
 
 // SideTxResult side tx result for vote

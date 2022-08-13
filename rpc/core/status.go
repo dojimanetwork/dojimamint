@@ -3,11 +3,11 @@ package core
 import (
 	"time"
 
-	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
-	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	tmbytes "github.com/tendermint/tendermint/libs/bytes"
+	"github.com/tendermint/tendermint/p2p"
+	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	rpctypes "github.com/tendermint/tendermint/rpc/jsonrpc/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 // Status returns Tendermint status including node info, pubkey, latest block

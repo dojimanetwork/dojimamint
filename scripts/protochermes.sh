@@ -24,5 +24,5 @@ for dir in $proto_dirs; do
 done
 
 # move proto files to the right places
- cp -r github.com/dojimanetwork/dojimamint/* ./
+ cp -r github.com/tendermint/tendermint/* ./
  rm -rf github.com

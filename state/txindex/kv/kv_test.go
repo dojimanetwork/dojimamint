@@ -13,11 +13,11 @@ import (
 
 	db "github.com/tendermint/tm-db"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	"github.com/dojimanetwork/dojimamint/state/txindex"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/pubsub/query"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
+	"github.com/tendermint/tendermint/state/txindex"
+	"github.com/tendermint/tendermint/types"
 )
 
 func TestTxIndex(t *testing.T) {

@@ -5,7 +5,7 @@ package blockchain
 
 import (
 	fmt "fmt"
-	types "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	types "github.com/tendermint/tendermint/proto/tendermint/types"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"

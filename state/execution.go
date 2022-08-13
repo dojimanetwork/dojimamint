@@ -1,20 +1,20 @@
 package state
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"time"
-	"bytes"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
-	"github.com/dojimanetwork/dojimamint/libs/fail"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/dojimanetwork/dojimamint/proxy"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	cryptoenc "github.com/tendermint/tendermint/crypto/encoding"
+	"github.com/tendermint/tendermint/libs/fail"
+	"github.com/tendermint/tendermint/libs/log"
+	mempl "github.com/tendermint/tendermint/mempool"
+	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/proxy"
+	"github.com/tendermint/tendermint/types"
 )
 
 //-----------------------------------------------------------------------------

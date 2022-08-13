@@ -1,11 +1,11 @@
 package core
 
 import (
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/bytes"
-	"github.com/dojimanetwork/dojimamint/proxy"
-	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
-	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/bytes"
+	"github.com/tendermint/tendermint/proxy"
+	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	rpctypes "github.com/tendermint/tendermint/rpc/jsonrpc/types"
 )
 
 // ABCIQuery queries the application for some information.

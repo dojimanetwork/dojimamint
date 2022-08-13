@@ -8,7 +8,7 @@ import (
 	"strings"
 	"text/template"
 
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	tmos "github.com/tendermint/tendermint/libs/os"
 )
 
 // DefaultDirPerm is the default permissions used when creating directories.

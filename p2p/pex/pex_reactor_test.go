@@ -13,11 +13,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/config"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	"github.com/dojimanetwork/dojimamint/p2p/mock"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	"github.com/tendermint/tendermint/config"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/p2p"
+	"github.com/tendermint/tendermint/p2p/mock"
+	tmp2p "github.com/tendermint/tendermint/proto/tendermint/p2p"
 )
 
 var (

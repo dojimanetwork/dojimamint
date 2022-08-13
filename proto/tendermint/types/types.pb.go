@@ -5,8 +5,8 @@ package types
 
 import (
 	fmt "fmt"
-	crypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
-	version "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	crypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	version "github.com/tendermint/tendermint/proto/tendermint/version"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"

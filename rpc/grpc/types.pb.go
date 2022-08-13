@@ -6,7 +6,7 @@ package coregrpc
 import (
 	context "context"
 	fmt "fmt"
-	types "github.com/dojimanetwork/dojimamint/abci/types"
+	types "github.com/tendermint/tendermint/abci/types"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
 	grpc "google.golang.org/grpc"

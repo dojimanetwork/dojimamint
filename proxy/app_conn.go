@@ -1,8 +1,8 @@
 package proxy
 
 import (
-	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
-	"github.com/dojimanetwork/dojimamint/abci/types"
+	abcicli "github.com/tendermint/tendermint/abci/client"
+	"github.com/tendermint/tendermint/abci/types"
 )
 
 //go:generate mockery --case underscore --name AppConnConsensus|AppConnMempool|AppConnQuery|AppConnSnapshot

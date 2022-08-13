@@ -6,8 +6,8 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	crypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
-	types "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	crypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	types "github.com/tendermint/tendermint/proto/tendermint/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -3266,7 +3266,7 @@ type Evidence struct {
 	Time time.Time `protobuf:"bytes,4,opt,name=time,proto3,stdtime" json:"time"`
 	// Total voting power of the validator set in case the ABCI application does
 	// not store historical validators.
-	// https://github.com/dojimanetwork/dojimamint/issues/4581
+	// https://github.com/tendermint/tendermint/issues/4581
 	TotalVotingPower int64 `protobuf:"varint,5,opt,name=total_voting_power,json=totalVotingPower,proto3" json:"total_voting_power,omitempty"`
 }
 

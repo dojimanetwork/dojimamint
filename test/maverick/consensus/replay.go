@@ -8,13 +8,13 @@ import (
 	"reflect"
 	"time"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmcon "github.com/dojimanetwork/dojimamint/consensus"
-	"github.com/dojimanetwork/dojimamint/crypto/merkle"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	"github.com/dojimanetwork/dojimamint/proxy"
-	sm "github.com/dojimanetwork/dojimamint/state"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	tmcon "github.com/tendermint/tendermint/consensus"
+	"github.com/tendermint/tendermint/crypto/merkle"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/proxy"
+	sm "github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
 )
 
 var crc32c = crc32.MakeTable(crc32.Castagnoli)

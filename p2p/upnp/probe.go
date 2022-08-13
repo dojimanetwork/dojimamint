@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/tendermint/tendermint/libs/log"
 )
 
 type Capabilities struct {

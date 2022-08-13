@@ -8,14 +8,14 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/libs/service"
 
-	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
-	"github.com/dojimanetwork/dojimamint/abci/example/code"
-	abciserver "github.com/dojimanetwork/dojimamint/abci/server"
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	abcicli "github.com/tendermint/tendermint/abci/client"
+	"github.com/tendermint/tendermint/abci/example/code"
+	abciserver "github.com/tendermint/tendermint/abci/server"
+	"github.com/tendermint/tendermint/abci/types"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
 const (

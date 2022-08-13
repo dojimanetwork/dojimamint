@@ -5,14 +5,14 @@ import (
 	"net"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
+	"github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/tendermint/tendermint/libs/log"
+	tmnet "github.com/tendermint/tendermint/libs/net"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
 
-	"github.com/dojimanetwork/dojimamint/config"
-	"github.com/dojimanetwork/dojimamint/p2p/conn"
+	"github.com/tendermint/tendermint/config"
+	"github.com/tendermint/tendermint/p2p/conn"
 )
 
 const testCh = 0x01
