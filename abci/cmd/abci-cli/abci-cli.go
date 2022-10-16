@@ -11,18 +11,18 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	"github.com/tendermint/tendermint/libs/log"
+	tmos "github.com/tendermint/tendermint/libs/os"
 
-	abcicli "github.com/dojimanetwork/dojimamint/abci/client"
-	"github.com/dojimanetwork/dojimamint/abci/example/code"
-	"github.com/dojimanetwork/dojimamint/abci/example/counter"
-	"github.com/dojimanetwork/dojimamint/abci/example/kvstore"
-	"github.com/dojimanetwork/dojimamint/abci/server"
-	servertest "github.com/dojimanetwork/dojimamint/abci/tests/server"
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/abci/version"
-	"github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	abcicli "github.com/tendermint/tendermint/abci/client"
+	"github.com/tendermint/tendermint/abci/example/code"
+	"github.com/tendermint/tendermint/abci/example/counter"
+	"github.com/tendermint/tendermint/abci/example/kvstore"
+	"github.com/tendermint/tendermint/abci/server"
+	servertest "github.com/tendermint/tendermint/abci/tests/server"
+	"github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/abci/version"
+	"github.com/tendermint/tendermint/proto/tendermint/crypto"
 )
 
 // client is a global variable so it can be reused by the console
