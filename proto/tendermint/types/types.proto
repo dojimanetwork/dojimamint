@@ -43,7 +43,7 @@ message PartSetHeader {
 message Part {
   uint32                  index = 1;
   bytes                   bytes = 2;
-  tendermint.crypto.Proof proof = 3 [(gogoproto.nullable) = false];
+  dojimamint.crypto.Proof proof = 3 [(gogoproto.nullable) = false];
 }
 
 // BlockID
@@ -58,7 +58,7 @@ message BlockID {
 
 message Header {
   // basic block info
-  tendermint.version.Consensus version = 1 [(gogoproto.nullable)=false];
+  dojimamint.version.Consensus version = 1 [(gogoproto.nullable)=false];
   string chain_id = 2 [(gogoproto.customname)="ChainID"];
   int64 height = 3;
   google.protobuf.Timestamp time = 4 [(gogoproto.nullable)=false, (gogoproto.stdtime)=true];
@@ -144,7 +144,7 @@ message SignedHeader {
 
 message LightBlock {
   SignedHeader                  signed_header = 1;
-  tendermint.types.ValidatorSet validator_set = 2;
+  dojimamint.types.ValidatorSet validator_set = 2;
 }
 
 message BlockMeta {
@@ -158,7 +158,7 @@ message BlockMeta {
 message TxProof {
   bytes                   root_hash = 1;
   bytes                   data      = 2;
-  tendermint.crypto.Proof proof     = 3;
+  dojimamint.crypto.Proof proof     = 3;
 }
 
 // Side-tx result type
