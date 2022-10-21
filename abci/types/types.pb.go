@@ -2805,10 +2805,17 @@ func (m *ConsensusParams) GetVersion() *types.VersionParams {
 
 // BlockParams contains limits on the block size.
 type BlockParams struct {
+	// Max block size, in bytes.
 	// Note: must be greater than 0
 	MaxBytes int64 `protobuf:"varint,1,opt,name=max_bytes,json=maxBytes,proto3" json:"max_bytes,omitempty"`
+	// Max gas per block.
 	// Note: must be greater or equal to -1
 	MaxGas int64 `protobuf:"varint,2,opt,name=max_gas,json=maxGas,proto3" json:"max_gas,omitempty"`
+	// Minimum time increment between consecutive blocks (in milliseconds) If the
+	// block header timestamp is ahead of the system clock, decrease this value.
+	//
+	// Not exposed to the application.
+	TimeIotaMs int64 `protobuf:"varint,3,opt,name=time_iota_ms,json=timeIotaMs,proto3" json:"time_iota_ms,omitempty"`
 }
 
 func (m *BlockParams) Reset()         { *m = BlockParams{} }
