@@ -118,7 +118,7 @@ func TestConsensusParamsUpdate(t *testing.T) {
 		{
 			makeParams(1, 2, 10, 3, 0, valEd25519),
 			&abci.ConsensusParams{
-				Block: &abci.BlockParams{
+				Block: &tmproto.BlockParams{
 					MaxBytes: 100,
 					MaxGas:   200,
 				},

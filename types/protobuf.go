@@ -99,9 +99,10 @@ func (tm2pb) ValidatorUpdates(vals *ValidatorSet) []abci.ValidatorUpdate {
 
 func (tm2pb) ConsensusParams(params *tmproto.ConsensusParams) *abci.ConsensusParams {
 	return &abci.ConsensusParams{
-		Block: &abci.BlockParams{
+		Block: &tmproto.BlockParams{
 			MaxBytes: params.Block.MaxBytes,
 			MaxGas:   params.Block.MaxGas,
+			TimeIotaMs: params.Block.TimeIotaMs,
 		},
 		Evidence:  &params.Evidence,
 		Validator: &params.Validator,
