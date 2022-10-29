@@ -604,8 +604,8 @@ type CommitSig struct {
 }
 
 // NewCommitSigForBlock returns new CommitSig with BlockIDFlagCommit.
-func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) *CommitSig {
-	return &CommitSig{
+func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) CommitSig {
+	return CommitSig{
 		BlockIDFlag:      BlockIDFlagCommit,
 		ValidatorAddress: valAddr,
 		Timestamp:        ts,
@@ -621,8 +621,8 @@ func MaxCommitBytes(valCount int) int64 {
 
 // NewCommitSigAbsent returns new CommitSig with BlockIDFlagAbsent. Other
 // fields are all empty.
-func NewCommitSigAbsent() *CommitSig {
-	 return &CommitSig{
+func NewCommitSigAbsent() CommitSig {
+	return CommitSig{
 		BlockIDFlag: BlockIDFlagAbsent,
 	}
 
@@ -702,23 +702,23 @@ func (cs CommitSig) ValidateBasic() error {
 			return errors.New("signature is present")
 		}
 
-	if len(cs.SideTxResults) > 0 {
-		for _, s := range cs.SideTxResults {
-			// side-tx response sig should be empty or valid 65 bytes
-			if len(s.Sig) != 0 && len(s.Sig) != 65 {
-				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
-			}
+		if len(cs.SideTxResults) > 0 {
+			for _, s := range cs.SideTxResults {
+				// side-tx response sig should be empty or valid 65 bytes
+				if len(s.Sig) != 0 && len(s.Sig) != 65 {
+					return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+				}
 
-			if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
-				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
-			}
+				if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+					return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+				}
 
-			// tx-hash must be 32 bytes
-			if len(s.TxHash) != 32 {
-				return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+				// tx-hash must be 32 bytes
+				if len(s.TxHash) != 32 {
+					return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+				}
 			}
 		}
-	}
 	default:
 		if len(cs.ValidatorAddress) != crypto.AddressSize {
 			return fmt.Errorf("expected ValidatorAddress size to be %d bytes, got %d bytes",
@@ -776,7 +776,7 @@ type Commit struct {
 	Height     int64       `json:"height"`
 	Round      int32       `json:"round"`
 	BlockID    BlockID     `json:"block_id"`
-	Signatures []*CommitSig `json:"signatures"`
+	Signatures []CommitSig `json:"signatures"`
 
 	// Memoized in first call to corresponding method.
 	// NOTE: can't memoize in constructor because constructor isn't used for
@@ -786,7 +786,7 @@ type Commit struct {
 }
 
 // NewCommit returns a new Commit.
-func NewCommit(height int64, round int32, blockID BlockID, commitSigs []*CommitSig) *Commit {
+func NewCommit(height int64, round int32, blockID BlockID, commitSigs []CommitSig) *Commit {
 	return &Commit{
 		Height:     height,
 		Round:      round,
@@ -1005,7 +1005,7 @@ func CommitFromProto(cp *tmproto.Commit) (*Commit, error) {
 		return nil, err
 	}
 
-	sigs := make([]*CommitSig, len(cp.Signatures))
+	sigs := make([]CommitSig, len(cp.Signatures))
 	for i := range cp.Signatures {
 		if err := sigs[i].FromProto(cp.Signatures[i]); err != nil {
 			return nil, err

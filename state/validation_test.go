@@ -131,7 +131,7 @@ func TestValidateBlockCommit(t *testing.T) {
 				wrongHeightVote.Height,
 				wrongHeightVote.Round,
 				state.LastBlockID,
-				[]*types.CommitSig{wrongHeightVote.CommitSig()},
+				[]types.CommitSig{wrongHeightVote.CommitSig()},
 			)
 			block, _ := state.MakeBlock(height, makeTxs(height), wrongHeightCommit, nil, proposerAddr)
 			err = blockExec.ValidateBlock(state, block)
@@ -203,7 +203,7 @@ func TestValidateBlockCommit(t *testing.T) {
 		goodVote.Signature, badVote.Signature = g.Signature, b.Signature
 
 		wrongSigsCommit = types.NewCommit(goodVote.Height, goodVote.Round,
-			blockID, []*types.CommitSig{goodVote.CommitSig(), badVote.CommitSig()})
+			blockID, []types.CommitSig{goodVote.CommitSig(), badVote.CommitSig()})
 	}
 }
 

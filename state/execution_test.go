@@ -88,12 +88,12 @@ func TestBeginBlockValidators(t *testing.T) {
 
 	testCases := []struct {
 		desc                     string
-		lastCommitSigs           []*types.CommitSig
+		lastCommitSigs           []types.CommitSig
 		expectedAbsentValidators []int
 	}{
-		{"none absent", []*types.CommitSig{commitSig0, commitSig1}, []int{}},
-		{"one absent", []*types.CommitSig{commitSig0, absentSig}, []int{1}},
-		{"multiple absent", []*types.CommitSig{absentSig, absentSig}, []int{0, 1}},
+		{"none absent", []types.CommitSig{commitSig0, commitSig1}, []int{}},
+		{"one absent", []types.CommitSig{commitSig0, absentSig}, []int{1}},
+		{"multiple absent", []types.CommitSig{absentSig, absentSig}, []int{0, 1}},
 	}
 
 	for _, tc := range testCases {
@@ -159,7 +159,7 @@ func TestBeginBlockByzantineValidators(t *testing.T) {
 		ConflictingBlock: &types.LightBlock{
 			SignedHeader: &types.SignedHeader{
 				Header: header,
-				Commit: types.NewCommit(10, 0, makeBlockID(header.Hash(), 100, []byte("partshash")), []*types.CommitSig{{
+				Commit: types.NewCommit(10, 0, makeBlockID(header.Hash(), 100, []byte("partshash")), []types.CommitSig{{
 					BlockIDFlag:      types.BlockIDFlagNil,
 					ValidatorAddress: crypto.AddressHash([]byte("validator_address")),
 					Timestamp:        defaultEvidenceTime,
