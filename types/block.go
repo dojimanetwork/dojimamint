@@ -2,15 +2,15 @@ package types
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
 	"time"
-	"encoding/hex"
 
+	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/gogo/protobuf/proto"
 	gogotypes "github.com/gogo/protobuf/types"
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/dojimanetwork/dojimamint/crypto"
 	"github.com/dojimanetwork/dojimamint/crypto/merkle"
@@ -574,7 +574,7 @@ func HeaderFromProto(ph *tmproto.Header) (Header, error) {
 //-------------------------------------
 
 // BlockIDFlag indicates which BlockID the signature is for.
-type BlockIDFlag byte
+type BlockIDFlag int32
 
 const (
 	// BlockIDFlagAbsent - no vote was received from a validator.
@@ -622,7 +622,7 @@ func MaxCommitBytes(valCount int) int64 {
 // NewCommitSigAbsent returns new CommitSig with BlockIDFlagAbsent. Other
 // fields are all empty.
 func NewCommitSigAbsent() *CommitSig {
-	 return &CommitSig{
+	return &CommitSig{
 		BlockIDFlag: BlockIDFlagAbsent,
 	}
 
@@ -684,14 +684,6 @@ func (cs CommitSig) BlockID(commitBlockID BlockID) BlockID {
 func (cs CommitSig) ValidateBasic() error {
 	switch cs.BlockIDFlag {
 	case BlockIDFlagAbsent:
-	case BlockIDFlagCommit:
-	case BlockIDFlagNil:
-	default:
-		return fmt.Errorf("unknown BlockIDFlag: %v", cs.BlockIDFlag)
-	}
-
-	switch cs.BlockIDFlag {
-	case BlockIDFlagAbsent:
 		if len(cs.ValidatorAddress) != 0 {
 			return errors.New("validator address is present")
 		}
@@ -702,23 +694,25 @@ func (cs CommitSig) ValidateBasic() error {
 			return errors.New("signature is present")
 		}
 
-	if len(cs.SideTxResults) > 0 {
-		for _, s := range cs.SideTxResults {
-			// side-tx response sig should be empty or valid 65 bytes
-			if len(s.Sig) != 0 && len(s.Sig) != 65 {
-				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
-			}
+		if len(cs.SideTxResults) > 0 {
+			for _, s := range cs.SideTxResults {
+				// side-tx response sig should be empty or valid 65 bytes
+				if len(s.Sig) != 0 && len(s.Sig) != 65 {
+					return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+				}
 
-			if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
-				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
-			}
+				if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+					return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+				}
 
-			// tx-hash must be 32 bytes
-			if len(s.TxHash) != 32 {
-				return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+				// tx-hash must be 32 bytes
+				if len(s.TxHash) != 32 {
+					return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+				}
 			}
 		}
-	}
+	case BlockIDFlagCommit:
+	case BlockIDFlagNil:
 	default:
 		if len(cs.ValidatorAddress) != crypto.AddressSize {
 			return fmt.Errorf("expected ValidatorAddress size to be %d bytes, got %d bytes",
@@ -733,6 +727,7 @@ func (cs CommitSig) ValidateBasic() error {
 		if len(cs.Signature) > MaxSignatureSize {
 			return fmt.Errorf("signature is too big (max: %d)", MaxSignatureSize)
 		}
+		return fmt.Errorf("unknown BlockIDFlag: %v", cs.BlockIDFlag)
 	}
 
 	return nil
@@ -773,9 +768,9 @@ type Commit struct {
 	// ValidatorSet order.
 	// Any peer with a block can gossip signatures by index with a peer without
 	// recalculating the active ValidatorSet.
-	Height     int64       `json:"height"`
-	Round      int32       `json:"round"`
-	BlockID    BlockID     `json:"block_id"`
+	Height     int64        `json:"height"`
+	Round      int32        `json:"round"`
+	BlockID    BlockID      `json:"block_id"`
 	Signatures []*CommitSig `json:"signatures"`
 
 	// Memoized in first call to corresponding method.
