@@ -1,10 +1,10 @@
 package state
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"time"
-	"bytes"
 
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
@@ -147,7 +147,7 @@ func (blockExec *BlockExecutor) ApplyBlock(
 	}
 
 	startTime := time.Now().UnixNano()
-	abciResponses,sideTxResponses, err := execBlockOnProxyApp(
+	abciResponses, sideTxResponses, err := execBlockOnProxyApp(
 		blockExec.logger, blockExec.proxyApp, block, blockExec.store, state.InitialHeight, executeSideDeliverTx,
 	)
 	endTime := time.Now().UnixNano()
@@ -276,7 +276,7 @@ func execBlockOnProxyApp(
 	store Store,
 	initialHeight int64,
 	executeSideDeliverTx bool,
-) (*tmstate.ABCIResponses,[]*types.SideTxResultWithData, error) {
+) (*tmstate.ABCIResponses, []*types.SideTxResultWithData, error) {
 	var validTxs, invalidTxs = 0, 0
 
 	txIndex := 0
@@ -316,7 +316,7 @@ func execBlockOnProxyApp(
 	var err error
 	pbh := block.Header.ToProto()
 	if pbh == nil {
-		return nil,nil, errors.New("nil header")
+		return nil, nil, errors.New("nil header")
 	}
 
 	abciResponses.BeginBlock, err = proxyAppConn.BeginBlockSync(abci.RequestBeginBlock{
@@ -327,7 +327,7 @@ func execBlockOnProxyApp(
 	})
 	if err != nil {
 		logger.Error("error in proxyAppConn.BeginBlock", "err", err)
-		return nil,nil, err
+		return nil, nil, err
 	}
 	//
 	// Side begin block
@@ -360,7 +360,7 @@ func execBlockOnProxyApp(
 	for _, tx := range block.Txs {
 		proxyAppConn.DeliverTxAsync(abci.RequestDeliverTx{Tx: tx})
 		if err := proxyAppConn.Error(); err != nil {
-			return nil,nil, err
+			return nil, nil, err
 		}
 	}
 
@@ -410,7 +410,7 @@ func execBlockOnProxyApp(
 	abciResponses.EndBlock, err = proxyAppConn.EndBlockSync(abci.RequestEndBlock{Height: block.Height})
 	if err != nil {
 		logger.Error("error in proxyAppConn.EndBlock", "err", err)
-		return nil,nil, err
+		return nil, nil, err
 	}
 
 	logger.Info("Executed block", "height", block.Height, "validTxs", validTxs, "invalidTxs", invalidTxs)
@@ -419,7 +419,7 @@ func execBlockOnProxyApp(
 	}
 
 	logger.Info("executed block", "height", block.Height, "num_valid_txs", validTxs, "num_invalid_txs", invalidTxs)
-	return abciResponses,sideTxResponses, nil
+	return abciResponses, sideTxResponses, nil
 }
 
 func getBeginBlockValidatorInfo(block *types.Block, store Store,
@@ -623,7 +623,7 @@ func ExecCommitBlock(
 	initialHeight int64,
 ) ([]byte, error) {
 	logger.Info("[Peppermint] Exec commit block", "height", block.Height)
-	_, _, err := execBlockOnProxyApp(logger, appConnConsensus, block, store,initialHeight, false)
+	_, _, err := execBlockOnProxyApp(logger, appConnConsensus, block, store, initialHeight, false)
 	if err != nil {
 		logger.Error("Error executing block on proxy app", "height", block.Height, "err", err)
 		return nil, err
@@ -667,7 +667,7 @@ func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResu
 
 	// iterate all votes
 	for _, vote := range block.LastCommit.Signatures {
-		if vote != nil {
+		if !vote.Absent() {
 			txMapping := make(map[int]bool)
 			for _, sideTxResult := range vote.SideTxResults {
 				// find if result object is already created

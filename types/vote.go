@@ -2,15 +2,15 @@ package types
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"time"
-	"encoding/hex"
 
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/dojimanetwork/dojimamint/crypto"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
+	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
@@ -63,7 +63,7 @@ type Vote struct {
 }
 
 // CommitSig converts the Vote to a CommitSig.
-func (vote *Vote) CommitSig() *CommitSig {
+func (vote *Vote) CommitSig() CommitSig {
 	if vote == nil {
 		return NewCommitSigAbsent()
 	}
@@ -78,7 +78,7 @@ func (vote *Vote) CommitSig() *CommitSig {
 		panic(fmt.Sprintf("Invalid vote %v - expected BlockID to be either empty or complete", vote))
 	}
 
-	return &CommitSig{
+	return CommitSig{
 		BlockIDFlag:      blockIDFlag,
 		ValidatorAddress: vote.ValidatorAddress,
 		Timestamp:        vote.Timestamp,

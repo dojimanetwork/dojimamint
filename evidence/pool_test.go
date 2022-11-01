@@ -418,7 +418,7 @@ func initializeBlockStore(db dbm.DB, state sm.State, valAddr []byte) *store.Bloc
 }
 
 func makeCommit(height int64, valAddr []byte) *types.Commit {
-	commitSigs := []*types.CommitSig{{
+	commitSigs := []types.CommitSig{{
 		BlockIDFlag:      types.BlockIDFlagCommit,
 		ValidatorAddress: valAddr,
 		Timestamp:        defaultEvidenceTime,

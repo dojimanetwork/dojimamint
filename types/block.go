@@ -574,7 +574,7 @@ func HeaderFromProto(ph *tmproto.Header) (Header, error) {
 //-------------------------------------
 
 // BlockIDFlag indicates which BlockID the signature is for.
-type BlockIDFlag int32
+type BlockIDFlag byte
 
 const (
 	// BlockIDFlagAbsent - no vote was received from a validator.
@@ -604,8 +604,8 @@ type CommitSig struct {
 }
 
 // NewCommitSigForBlock returns new CommitSig with BlockIDFlagCommit.
-func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) *CommitSig {
-	return &CommitSig{
+func NewCommitSigForBlock(signature []byte, valAddr Address, ts time.Time) CommitSig {
+	return CommitSig{
 		BlockIDFlag:      BlockIDFlagCommit,
 		ValidatorAddress: valAddr,
 		Timestamp:        ts,
@@ -621,8 +621,8 @@ func MaxCommitBytes(valCount int) int64 {
 
 // NewCommitSigAbsent returns new CommitSig with BlockIDFlagAbsent. Other
 // fields are all empty.
-func NewCommitSigAbsent() *CommitSig {
-	return &CommitSig{
+func NewCommitSigAbsent() CommitSig {
+	return CommitSig{
 		BlockIDFlag: BlockIDFlagAbsent,
 	}
 
@@ -768,10 +768,10 @@ type Commit struct {
 	// ValidatorSet order.
 	// Any peer with a block can gossip signatures by index with a peer without
 	// recalculating the active ValidatorSet.
-	Height     int64        `json:"height"`
-	Round      int32        `json:"round"`
-	BlockID    BlockID      `json:"block_id"`
-	Signatures []*CommitSig `json:"signatures"`
+	Height     int64       `json:"height"`
+	Round      int32       `json:"round"`
+	BlockID    BlockID     `json:"block_id"`
+	Signatures []CommitSig `json:"signatures"`
 
 	// Memoized in first call to corresponding method.
 	// NOTE: can't memoize in constructor because constructor isn't used for
@@ -781,7 +781,7 @@ type Commit struct {
 }
 
 // NewCommit returns a new Commit.
-func NewCommit(height int64, round int32, blockID BlockID, commitSigs []*CommitSig) *Commit {
+func NewCommit(height int64, round int32, blockID BlockID, commitSigs []CommitSig) *Commit {
 	return &Commit{
 		Height:     height,
 		Round:      round,
@@ -1000,7 +1000,7 @@ func CommitFromProto(cp *tmproto.Commit) (*Commit, error) {
 		return nil, err
 	}
 
-	sigs := make([]*CommitSig, len(cp.Signatures))
+	sigs := make([]CommitSig, len(cp.Signatures))
 	for i := range cp.Signatures {
 		if err := sigs[i].FromProto(cp.Signatures[i]); err != nil {
 			return nil, err
