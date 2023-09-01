@@ -12,7 +12,7 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 func main() {

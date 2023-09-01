@@ -9,9 +9,9 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 	"github.com/dojimanetwork/dojimamint/version"

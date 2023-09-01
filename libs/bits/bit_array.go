@@ -9,7 +9,7 @@ import (
 
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmprotobits "github.com/dojimanetwork/dojimamint/proto/tendermint/libs/bits"
+	tmprotobits "github.com/dojimanetwork/dojimamint/proto/dojimamint/libs/bits"
 )
 
 // BitArray is a thread-safe implementation of a bit array.

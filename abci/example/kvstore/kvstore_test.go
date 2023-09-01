@@ -15,7 +15,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/abci/example/code"
 	abciserver "github.com/dojimanetwork/dojimamint/abci/server"
 	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 const (

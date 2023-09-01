@@ -61,7 +61,7 @@ and more.
 For example:
 
 ```bash
-$ tendermint light supernova -p tcp://233.123.0.140:26657 \
+$ dojimamint light supernova -p tcp://233.123.0.140:26657 \
   -w tcp://179.63.29.15:26657,tcp://144.165.223.135:26657 \
   --height=10 --hash=37E9A6DD3FA25E83B22C18835401E8E56088D0D7ABC6FD99FCDC920DD76C1C57
 ```

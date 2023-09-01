@@ -6,8 +6,8 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/crypto"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
-	privvalproto "github.com/dojimanetwork/dojimamint/proto/tendermint/privval"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	privvalproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/privval"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

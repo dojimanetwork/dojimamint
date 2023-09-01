@@ -443,7 +443,7 @@ dependency management.
 
 ```bash
 go mod init github.com/me/example
-go get github.com/tendermint/tendermint/@v0.34.0
+go get github.com/dojimamint/dojimamint/@v0.34.0
 ```
 
 After running the above commands you will see two generated files, go.mod and go.sum. The go.mod file should look similar to:
@@ -473,7 +473,7 @@ installing from source, don't forget to checkout the latest release (`git checko
 
 ```bash
 rm -rf /tmp/example
-TMHOME="/tmp/example" tendermint init
+TMHOME="/tmp/example" dojimamint init
 
 I[2019-07-16|18:20:36.480] Generated private validator                  module=main keyFile=/tmp/example/config/priv_validator_key.json stateFile=/tmp/example2/data/priv_validator_state.json
 I[2019-07-16|18:20:36.481] Generated node key                           module=main path=/tmp/example/config/node_key.json
@@ -500,7 +500,7 @@ Then we need to start Tendermint Core and point it to our application. Staying
 within the application directory execute:
 
 ```bash
-TMHOME="/tmp/example" tendermint node --proxy_app=unix://example.sock
+TMHOME="/tmp/example" dojimamint node --proxy_app=unix://example.sock
 
 I[2019-07-16|18:26:20.362] Version info                                 module=main software=0.32.1 block=10 p2p=7
 I[2019-07-16|18:26:20.383] Starting Node                                module=main impl=Node
@@ -524,7 +524,7 @@ I[2019-07-16|18:26:20.330] Accepted a new connection
 Now open another tab in your terminal and try sending a transaction:
 
 ```json
-curl -s 'localhost:26657/broadcast_tx_commit?tx="tendermint=rocks"'
+curl -s 'localhost:26657/broadcast_tx_commit?tx="dojimamint=rocks"'
 {
   "jsonrpc": "2.0",
   "id": "",
@@ -543,7 +543,7 @@ Response should contain the height where this transaction was committed.
 Now let's check if the given key now exists and its value:
 
 ```json
-curl -s 'localhost:26657/abci_query?data="tendermint"'
+curl -s 'localhost:26657/abci_query?data="dojimamint"'
 {
   "jsonrpc": "2.0",
   "id": "",

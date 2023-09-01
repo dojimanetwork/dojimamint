@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
-	tmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmcrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 const ProofOpValue = "simple:v"

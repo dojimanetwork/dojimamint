@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 // EmptyNetAddress defines the string representation of an empty NetAddress

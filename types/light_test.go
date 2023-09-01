@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/dojimanetwork/dojimamint/crypto"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	"github.com/dojimanetwork/dojimamint/version"
 )
 

@@ -17,7 +17,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	"github.com/dojimanetwork/dojimamint/p2p/mock"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 var (

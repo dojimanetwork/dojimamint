@@ -15,7 +15,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
@@ -132,11 +132,11 @@ func TestUnmarshalValidatorKey(t *testing.T) {
 	serialized := fmt.Sprintf(`{
   "address": "%s",
   "pub_key": {
-    "type": "tendermint/PubKeyEd25519",
+    "type": "dojimamint/PubKeyEd25519",
     "value": "%s"
   },
   "priv_key": {
-    "type": "tendermint/PrivKeyEd25519",
+    "type": "dojimamint/PrivKeyEd25519",
     "value": "%s"
   }
 }`, addr, pubB64, privB64)

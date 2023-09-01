@@ -8,7 +8,7 @@ import (
 
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	tmstrings "github.com/dojimanetwork/dojimamint/libs/strings"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 	"github.com/dojimanetwork/dojimamint/version"
 )
 

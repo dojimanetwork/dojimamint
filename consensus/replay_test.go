@@ -27,8 +27,8 @@ import (
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	mempl "github.com/dojimanetwork/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/privval"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
@@ -698,7 +698,7 @@ func testHandshakeReplay(t *testing.T, config *cfg.Config, nBlocks int, mode uin
 	store.commits = commits
 
 	state := genesisState.Copy()
-	// run the chain through state.ApplyBlock to build up the tendermint state
+	// run the chain through state.ApplyBlock to build up the dojimamint state
 	state = buildTMStateFromChain(config, stateStore, state, chain, nBlocks, mode)
 	latestAppHash := state.AppHash
 
@@ -709,7 +709,7 @@ func testHandshakeReplay(t *testing.T, config *cfg.Config, nBlocks int, mode uin
 	clientCreator2 := proxy.NewLocalClientCreator(kvstoreApp)
 	if nBlocks > 0 {
 		// run nBlocks against a new client to build up the app state.
-		// use a throwaway tendermint state
+		// use a throwaway dojimamint state
 		proxyApp := proxy.NewAppConns(clientCreator2)
 		stateDB1 := dbm.NewMemDB()
 		stateStore := sm.NewStore(stateDB1)
@@ -835,7 +835,7 @@ func buildTMStateFromChain(
 	chain []*types.Block,
 	nBlocks int,
 	mode uint) sm.State {
-	// run the whole chain against this client to build up the tendermint state
+	// run the whole chain against this client to build up the dojimamint state
 	clientCreator := proxy.NewLocalClientCreator(
 		kvstore.NewPersistentKVStoreApplication(
 			filepath.Join(config.DBDir(), fmt.Sprintf("replay_test_%d_%d_t", nBlocks, mode))))
@@ -880,7 +880,7 @@ func buildTMStateFromChain(
 }
 
 func TestHandshakePanicsIfAppReturnsWrongAppHash(t *testing.T) {
-	// 1. Initialize tendermint and commit 3 blocks with the following app hashes:
+	// 1. Initialize dojimamint and commit 3 blocks with the following app hashes:
 	//		- 0x01
 	//		- 0x02
 	//		- 0x03

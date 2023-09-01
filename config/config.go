@@ -32,7 +32,7 @@ const (
 // config/toml.go
 // NOTE: libs/cli must know to look in the config dir!
 var (
-	DefaultTendermintDir = ".tendermint"
+	DefaultTendermintDir = ".dojimamint"
 	defaultConfigDir     = "config"
 	defaultDataDir       = "data"
 
@@ -392,7 +392,7 @@ type RPCConfig struct {
 	TLSCertFile string `mapstructure:"tls_cert_file"`
 
 	// The path to a file containing matching private key that is used to create the HTTPS server.
-	// Might be either absolute path or path related to tendermint's config directory.
+	// Might be either absolute path or path related to dojimamint's config directory.
 	//
 	// NOTE: both tls_cert_file and tls_key_file must be present for Tendermint to create HTTPS server.
 	// Otherwise, HTTP server is run.
@@ -1107,7 +1107,7 @@ func DefaultInstrumentationConfig() *InstrumentationConfig {
 		Prometheus:           false,
 		PrometheusListenAddr: ":26660",
 		MaxOpenConnections:   3,
-		Namespace:            "tendermint",
+		Namespace:            "dojimamint",
 	}
 }
 

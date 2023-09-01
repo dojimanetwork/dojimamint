@@ -17,7 +17,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
+	tmcons "github.com/dojimanetwork/dojimamint/proto/dojimamint/consensus"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
@@ -32,9 +32,9 @@ const (
 //--------------------------------------------------------
 // types and functions for savings consensus messages
 // func init() {
-// 	tmjson.RegisterType(msgInfo{}, "tendermint/wal/MsgInfo")
-// 	tmjson.RegisterType(timeoutInfo{}, "tendermint/wal/TimeoutInfo")
-// 	tmjson.RegisterType(tmcon.EndHeightMessage  {}, "tendermint/wal/EndHeightMessage  ")
+// 	tmjson.RegisterType(msgInfo{}, "dojimamint/wal/MsgInfo")
+// 	tmjson.RegisterType(timeoutInfo{}, "dojimamint/wal/TimeoutInfo")
+// 	tmjson.RegisterType(tmcon.EndHeightMessage  {}, "dojimamint/wal/EndHeightMessage  ")
 // }
 
 // Write ahead logger writes msgs to disk before they are processed.
@@ -177,7 +177,7 @@ func (wal *BaseWAL) WriteSync(msg tmcon.WALMessage) error {
 	}
 
 	if err := wal.FlushAndSync(); err != nil {
-		wal.Logger.Error(`WriteSync failed to flush consensus wal. 
+		wal.Logger.Error(`WriteSync failed to flush consensus wal.
 		WARNING: may result in creating alternative proposals / votes for the current height iff the node restarted`,
 			"err", err)
 		return err

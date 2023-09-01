@@ -64,25 +64,25 @@ spec:
       annotations:
         pod.beta.kubernetes.io/init-containers: '[{
           "name": "tm-gen-validator",
-          "image": "tendermint/tendermint:0.10.0",
+          "image": "dojimamint/dojimamint:0.10.0",
           "imagePullPolicy": "IfNotPresent",
           "command": ["bash", "-c", "
             set -ex\n
-            if [ ! -f /tendermint/priv_validator.json ]; then\n
-              tendermint gen_validator > /tendermint/priv_validator.json\n
+            if [ ! -f /dojimamint/priv_validator.json ]; then\n
+              dojimamint gen_validator > /dojimamint/priv_validator.json\n
               # pub_key.json will be served by pub-key container\n
-              cat /tendermint/priv_validator.json | jq \".pub_key\" > /tendermint/pub_key.json\n
+              cat /dojimamint/priv_validator.json | jq \".pub_key\" > /dojimamint/pub_key.json\n
             fi\n
           "],
           "volumeMounts": [
-            {"name": "tmdir", "mountPath": "/tendermint"}
+            {"name": "tmdir", "mountPath": "/dojimamint"}
           ]
         }]'
     spec:
       containers:
       - name: tm
         imagePullPolicy: IfNotPresent
-        image: tendermint/tendermint:0.10.0
+        image: dojimamint/dojimamint:0.10.0
         resources:
           requests:
             cpu: 50m
@@ -112,7 +112,7 @@ spec:
               name: tm-config
               key: validators
         - name: TMHOME
-          value: /tendermint
+          value: /dojimamint
         command:
         - bash
         - "-c"
@@ -155,8 +155,8 @@ spec:
           tendermint node --p2p.seeds="$seeds" --moniker="`hostname`" --proxy_app="unix:///socks/app.sock"
         volumeMounts:
         - name: tmdir
-          mountPath: /tendermint
-        - mountPath: /etc/tendermint/genesis.json
+          mountPath: /dojimamint
+        - mountPath: /etc/dojimamint/genesis.json
           name: configdir
           subPath: genesis.json
         - name: socksdir
@@ -209,7 +209,7 @@ spec:
       #   - "-c"
       #   - |
       #     set -ex
-      #     go get github.com/tendermint/merkleeyes/cmd/merkleeyes
+      #     go get github.com/dojimamint/merkleeyes/cmd/merkleeyes
       #     rm -f /socks/data.sock # remove old socket
       #     merkleeyes server --address="unix:///socks/data.sock"
       #   volumeMounts:
@@ -241,7 +241,7 @@ spec:
           nginx -g "daemon off;"
         volumeMounts:
         - name: tmdir
-          mountPath: /tendermint
+          mountPath: /dojimamint
         - mountPath: /etc/nginx/conf.d/pub_key.conf
           name: configdir
           subPath: pub_key_nginx.conf

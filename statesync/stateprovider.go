@@ -15,7 +15,7 @@ import (
 	lighthttp "github.com/dojimanetwork/dojimamint/light/provider/http"
 	lightrpc "github.com/dojimanetwork/dojimamint/light/rpc"
 	lightdb "github.com/dojimanetwork/dojimamint/light/store/db"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
 	rpchttp "github.com/dojimanetwork/dojimamint/rpc/client/http"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"

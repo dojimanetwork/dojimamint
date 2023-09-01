@@ -41,7 +41,7 @@ This step will create four Digital Ocean droplets. First, go to the
 correct directory:
 
 ```sh
-cd $GOPATH/src/github.com/tendermint/tendermint/networks/remote/terraform
+cd $GOPATH/src/github.com/dojimamint/dojimamint/networks/remote/terraform
 ```
 
 then:
@@ -73,13 +73,13 @@ number of droplets created).
 To create the node files run:
 
 ```sh
-tendermint testnet
+dojimamint testnet
 ```
 
 Then, to configure our droplets run:
 
 ```sh
-ansible-playbook -i inventory/digital_ocean.py -l sentrynet config.yml -e BINARY=$GOPATH/src/github.com/tendermint/tendermint/build/tendermint -e CONFIGDIR=$GOPATH/src/github.com/tendermint/tendermint/networks/remote/ansible/mytestnet
+ansible-playbook -i inventory/digital_ocean.py -l sentrynet config.yml -e BINARY=$GOPATH/src/github.com/dojimamint/dojimamint/build/dojimamint -e CONFIGDIR=$GOPATH/src/github.com/dojimamint/dojimamint/networks/remote/ansible/mytestnet
 ```
 
 Voila! All your droplets now have the `tendermint` binary and required
@@ -105,7 +105,7 @@ Next, open `roles/install/templates/systemd.service.j2` and look for the
 line `ExecStart` which should look something like:
 
 ```sh
-ExecStart=/usr/bin/tendermint node --proxy_app=kvstore
+ExecStart=/usr/bin/dojimamint node --proxy_app=kvstore
 ```
 
 and add the `--p2p.persistent_peers` flag with the relevant information
@@ -122,7 +122,7 @@ Restart=on-failure
 User={{service}}
 Group={{service}}
 PermissionsStartOnly=true
-ExecStart=/usr/bin/tendermint node --proxy_app=kvstore --p2p.persistent_peers=167b80242c300bf0ccfb3ced3dec60dc2a81776e@165.227.41.206:26656,3c7a5920811550c04bf7a0b2f1e02ab52317b5e6@165.227.43.146:26656,303a1a4312c30525c99ba66522dd81cca56a361a@159.89.115.32:26656,b686c2a7f4b1b46dca96af3a0f31a6a7beae0be4@159.89.119.125:26656
+ExecStart=/usr/bin/dojimamint node --proxy_app=kvstore --p2p.persistent_peers=167b80242c300bf0ccfb3ced3dec60dc2a81776e@165.227.41.206:26656,3c7a5920811550c04bf7a0b2f1e02ab52317b5e6@165.227.43.146:26656,303a1a4312c30525c99ba66522dd81cca56a361a@159.89.115.32:26656,b686c2a7f4b1b46dca96af3a0f31a6a7beae0be4@159.89.119.125:26656
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGTERM
 

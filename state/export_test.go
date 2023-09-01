@@ -4,8 +4,8 @@ import (
 	dbm "github.com/tendermint/tm-db"
 
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

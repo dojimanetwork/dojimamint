@@ -11,7 +11,7 @@ import (
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	"github.com/dojimanetwork/dojimamint/libs/tempfile"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

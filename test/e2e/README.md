@@ -138,15 +138,15 @@ The E2E test harness is designed to run several nodes of varying configurations 
 
 ```bash
 make node
-tendermint init validator
-TMHOME=$HOME/.tendermint ./build/node ./node/built-in.toml
+dojimamint init validator
+TMHOME=$HOME/.dojimamint ./build/node ./node/built-in.toml
 ```
 
 To make things simpler the e2e application can also be run in the tendermint binary
 by running
 
 ```bash
-tendermint start --proxy-app e2e
+dojimamint start --proxy-app e2e
 ```
 
 However this won't offer the same level of configurability of the application.
@@ -155,8 +155,8 @@ However this won't offer the same level of configurability of the application.
 
 ```bash
 make node
-tendermint init validator
-tendermint start
+dojimamint init validator
+dojimamint start
 ./build/node ./node.socket.toml
 ```
 

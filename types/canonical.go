@@ -3,7 +3,7 @@ package types
 import (
 	"time"
 
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 

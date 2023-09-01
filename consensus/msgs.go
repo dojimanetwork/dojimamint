@@ -10,8 +10,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/bits"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmcons "github.com/dojimanetwork/dojimamint/proto/dojimamint/consensus"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

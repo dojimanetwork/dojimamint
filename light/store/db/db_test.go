@@ -13,7 +13,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	"github.com/dojimanetwork/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/version"
 )

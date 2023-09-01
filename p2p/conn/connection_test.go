@@ -13,8 +13,8 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
-	"github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
+	"github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 const maxPingPongPacketSize = 1024 // bytes

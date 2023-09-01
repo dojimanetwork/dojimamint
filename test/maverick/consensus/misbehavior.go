@@ -5,7 +5,7 @@ import (
 
 	tmcon "github.com/dojimanetwork/dojimamint/consensus"
 	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

@@ -16,7 +16,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
+	tmcons "github.com/dojimanetwork/dojimamint/proto/dojimamint/consensus"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
@@ -46,9 +46,9 @@ type EndHeightMessage struct {
 type WALMessage interface{}
 
 func init() {
-	tmjson.RegisterType(msgInfo{}, "tendermint/wal/MsgInfo")
-	tmjson.RegisterType(timeoutInfo{}, "tendermint/wal/TimeoutInfo")
-	tmjson.RegisterType(EndHeightMessage{}, "tendermint/wal/EndHeightMessage")
+	tmjson.RegisterType(msgInfo{}, "dojimamint/wal/MsgInfo")
+	tmjson.RegisterType(timeoutInfo{}, "dojimamint/wal/TimeoutInfo")
+	tmjson.RegisterType(EndHeightMessage{}, "dojimamint/wal/EndHeightMessage")
 }
 
 //--------------------------------------------------------

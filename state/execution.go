@@ -11,8 +11,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/fail"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	"github.com/dojimanetwork/dojimamint/types"
 )
@@ -165,7 +165,7 @@ func (blockExec *BlockExecutor) ApplyBlock(
 
 	fail.Fail() // XXX
 
-	// validate the validator updates and convert to tendermint types
+	// validate the validator updates and convert to dojimamint types
 	abciValUpdates := abciResponses.EndBlock.ValidatorUpdates
 	err = validateValidatorUpdates(abciValUpdates, state.ConsensusParams.Validator)
 	if err != nil {

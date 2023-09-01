@@ -16,8 +16,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmcons "github.com/dojimanetwork/dojimamint/proto/dojimamint/consensus"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
@@ -1428,15 +1428,15 @@ type Message interface {
 }
 
 func init() {
-	tmjson.RegisterType(&NewRoundStepMessage{}, "tendermint/NewRoundStepMessage")
-	tmjson.RegisterType(&NewValidBlockMessage{}, "tendermint/NewValidBlockMessage")
-	tmjson.RegisterType(&ProposalMessage{}, "tendermint/Proposal")
-	tmjson.RegisterType(&ProposalPOLMessage{}, "tendermint/ProposalPOL")
-	tmjson.RegisterType(&BlockPartMessage{}, "tendermint/BlockPart")
-	tmjson.RegisterType(&VoteMessage{}, "tendermint/Vote")
-	tmjson.RegisterType(&HasVoteMessage{}, "tendermint/HasVote")
-	tmjson.RegisterType(&VoteSetMaj23Message{}, "tendermint/VoteSetMaj23")
-	tmjson.RegisterType(&VoteSetBitsMessage{}, "tendermint/VoteSetBits")
+	tmjson.RegisterType(&NewRoundStepMessage{}, "dojimamint/NewRoundStepMessage")
+	tmjson.RegisterType(&NewValidBlockMessage{}, "dojimamint/NewValidBlockMessage")
+	tmjson.RegisterType(&ProposalMessage{}, "dojimamint/Proposal")
+	tmjson.RegisterType(&ProposalPOLMessage{}, "dojimamint/ProposalPOL")
+	tmjson.RegisterType(&BlockPartMessage{}, "dojimamint/BlockPart")
+	tmjson.RegisterType(&VoteMessage{}, "dojimamint/Vote")
+	tmjson.RegisterType(&HasVoteMessage{}, "dojimamint/HasVote")
+	tmjson.RegisterType(&VoteSetMaj23Message{}, "dojimamint/VoteSetMaj23")
+	tmjson.RegisterType(&VoteSetBitsMessage{}, "dojimamint/VoteSetBits")
 }
 
 func decodeMsg(bz []byte) (msg Message, err error) {

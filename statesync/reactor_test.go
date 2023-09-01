@@ -12,7 +12,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/config"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	p2pmocks "github.com/dojimanetwork/dojimamint/p2p/mocks"
-	ssproto "github.com/dojimanetwork/dojimamint/proto/tendermint/statesync"
+	ssproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/statesync"
 	proxymocks "github.com/dojimanetwork/dojimamint/proxy/mocks"
 )
 

@@ -13,7 +13,7 @@ import (
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/light"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	ssproto "github.com/dojimanetwork/dojimamint/proto/tendermint/statesync"
+	ssproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/statesync"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
@@ -280,7 +280,7 @@ func (s *syncer) Sync(snapshot *snapshot, chunks *chunkQueue) (sm.State, *types.
 	// Optimistically build new state, so we don't discover any light client failures at the end.
 	state, err := s.stateProvider.State(pctx, snapshot.Height)
 	if err != nil {
-		s.logger.Info("failed to fetch and verify tendermint state", "err", err)
+		s.logger.Info("failed to fetch and verify dojimamint state", "err", err)
 		if err == light.ErrNoWitnesses {
 			return sm.State{}, nil, err
 		}

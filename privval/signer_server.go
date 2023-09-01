@@ -5,7 +5,7 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/libs/service"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	privvalproto "github.com/dojimanetwork/dojimamint/proto/tendermint/privval"
+	privvalproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/privval"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

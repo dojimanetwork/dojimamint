@@ -41,7 +41,7 @@ for arch in "${arch_list[@]}"; do
 	for os in "${os_list[@]}"; do
 		if [[ "$XC_EXCLUDE" !=  *" $os/$arch "* ]]; then
 			echo "--> $os/$arch"
-			GOOS=${os} GOARCH=${arch} go build -ldflags "-s -w -X ${GIT_IMPORT}.TMCoreSemVer=${VERSION}" -tags="${BUILD_TAGS}" -o "build/pkg/${os}_${arch}/tendermint" ./cmd/tendermint
+			GOOS=${os} GOARCH=${arch} go build -ldflags "-s -w -X ${GIT_IMPORT}.TMCoreSemVer=${VERSION}" -tags="${BUILD_TAGS}" -o "build/pkg/${os}_${arch}/tendermint" ./cmd/dojimamint
 		fi
 	done
 done
@@ -57,7 +57,7 @@ for PLATFORM in $(find ./build/pkg -mindepth 1 -maxdepth 1 -type d); do
 	popd >/dev/null 2>&1
 done
 
-# Add "tendermint" and $VERSION prefix to package name.
+# Add "dojimamint" and $VERSION prefix to package name.
 rm -rf ./build/dist
 mkdir -p ./build/dist
 for FILENAME in $(find ./build/pkg -mindepth 1 -maxdepth 1 -type f); do

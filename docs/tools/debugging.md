@@ -10,7 +10,7 @@ before exit. These files can be useful to examine when debugging a faulty
 Tendermint process.
 
 ```bash
-tendermint debug kill <pid> </path/to/out.zip> --home=</path/to/app.d>
+dojimamint debug kill <pid> </path/to/out.zip> --home=</path/to/app.d>
 ```
 
 will write debug info into a compressed archive. The archive will contain the
@@ -37,7 +37,7 @@ and heap profiles in addition to the consensus state, network info, node
 status, and even the WAL.
 
 ```bash
-tendermint debug dump </path/to/out> --home=</path/to/app.d>
+dojimamint debug dump </path/to/out> --home=</path/to/app.d>
 ```
 
 will perform similarly to `kill` except it only polls the node and

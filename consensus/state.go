@@ -24,7 +24,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/service"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"

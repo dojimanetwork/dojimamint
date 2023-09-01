@@ -18,7 +18,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/dojimanetwork/dojimamint/mempool/mock"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/store"

@@ -17,7 +17,7 @@ import (
 	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	p2pmock "github.com/dojimanetwork/dojimamint/p2p/mock"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

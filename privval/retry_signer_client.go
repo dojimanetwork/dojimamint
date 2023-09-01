@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/dojimanetwork/dojimamint/crypto"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 
@@ -97,6 +97,6 @@ func (sc *RetrySignerClient) SignProposal(chainID string, proposal *tmproto.Prop
 
 func (sc *RetrySignerClient) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
 
-	sig := sc.next.SignSideTxResult(sideTxResult)	
+	sig := sc.next.SignSideTxResult(sideTxResult)
 	return sig
 }

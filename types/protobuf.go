@@ -6,7 +6,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	"github.com/dojimanetwork/dojimamint/crypto/secp256k1"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 //-------------------------------------------------------

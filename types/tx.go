@@ -8,7 +8,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/merkle"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 // Tx is an arbitrary byte array.

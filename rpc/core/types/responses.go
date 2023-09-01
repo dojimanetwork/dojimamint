@@ -8,7 +8,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto"
 	"github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

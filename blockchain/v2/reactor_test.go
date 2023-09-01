@@ -22,7 +22,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/mempool/mock"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	"github.com/dojimanetwork/dojimamint/p2p/conn"
-	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
+	bcproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/blockchain"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/store"

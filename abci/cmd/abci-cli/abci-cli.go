@@ -22,7 +22,7 @@ import (
 	servertest "github.com/dojimanetwork/dojimamint/abci/tests/server"
 	"github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/abci/version"
-	"github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	"github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 // client is a global variable so it can be reused by the console

@@ -34,7 +34,7 @@ For manual installation, see the [install instructions](install.md)
 Running:
 
 ```sh
-tendermint init
+dojimamint init
 ```
 
 will create the required files for a single, local node.
@@ -42,11 +42,11 @@ will create the required files for a single, local node.
 These files are found in `$HOME/.tendermint`:
 
 ```sh
-$ ls $HOME/.tendermint
+$ ls $HOME/.dojimamint
 
 config  data
 
-$ ls $HOME/.tendermint/config/
+$ ls $HOME/.dojimamint/config/
 
 config.toml  genesis.json  node_key.json  priv_validator.json
 ```
@@ -59,7 +59,7 @@ Configuring a cluster is covered further below.
 Start Tendermint with a simple in-process application:
 
 ```sh
-tendermint node --proxy_app=kvstore
+dojimamint node --proxy_app=kvstore
 ```
 
 > Note: `kvstore` is a non persistent app, if you would like to run an application with persistence run `--proxy_app=persistent_kvstore`
@@ -125,19 +125,19 @@ Next, use the `tendermint testnet` command to create four directories of config 
 Before you can start the network, you'll need peers identifiers (IPs are not enough and can change). We'll refer to them as ID1, ID2, ID3, ID4.
 
 ```sh
-tendermint show_node_id --home ./mytestnet/node0
-tendermint show_node_id --home ./mytestnet/node1
-tendermint show_node_id --home ./mytestnet/node2
-tendermint show_node_id --home ./mytestnet/node3
+dojimamint show_node_id --home ./mytestnet/node0
+dojimamint show_node_id --home ./mytestnet/node1
+dojimamint show_node_id --home ./mytestnet/node2
+dojimamint show_node_id --home ./mytestnet/node3
 ```
 
 Finally, from each machine, run:
 
 ```sh
-tendermint node --home ./mytestnet/node0 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
-tendermint node --home ./mytestnet/node1 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
-tendermint node --home ./mytestnet/node2 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
-tendermint node --home ./mytestnet/node3 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
+dojimamint node --home ./mytestnet/node0 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
+dojimamint node --home ./mytestnet/node1 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
+dojimamint node --home ./mytestnet/node2 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
+dojimamint node --home ./mytestnet/node3 --proxy_app=kvstore --p2p.persistent_peers="ID1@IP1:26656,ID2@IP2:26656,ID3@IP3:26656,ID4@IP4:26656"
 ```
 
 Note that after the third node is started, blocks will start to stream in

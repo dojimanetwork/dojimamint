@@ -13,7 +13,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
 	"github.com/dojimanetwork/dojimamint/p2p/conn"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 var defaultNodeName = "host_peer"

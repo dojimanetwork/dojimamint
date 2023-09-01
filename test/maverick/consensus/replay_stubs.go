@@ -4,7 +4,7 @@ import (
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/clist"
 	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	"github.com/dojimanetwork/dojimamint/types"
 )

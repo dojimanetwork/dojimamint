@@ -21,7 +21,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/service"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/libs/timer"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 const (

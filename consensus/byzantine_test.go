@@ -22,7 +22,7 @@ import (
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	mempl "github.com/dojimanetwork/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/store"
 	"github.com/dojimanetwork/dojimamint/types"

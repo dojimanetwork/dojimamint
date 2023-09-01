@@ -69,7 +69,7 @@ func cleanupDir(dir string) error {
 		return err
 	}
 	err = execDocker("run", "--rm", "--entrypoint", "", "-v", fmt.Sprintf("%v:/network", absDir),
-		"tendermint/e2e-node", "sh", "-c", "rm -rf /network/*/")
+		"dojimamint/e2e-node", "sh", "-c", "rm -rf /network/*/")
 	if err != nil {
 		return err
 	}

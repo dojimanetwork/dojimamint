@@ -10,7 +10,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
+	bcproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/blockchain"
 	"github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 )

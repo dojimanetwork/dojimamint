@@ -17,7 +17,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

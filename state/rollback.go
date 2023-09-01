@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	"github.com/dojimanetwork/dojimamint/version"
 )
 

@@ -31,8 +31,8 @@ To get started developing applications, see the [application developers guide](h
 A quick example of a built-in app and Tendermint core in one container.
 
 ```sh
-docker run -it --rm -v "/tmp:/tendermint" tendermint/tendermint init
-docker run -it --rm -v "/tmp:/tendermint" tendermint/tendermint node --proxy_app=kvstore
+docker run -it --rm -v "/tmp:/tendermint" dojimamint/dojimamint init
+docker run -it --rm -v "/tmp:/tendermint" dojimamint/dojimamint node --proxy_app=kvstore
 ```
 
 ## Local cluster

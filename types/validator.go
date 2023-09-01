@@ -9,7 +9,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto"
 	ce "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 // Volatile state for each Validator

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	privvalproto "github.com/dojimanetwork/dojimamint/proto/tendermint/privval"
+	privvalproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/privval"
 )
 
 // TODO: Add ChainIDRequest

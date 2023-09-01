@@ -7,13 +7,13 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	"github.com/dojimanetwork/dojimamint/crypto/secp256k1"
 	"github.com/dojimanetwork/dojimamint/libs/json"
-	pc "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	pc "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 func init() {
-	json.RegisterType((*pc.PublicKey)(nil), "tendermint.crypto.PublicKey")
-	json.RegisterType((*pc.PublicKey_Ed25519)(nil), "tendermint.crypto.PublicKey_Ed25519")
-	json.RegisterType((*pc.PublicKey_Secp256K1)(nil), "tendermint.crypto.PublicKey_Secp256K1")
+	json.RegisterType((*pc.PublicKey)(nil), "dojimamint.crypto.PublicKey")
+	json.RegisterType((*pc.PublicKey_Ed25519)(nil), "dojimamint.crypto.PublicKey_Ed25519")
+	json.RegisterType((*pc.PublicKey_Secp256K1)(nil), "dojimamint.crypto.PublicKey_Secp256K1")
 }
 
 // PubKeyToProto takes crypto.PubKey and transforms it to a protobuf Pubkey

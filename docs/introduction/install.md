@@ -21,8 +21,8 @@ echo export PATH=\"\$PATH:\$GOPATH/bin\" >> ~/.bash_profile
 ### Get Source Code
 
 ```sh
-git clone https://github.com/tendermint/tendermint.git
-cd tendermint
+git clone https://github.com/dojimanetwork/dojimamint.git
+cd dojimamint
 ```
 
 ### Compile
@@ -48,7 +48,7 @@ The latest Tendermint is now installed. You can verify the installation by
 running:
 
 ```sh
-tendermint version
+dojimamint version
 ```
 
 ## Run
@@ -56,8 +56,8 @@ tendermint version
 To start a one-node blockchain with a simple in-process application:
 
 ```sh
-tendermint init
-tendermint node --proxy_app=kvstore
+dojimamint init
+dojimamint node --proxy_app=kvstore
 ```
 
 ## Reinstall

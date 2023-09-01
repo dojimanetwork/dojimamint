@@ -24,7 +24,7 @@ rebuilding the image.
 # Build the linux binary in ./build
 make build-linux
 
-# (optionally) Build tendermint/localnode image
+# (optionally) Build dojimamint/localnode image
 make build-docker-localnode
 ```
 
@@ -74,14 +74,14 @@ Adding 4 more nodes is required in order to fully utilize the config files that 
 ```yml
   node3: # bump by 1 for every node
     container_name: node3 # bump by 1 for every node
-    image: "tendermint/localnode"
+    image: "dojimamint/localnode"
     environment:
       - ID=3
-      - LOG=${LOG:-tendermint.log}
+      - LOG=${LOG:-dojimamint.log}
     ports:
       - "26663-26664:26656-26657" # Bump 26663-26664 by one for every node
     volumes:
-      - ./build:/tendermint:Z
+      - ./build:/dojimamint:Z
     networks:
       localnet:
         ipv4_address: 192.167.10.5 # bump the final digit by 1 for every node
@@ -150,14 +150,14 @@ Override the [command](https://github.com/tendermint/tendermint/blob/v0.34.x/net
 ```yml
   node0:
     container_name: node0
-    image: "tendermint/localnode"
+    image: "dojimamint/localnode"
     ports:
       - "26656-26657:26656-26657"
     environment:
       - ID=0
-      - LOG=$${LOG:-tendermint.log}
+      - LOG=$${LOG:-dojimamint.log}
     volumes:
-      - ./build:/tendermint:Z
+      - ./build:/dojimamint:Z
     command: node --proxy_app=tcp://abci0:26658
     networks:
       localnet:

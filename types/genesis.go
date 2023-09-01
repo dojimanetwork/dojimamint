@@ -12,7 +12,7 @@ import (
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 
@@ -25,7 +25,7 @@ const (
 // core types for a genesis definition
 // NOTE: any changes to the genesis definition should
 // be reflected in the documentation:
-// docs/tendermint-core/using-tendermint.md
+// docs/dojimamint-core/using-dojimamint.md
 
 // GenesisValidator is an initial validator.
 type GenesisValidator struct {
@@ -35,7 +35,7 @@ type GenesisValidator struct {
 	Name    string        `json:"name"`
 }
 
-// GenesisDoc defines the initial conditions for a tendermint blockchain, in particular its validator set.
+// GenesisDoc defines the initial conditions for a dojimamint blockchain, in particular its validator set.
 type GenesisDoc struct {
 	GenesisTime     time.Time                `json:"genesis_time"`
 	ChainID         string                   `json:"chain_id"`

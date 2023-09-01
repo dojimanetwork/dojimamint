@@ -18,8 +18,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 )

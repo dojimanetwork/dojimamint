@@ -168,29 +168,29 @@ Copy the necessary `.proto` files to your project:
 
 ```bash
 mkdir -p \
-  $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/abci \
-  $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/version \
-  $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/types \
-  $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/crypto \
-  $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/libs \
+  $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/abci \
+  $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/version \
+  $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/types \
+  $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/crypto \
+  $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/libs \
   $KVSTORE_HOME/src/main/proto/github.com/gogo/protobuf/gogoproto
 
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/abci/types.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/abci/types.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/version/version.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/version/version.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/types/types.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/types/types.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/types/evidence.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/types/evidence.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/types/params.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/types/params.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/crypto/merkle.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/crypto/merkle.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/crypto/keys.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/crypto/keys.proto
-cp $GOPATH/src/github.com/tendermint/tendermint/proto/tendermint/libs/types.proto \
-   $KVSTORE_HOME/src/main/proto/github.com/tendermint/tendermint/proto/tendermint/libs/types.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/abci/types.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/abci/types.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/version/version.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/version/version.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/types/types.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/types/types.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/types/evidence.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/types/evidence.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/types/params.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/types/params.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/crypto/merkle.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/crypto/merkle.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/crypto/keys.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/crypto/keys.proto
+cp $GOPATH/src/github.com/dojimamint/dojimamint/proto/dojimamint/libs/types.proto \
+   $KVSTORE_HOME/src/main/proto/github.com/dojimamint/dojimamint/proto/dojimamint/libs/types.proto
 cp $GOPATH/src/github.com/gogo/protobuf/gogoproto/gogo.proto \
    $KVSTORE_HOME/src/main/proto/github.com/gogo/protobuf/gogoproto/gogo.proto
 ```
@@ -548,9 +548,9 @@ Tendermint Core.
 
 ```bash
 $ rm -rf /tmp/example
-$ cd $GOPATH/src/github.com/tendermint/tendermint
+$ cd $GOPATH/src/github.com/dojimamint/dojimamint
 $ make install
-$ TMHOME="/tmp/example" tendermint init
+$ TMHOME="/tmp/example" dojimamint init
 
 I[2019-07-16|18:20:36.480] Generated private validator                  module=main keyFile=/tmp/example/config/priv_validator_key.json stateFile=/tmp/example2/data/priv_validator_state.json
 I[2019-07-16|18:20:36.481] Generated node key                           module=main path=/tmp/example/config/node_key.json
@@ -573,7 +573,7 @@ Then we need to start Tendermint Core and point it to our application. Staying
 within the application directory execute:
 
 ```bash
-$ TMHOME="/tmp/example" tendermint node --abci grpc --proxy_app tcp://127.0.0.1:26658
+$ TMHOME="/tmp/example" dojimamint node --abci grpc --proxy_app tcp://127.0.0.1:26658
 
 I[2019-07-28|15:44:53.632] Version info                                 module=main software=0.32.1 block=10 p2p=7
 I[2019-07-28|15:44:53.677] Starting Node                                module=main impl=Node
@@ -585,7 +585,7 @@ I[2019-07-28|15:44:54.814] Committed state                              module=s
 Now open another tab in your terminal and try sending a transaction:
 
 ```bash
-$ curl -s 'localhost:26657/broadcast_tx_commit?tx="tendermint=rocks"'
+$ curl -s 'localhost:26657/broadcast_tx_commit?tx="dojimamint=rocks"'
 {
   "jsonrpc": "2.0",
   "id": "",
@@ -604,7 +604,7 @@ Response should contain the height where this transaction was committed.
 Now let's check if the given key now exists and its value:
 
 ```bash
-$ curl -s 'localhost:26657/abci_query?data="tendermint"'
+$ curl -s 'localhost:26657/abci_query?data="dojimamint"'
 {
   "jsonrpc": "2.0",
   "id": "",

@@ -12,9 +12,9 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
-	cryptoproto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
-	privproto "github.com/dojimanetwork/dojimamint/proto/tendermint/privval"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	cryptoproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
+	privproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/privval"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

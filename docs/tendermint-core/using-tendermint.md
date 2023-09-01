@@ -21,7 +21,7 @@ this by setting the `TMHOME` environment variable.
 Initialize the root directory by running:
 
 ```sh
-tendermint init
+dojimamint init
 ```
 
 This will create a new private key (`priv_validator_key.json`), and a
@@ -32,7 +32,7 @@ with one validator.
 For more elaborate initialization, see the testnet command:
 
 ```sh
-tendermint testnet --help
+dojimamint testnet --help
 ```
 
 ### Genesis
@@ -47,8 +47,8 @@ definition](https://github.com/tendermint/tendermint/blob/master/types/genesis.g
 - `chain_id`: ID of the blockchain. **This must be unique for
   every blockchain.** If your testnet blockchains do not have unique
   chain IDs, you will have a bad time. The ChainID must be less than 50 symbols.
-- `initial_height`: Height at which Tendermint should begin at. If a blockchain is conducting a network upgrade, 
-    starting from the stopped height brings uniqueness to previous heights. 
+- `initial_height`: Height at which Tendermint should begin at. If a blockchain is conducting a network upgrade,
+    starting from the stopped height brings uniqueness to previous heights.
 - `consensus_params` [spec](https://github.com/tendermint/spec/blob/master/spec/core/state.md#consensusparams)
     - `block`
         - `max_bytes`: Max block size, in bytes.
@@ -113,7 +113,7 @@ definition](https://github.com/tendermint/tendermint/blob/master/types/genesis.g
     {
       "address": "B547AB87E79F75A4A3198C57A8C2FDAF8628CB47",
       "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
+        "type": "dojimamint/PubKeyEd25519",
         "value": "P/V6GHuZrb8rs/k1oBorxc6vyXMlnzhJmv7LmjELDys="
       },
       "power": "10",
@@ -129,7 +129,7 @@ definition](https://github.com/tendermint/tendermint/blob/master/types/genesis.g
 To run a Tendermint node, use:
 
 ```bash
-tendermint node
+dojimamint node
 ```
 
 By default, Tendermint will try to connect to an ABCI application on
@@ -138,7 +138,7 @@ another window. If you don't, kill Tendermint and run an in-process version of
 the `kvstore` app:
 
 ```bash
-tendermint node --proxy_app=kvstore
+dojimamint node --proxy_app=kvstore
 ```
 
 After a few seconds, you should see blocks start streaming in. Note that blocks
@@ -152,7 +152,7 @@ Go, run it in another process, and use the `--proxy_app` flag to specify the
 address of the socket it is listening on, for instance:
 
 ```bash
-tendermint node --proxy_app=/var/run/abci.sock
+dojimamint node --proxy_app=/var/run/abci.sock
 ```
 
 You can find out what flags are supported by running `tendermint node --help`.
@@ -242,7 +242,7 @@ afford to lose all blockchain data!
 To reset a blockchain, stop the node and run:
 
 ```sh
-tendermint unsafe_reset_all
+dojimamint unsafe_reset_all
 ```
 
 This command will remove the data directory and reset private validator and
@@ -272,7 +272,7 @@ transactions or the app hash changes, run Tendermint with this
 additional flag:
 
 ```sh
-tendermint node --consensus.create_empty_blocks=false
+dojimamint node --consensus.create_empty_blocks=false
 ```
 
 or set the configuration via the `config.toml` file:
@@ -355,7 +355,7 @@ When `tendermint init` is run, both a `genesis.json` and
     {
       "pub_key" : {
         "value" : "h3hk+QE8c6QLTySp8TcfzclJw/BG79ziGB/pIA+DfPE=",
-        "type" : "tendermint/PubKeyEd25519"
+        "type" : "dojimamint/PubKeyEd25519"
       },
       "power" : 10,
       "name" : ""
@@ -376,12 +376,12 @@ And the `priv_validator_key.json`:
   "address" : "B788DEDE4F50AD8BC9462DE76741CCAFF87D51E2",
   "pub_key" : {
     "value" : "h3hk+QE8c6QLTySp8TcfzclJw/BG79ziGB/pIA+DfPE=",
-    "type" : "tendermint/PubKeyEd25519"
+    "type" : "dojimamint/PubKeyEd25519"
   },
   "last_height" : "0",
   "priv_key" : {
     "value" : "JPivl82x+LfVkp8i3ztoTjY6c6GJ4pBxQexErOCyhwqHeGT5ATxzpAtPJKnxNx/NyUnD8Ebv3OIYH+kgD4N88Q==",
-    "type" : "tendermint/PrivKeyEd25519"
+    "type" : "dojimamint/PrivKeyEd25519"
   }
 }
 ```
@@ -447,7 +447,7 @@ persistent connections with.
 For example,
 
 ```sh
-tendermint node --p2p.seeds "f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656,0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656"
+dojimamint node --p2p.seeds "f9baeaa15fedf5e1ef7448dd60f46c01f1a9e9c4@1.2.3.4:26656,0491d373a8e0fcf1023aaf18c51d6a1d0d4f31bd@5.6.7.8:26656"
 ```
 
 Alternatively, you can use the `/dial_seeds` endpoint of the RPC to
@@ -467,7 +467,7 @@ maintain a persistent connection with each, you can use the
 stopping Tendermint core instance.
 
 ```sh
-tendermint node --p2p.persistent_peers "429fcf25974313b95673f58d77eacdd434402665@10.11.12.13:26656,96663a3dd0d7b9d17d4c8211b191af259621c693@10.11.12.14:26656"
+dojimamint node --p2p.persistent_peers "429fcf25974313b95673f58d77eacdd434402665@10.11.12.13:26656,96663a3dd0d7b9d17d4c8211b191af259621c693@10.11.12.14:26656"
 
 curl 'localhost:26657/dial_peers?persistent=true&peers=\["429fcf25974313b95673f58d77eacdd434402665@10.11.12.13:26656","96663a3dd0d7b9d17d4c8211b191af259621c693@10.11.12.14:26656"\]'
 ```
@@ -490,7 +490,7 @@ before starting the network. For instance, we could make a new
 We can generate a new `priv_validator_key.json` with the command:
 
 ```sh
-tendermint gen_validator
+dojimamint gen_validator
 ```
 
 Now we can update our genesis file. For instance, if the new
@@ -501,11 +501,11 @@ Now we can update our genesis file. For instance, if the new
   "address" : "5AF49D2A2D4F5AD4C7C8C4CC2FB020131E9C4902",
   "pub_key" : {
     "value" : "l9X9+fjkeBzDfPGbUM7AMIRE6uJN78zN5+lk5OYotek=",
-    "type" : "tendermint/PubKeyEd25519"
+    "type" : "dojimamint/PubKeyEd25519"
   },
   "priv_key" : {
     "value" : "EDJY9W6zlAw+su6ITgTKg2nTZcHAH1NMTW5iwlgmNDuX1f35+OR4HMN88ZtQzsAwhETq4k3vzM3n6WTk5ii16Q==",
-    "type" : "tendermint/PrivKeyEd25519"
+    "type" : "dojimamint/PrivKeyEd25519"
   },
   "last_step" : 0,
   "last_round" : "0",
@@ -521,7 +521,7 @@ then the new `genesis.json` will be:
     {
       "pub_key" : {
         "value" : "h3hk+QE8c6QLTySp8TcfzclJw/BG79ziGB/pIA+DfPE=",
-        "type" : "tendermint/PubKeyEd25519"
+        "type" : "dojimamint/PubKeyEd25519"
       },
       "power" : 10,
       "name" : ""
@@ -529,7 +529,7 @@ then the new `genesis.json` will be:
     {
       "pub_key" : {
         "value" : "l9X9+fjkeBzDfPGbUM7AMIRE6uJN78zN5+lk5OYotek=",
-        "type" : "tendermint/PubKeyEd25519"
+        "type" : "dojimamint/PubKeyEd25519"
       },
       "power" : 10,
       "name" : ""

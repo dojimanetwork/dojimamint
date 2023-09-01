@@ -10,8 +10,8 @@ import (
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

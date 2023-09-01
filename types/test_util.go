@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	"github.com/dojimanetwork/dojimamint/version"
 )
 

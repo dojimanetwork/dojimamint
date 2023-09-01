@@ -156,7 +156,7 @@ func ExampleClient_VerifyLightBlockAtHeight() {
 }
 
 func TestMain(m *testing.M) {
-	// start a tendermint node (and kvstore) in the background to test against
+	// start a dojimamint node (and kvstore) in the background to test against
 	app := kvstore.NewApplication()
 	node := rpctest.StartTendermint(app, rpctest.SuppressStdout)
 

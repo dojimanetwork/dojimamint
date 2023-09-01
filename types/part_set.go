@@ -12,7 +12,7 @@ import (
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 var (

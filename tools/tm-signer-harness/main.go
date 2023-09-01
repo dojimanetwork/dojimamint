@@ -18,7 +18,7 @@ import (
 const (
 	defaultAcceptRetries    = 100
 	defaultBindAddr         = "tcp://127.0.0.1:0"
-	defaultTMHome           = "~/.tendermint"
+	defaultTMHome           = "~/.dojimamint"
 	defaultAcceptDeadline   = 1
 	defaultConnDeadline     = 3
 	defaultExtractKeyOutput = "./signing.key"
@@ -45,7 +45,7 @@ var (
 func init() {
 	rootCmd = flag.NewFlagSet("root", flag.ExitOnError)
 	rootCmd.Usage = func() {
-		fmt.Println(`Remote signer test harness for Tendermint.
+		fmt.Println(`Remote signer test harness for Dojimamint.
 
 Usage:
   tm-signer-harness <command> [flags]
@@ -68,7 +68,7 @@ Use "tm-signer-harness help <command>" for more information about that command.`
 	runCmd.StringVar(&flagBindAddr, "addr", defaultBindAddr, "Bind to this address for the testing")
 	runCmd.StringVar(&flagTMHome, "tmhome", defaultTMHome, "Path to the Tendermint home directory")
 	runCmd.Usage = func() {
-		fmt.Println(`Runs the remote signer test harness for Tendermint.
+		fmt.Println(`Runs the remote signer test harness for Dojimamint.
 
 Usage:
   tm-signer-harness run [flags]

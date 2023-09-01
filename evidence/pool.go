@@ -14,7 +14,7 @@ import (
 
 	clist "github.com/dojimanetwork/dojimamint/libs/clist"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 )

@@ -9,7 +9,7 @@ import (
 
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	ctest "github.com/dojimanetwork/dojimamint/libs/test"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 func makeTxs(cnt, size int) Txs {

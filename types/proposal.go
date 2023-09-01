@@ -7,7 +7,7 @@ import (
 
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 )
 

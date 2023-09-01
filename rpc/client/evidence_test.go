@@ -15,7 +15,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/privval"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/rpc/client"
 	rpctest "github.com/dojimanetwork/dojimamint/rpc/test"
 	"github.com/dojimanetwork/dojimamint/types"

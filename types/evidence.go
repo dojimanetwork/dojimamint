@@ -14,7 +14,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 // Evidence represents any provable malicious activity by a validator.
@@ -186,7 +186,7 @@ func DuplicateVoteEvidenceFromProto(pb *tmproto.DuplicateVoteEvidence) (*Duplica
 // a light client such that a full node can verify, propose and commit the evidence on-chain for
 // punishment of the malicious validators. There are three forms of attacks: Lunatic, Equivocation
 // and Amnesia. These attacks are exhaustive. You can find a more detailed overview of this at
-// tendermint/docs/architecture/adr-047-handling-evidence-from-light-client.md
+// dojimamint/docs/architecture/adr-047-handling-evidence-from-light-client.md
 type LightClientAttackEvidence struct {
 	ConflictingBlock *LightBlock
 	CommonHeight     int64
@@ -318,10 +318,10 @@ func (l *LightClientAttackEvidence) Height() int64 {
 // String returns a string representation of LightClientAttackEvidence
 func (l *LightClientAttackEvidence) String() string {
 	return fmt.Sprintf(`LightClientAttackEvidence{
-		ConflictingBlock: %v, 
-		CommonHeight: %d, 
-		ByzatineValidators: %v, 
-		TotalVotingPower: %d, 
+		ConflictingBlock: %v,
+		CommonHeight: %d,
+		ByzatineValidators: %v,
+		TotalVotingPower: %d,
 		Timestamp: %v}#%X`,
 		l.ConflictingBlock.String(), l.CommonHeight, l.ByzantineValidators,
 		l.TotalVotingPower, l.Timestamp, l.Hash())
@@ -511,8 +511,8 @@ func EvidenceFromProto(evidence *tmproto.Evidence) (Evidence, error) {
 }
 
 func init() {
-	tmjson.RegisterType(&DuplicateVoteEvidence{}, "tendermint/DuplicateVoteEvidence")
-	tmjson.RegisterType(&LightClientAttackEvidence{}, "tendermint/LightClientAttackEvidence")
+	tmjson.RegisterType(&DuplicateVoteEvidence{}, "dojimamint/DuplicateVoteEvidence")
+	tmjson.RegisterType(&LightClientAttackEvidence{}, "dojimamint/LightClientAttackEvidence")
 }
 
 //-------------------------------------------- ERRORS --------------------------------------

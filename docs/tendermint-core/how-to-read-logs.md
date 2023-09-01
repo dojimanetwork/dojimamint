@@ -41,7 +41,7 @@ I[10-04|13:54:30.387] Starting BlockchainReactor                   module=blockc
 I[10-04|13:54:30.387] Starting ConsensusReactor                    module=consensus impl=ConsensusReactor
 I[10-04|13:54:30.387] ConsensusReactor                             module=consensus fastSync=false
 I[10-04|13:54:30.387] Starting ConsensusState                      module=consensus impl=ConsensusState
-I[10-04|13:54:30.387] Starting WAL                                 module=consensus wal=/home/vagrant/.tendermint/data/cs.wal/wal impl=WAL
+I[10-04|13:54:30.387] Starting WAL                                 module=consensus wal=/home/vagrant/.dojimamint/data/cs.wal/wal impl=WAL
 I[10-04|13:54:30.388] Starting TimeoutTicker                       module=consensus impl=TimeoutTicker
 ```
 

@@ -17,7 +17,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 func TestValidatorSetBasic(t *testing.T) {

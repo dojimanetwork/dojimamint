@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: transacter
-      image: tendermint/transacter
+      image: dojimamint/transacter
       command:
       - bash
       - "-c"

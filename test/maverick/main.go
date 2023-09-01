@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	cmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
-	"github.com/dojimanetwork/dojimamint/cmd/tendermint/commands/debug"
+	cmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
+	"github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands/debug"
 	cfg "github.com/dojimanetwork/dojimamint/config"
 	"github.com/dojimanetwork/dojimamint/libs/cli"
 	tmflags "github.com/dojimanetwork/dojimamint/libs/cli/flags"

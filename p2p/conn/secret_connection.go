@@ -27,7 +27,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/async"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	tmp2p "github.com/dojimanetwork/dojimamint/proto/dojimamint/p2p"
 )
 
 // 4 + 1024 == 1028 total frame size

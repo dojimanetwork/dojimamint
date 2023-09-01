@@ -31,7 +31,7 @@ import (
 	mempl "github.com/dojimanetwork/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	p2pmock "github.com/dojimanetwork/dojimamint/p2p/mock"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	statemocks "github.com/dojimanetwork/dojimamint/state/mocks"
 	"github.com/dojimanetwork/dojimamint/store"

@@ -3,9 +3,9 @@
 ##
 ## Input parameters
 ##
-BINARY=/tendermint/${BINARY:-tendermint}
+BINARY=/dojimamint/${BINARY:-dojimamint}
 ID=${ID:-0}
-LOG=${LOG:-tendermint.log}
+LOG=${LOG:-dojimamint.log}
 
 ##
 ## Assert linux binary
@@ -31,5 +31,5 @@ else
   "$BINARY" "$@"
 fi
 
-chmod 777 -R /tendermint
+chmod 777 -R /dojimamint
 

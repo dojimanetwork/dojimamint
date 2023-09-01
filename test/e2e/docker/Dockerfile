@@ -6,7 +6,7 @@ FROM golang:1.15
 RUN apt-get -qq update -y && apt-get -qq upgrade -y >/dev/null
 RUN apt-get -qq install -y libleveldb-dev librocksdb-dev >/dev/null
 
-# Set up build directory /src/tendermint
+# Set up build directory /src/dojimamint
 ENV TENDERMINT_BUILD_OPTIONS badgerdb,boltdb,cleveldb,rocksdb
 WORKDIR /src/tendermint
 
@@ -14,9 +14,9 @@ WORKDIR /src/tendermint
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Build Tendermint and install into /usr/bin/tendermint
+# Build Tendermint and install into /usr/bin/dojimamint
 COPY . .
-RUN make build && cp build/tendermint /usr/bin/tendermint
+RUN make build && cp build/dojimamint /usr/bin/dojimamint
 COPY test/e2e/docker/entrypoint* /usr/bin/
 RUN cd test/e2e && make maverick && cp build/maverick /usr/bin/maverick
 RUN cd test/e2e && make node && cp build/node /usr/bin/app

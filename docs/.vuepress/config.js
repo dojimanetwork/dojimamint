@@ -11,15 +11,15 @@ module.exports = {
   // },
   base: process.env.VUEPRESS_BASE,
   themeConfig: {
-    repo: 'tendermint/tendermint',
-    docsRepo: 'tendermint/tendermint',
+    repo: 'dojimamint/dojimamint',
+    docsRepo: 'dojimamint/dojimamint',
     docsDir: 'docs',
     editLinks: true,
     label: 'core',
     algolia: {
       id: "BH4D9OD16A",
       key: "59f0e2deb984aa9cdf2b3a5fd24ac501",
-      index: "tendermint"
+      index: "dojimamint"
     },
     versions: [
       {
@@ -67,7 +67,7 @@ module.exports = {
         text: 'Join the Tendermint forum to learn more',
         url: 'https://forum.cosmos.network/c/tendermint',
         bg: '#0B7E0B',
-        logo: 'tendermint'
+        logo: 'dojimamint'
       },
       github: {
         title: 'Found an Issue?',
@@ -76,11 +76,11 @@ module.exports = {
     },
     footer: {
       question: {
-        text: 'Chat with Tendermint developers in <a href=\'https://discord.gg/vcExX9T\' target=\'_blank\'>Discord</a> or reach out on the <a href=\'https://forum.cosmos.network/c/tendermint\' target=\'_blank\'>Tendermint Forum</a> to learn more.'
+        text: 'Chat with Tendermint developers in <a href=\'https://discord.gg/vcExX9T\' target=\'_blank\'>Discord</a> or reach out on the <a href=\'https://forum.cosmos.network/c/dojimamint\' target=\'_blank\'>Tendermint Forum</a> to learn more.'
       },
       logo: '/logo-bw.svg',
       textLink: {
-        text: 'tendermint.com',
+        text: 'dojimamint.com',
         url: 'https://tendermint.com'
       },
       services: [

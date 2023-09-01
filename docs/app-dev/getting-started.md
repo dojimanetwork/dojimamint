@@ -32,8 +32,8 @@ echo export PATH=\"\$PATH:\$GOPATH/bin\" >> ~/.bash_profile
 Then run
 
 ```sh
-go get github.com/tendermint/tendermint
-cd $GOPATH/src/github.com/tendermint/tendermint
+go get github.com/dojimamint/dojimamint
+cd $GOPATH/src/github.com/dojimamint/dojimamint
 make install_abci
 ```
 
@@ -63,8 +63,8 @@ Tendermint binary installed. If not, follow the steps from
 before, use:
 
 ```sh
-tendermint init
-tendermint node
+dojimamint init
+dojimamint node
 ```
 
 If you have used Tendermint, you may want to reset the data for a new
@@ -201,8 +201,8 @@ abci-cli counter --serial
 In another window, reset then start Tendermint:
 
 ```sh
-tendermint unsafe_reset_all
-tendermint node
+dojimamint unsafe_reset_all
+dojimamint node
 ```
 
 Once again, you can see the blocks streaming by. Let's send some
@@ -276,8 +276,8 @@ node example/counter.js
 In another window, reset and start `tendermint`:
 
 ```sh
-tendermint unsafe_reset_all
-tendermint node
+dojimamint unsafe_reset_all
+dojimamint node
 ```
 
 Once again, you should see blocks streaming by - but now, our

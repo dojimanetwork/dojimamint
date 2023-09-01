@@ -21,8 +21,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/bits"
 	"github.com/dojimanetwork/dojimamint/libs/bytes"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmversion "github.com/dojimanetwork/dojimamint/proto/tendermint/version"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmversion "github.com/dojimanetwork/dojimamint/proto/dojimamint/version"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 	"github.com/dojimanetwork/dojimamint/version"
 )

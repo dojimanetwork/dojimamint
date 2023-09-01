@@ -12,7 +12,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 func examplePrevote() *Vote {

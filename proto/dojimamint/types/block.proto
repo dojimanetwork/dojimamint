@@ -1,0 +1,15 @@
+syntax = "proto3";
+package tendermint.types;
+
+option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/types";
+
+import "gogoproto/gogo.proto";
+import "dojimamint/types/types.proto";
+import "dojimamint/types/evidence.proto";
+
+message Block {
+  Header                        header      = 1 [(gogoproto.nullable) = false];
+  Data                          data        = 2 [(gogoproto.nullable) = false];
+  tendermint.types.EvidenceList evidence    = 3 [(gogoproto.nullable) = false];
+  Commit                        last_commit = 4;
+}

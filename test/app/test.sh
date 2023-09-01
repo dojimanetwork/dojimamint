@@ -13,11 +13,11 @@ export TMHOME=$HOME/.tendermint_app
 
 function kvstore_over_socket(){
     rm -rf $TMHOME
-    tendermint init
+    dojimamint init
     echo "Starting kvstore_over_socket"
     abci-cli kvstore > /dev/null &
     pid_kvstore=$!
-    tendermint node > tendermint.log &
+    dojimamint node > dojimamint.log &
     pid_tendermint=$!
     sleep 5
 
@@ -27,12 +27,12 @@ function kvstore_over_socket(){
     kill -9 $pid_kvstore $pid_tendermint
 }
 
-# start tendermint first
+# start dojimamint first
 function kvstore_over_socket_reorder(){
     rm -rf $TMHOME
-    tendermint init
+    dojimamint init
     echo "Starting kvstore_over_socket_reorder (ie. start tendermint first)"
-    tendermint node > tendermint.log &
+    dojimamint node > dojimamint.log &
     pid_tendermint=$!
     sleep 2
     abci-cli kvstore > /dev/null &
@@ -48,11 +48,11 @@ function kvstore_over_socket_reorder(){
 
 function counter_over_socket() {
     rm -rf $TMHOME
-    tendermint init
+    dojimamint init
     echo "Starting counter_over_socket"
     abci-cli counter --serial > /dev/null &
     pid_counter=$!
-    tendermint node > tendermint.log &
+    dojimamint node > dojimamint.log &
     pid_tendermint=$!
     sleep 5
 
@@ -64,11 +64,11 @@ function counter_over_socket() {
 
 function counter_over_grpc() {
     rm -rf $TMHOME
-    tendermint init
+    dojimamint init
     echo "Starting counter_over_grpc"
     abci-cli counter --serial --abci grpc > /dev/null &
     pid_counter=$!
-    tendermint node --abci grpc > tendermint.log &
+    dojimamint node --abci grpc > dojimamint.log &
     pid_tendermint=$!
     sleep 5
 
@@ -80,13 +80,13 @@ function counter_over_grpc() {
 
 function counter_over_grpc_grpc() {
     rm -rf $TMHOME
-    tendermint init
+    dojimamint init
     echo "Starting counter_over_grpc_grpc (ie. with grpc broadcast_tx)"
     abci-cli counter --serial --abci grpc > /dev/null &
     pid_counter=$!
     sleep 1
     GRPC_PORT=36656
-    tendermint node --abci grpc --rpc.grpc_laddr tcp://localhost:$GRPC_PORT > tendermint.log &
+    dojimamint node --abci grpc --rpc.grpc_laddr tcp://localhost:$GRPC_PORT > dojimamint.log &
     pid_tendermint=$!
     sleep 5
 
@@ -96,7 +96,7 @@ function counter_over_grpc_grpc() {
     kill -9 $pid_counter $pid_tendermint
 }
 
-case "$1" in 
+case "$1" in
     "kvstore_over_socket")
     kvstore_over_socket
     ;;

@@ -9,7 +9,7 @@ import (
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

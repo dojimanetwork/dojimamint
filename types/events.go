@@ -46,16 +46,16 @@ type TMEventData interface {
 }
 
 func init() {
-	tmjson.RegisterType(EventDataNewBlock{}, "tendermint/event/NewBlock")
-	tmjson.RegisterType(EventDataNewBlockHeader{}, "tendermint/event/NewBlockHeader")
-	tmjson.RegisterType(EventDataNewEvidence{}, "tendermint/event/NewEvidence")
-	tmjson.RegisterType(EventDataTx{}, "tendermint/event/Tx")
-	tmjson.RegisterType(EventDataRoundState{}, "tendermint/event/RoundState")
-	tmjson.RegisterType(EventDataNewRound{}, "tendermint/event/NewRound")
-	tmjson.RegisterType(EventDataCompleteProposal{}, "tendermint/event/CompleteProposal")
-	tmjson.RegisterType(EventDataVote{}, "tendermint/event/Vote")
-	tmjson.RegisterType(EventDataValidatorSetUpdates{}, "tendermint/event/ValidatorSetUpdates")
-	tmjson.RegisterType(EventDataString(""), "tendermint/event/ProposalString")
+	tmjson.RegisterType(EventDataNewBlock{}, "dojimamint/event/NewBlock")
+	tmjson.RegisterType(EventDataNewBlockHeader{}, "dojimamint/event/NewBlockHeader")
+	tmjson.RegisterType(EventDataNewEvidence{}, "dojimamint/event/NewEvidence")
+	tmjson.RegisterType(EventDataTx{}, "dojimamint/event/Tx")
+	tmjson.RegisterType(EventDataRoundState{}, "dojimamint/event/RoundState")
+	tmjson.RegisterType(EventDataNewRound{}, "dojimamint/event/NewRound")
+	tmjson.RegisterType(EventDataCompleteProposal{}, "dojimamint/event/CompleteProposal")
+	tmjson.RegisterType(EventDataVote{}, "dojimamint/event/Vote")
+	tmjson.RegisterType(EventDataValidatorSetUpdates{}, "dojimamint/event/ValidatorSetUpdates")
+	tmjson.RegisterType(EventDataString(""), "dojimamint/event/ProposalString")
 }
 
 // Most event messages are basic types (a block, a transaction)

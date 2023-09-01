@@ -9,7 +9,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/config"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	ssproto "github.com/dojimanetwork/dojimamint/proto/tendermint/statesync"
+	ssproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/statesync"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"

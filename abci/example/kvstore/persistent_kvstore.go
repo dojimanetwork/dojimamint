@@ -13,7 +13,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/abci/types"
 	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	pc "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	pc "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 const (

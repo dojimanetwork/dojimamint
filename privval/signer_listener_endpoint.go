@@ -8,7 +8,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/dojimanetwork/dojimamint/libs/service"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	privvalproto "github.com/dojimanetwork/dojimamint/proto/tendermint/privval"
+	privvalproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/privval"
 )
 
 // SignerListenerEndpointOption sets an optional parameter on the SignerListenerEndpoint.

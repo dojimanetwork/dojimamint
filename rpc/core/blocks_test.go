@@ -10,7 +10,7 @@ import (
 	dbm "github.com/tendermint/tm-db"
 
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmstate "github.com/dojimanetwork/dojimamint/proto/tendermint/state"
+	tmstate "github.com/dojimanetwork/dojimamint/proto/dojimamint/state"
 	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 	rpctypes "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/types"
 	sm "github.com/dojimanetwork/dojimamint/state"

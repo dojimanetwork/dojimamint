@@ -127,7 +127,7 @@ func (app *multiAppConn) OnStop() {
 func (app *multiAppConn) killTMOnClientError() {
 	killFn := func(conn string, err error, logger tmlog.Logger) {
 		logger.Error(
-			fmt.Sprintf("%s connection terminated. Did the application crash? Please restart tendermint", conn),
+			fmt.Sprintf("%s connection terminated. Did the application crash? Please restart dojimamint", conn),
 			"err", err)
 		killErr := tmos.Kill()
 		if killErr != nil {

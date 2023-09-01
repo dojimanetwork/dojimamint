@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	bcproto "github.com/dojimanetwork/dojimamint/proto/tendermint/blockchain"
+	bcproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/blockchain"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

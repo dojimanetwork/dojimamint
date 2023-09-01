@@ -20,7 +20,7 @@ import (
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	"github.com/dojimanetwork/dojimamint/p2p/mock"
-	memproto "github.com/dojimanetwork/dojimamint/proto/tendermint/mempool"
+	memproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	"github.com/dojimanetwork/dojimamint/types"
 )

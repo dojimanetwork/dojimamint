@@ -10,8 +10,8 @@ import (
 	"github.com/dojimanetwork/dojimamint/crypto"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tenderTypes "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 const (

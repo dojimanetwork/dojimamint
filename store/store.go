@@ -8,8 +8,8 @@ import (
 	dbm "github.com/tendermint/tm-db"
 
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	tmstore "github.com/dojimanetwork/dojimamint/proto/tendermint/store"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmstore "github.com/dojimanetwork/dojimamint/proto/dojimamint/store"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

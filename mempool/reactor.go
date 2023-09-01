@@ -11,7 +11,7 @@ import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	protomem "github.com/dojimanetwork/dojimamint/proto/tendermint/mempool"
+	protomem "github.com/dojimanetwork/dojimamint/proto/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/types"
 )
 

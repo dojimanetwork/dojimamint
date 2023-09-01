@@ -22,7 +22,7 @@ like the file below, however, double check by inspecting the
 
 # NOTE: Any path below can be absolute (e.g. "/var/myawesomeapp/data") or
 # relative to the home directory (e.g. "data"). The home directory is
-# "$HOME/.tendermint" by default, but could be changed via $TMHOME env variable
+# "$HOME/.dojimamint" by default, but could be changed via $TMHOME env variable
 # or --home cmd flag.
 
 #######################################################################
@@ -168,7 +168,7 @@ max_body_bytes = 1000000
 max_header_bytes = 1048576
 
 # The path to a file containing certificate that is used to create the HTTPS server.
-# Migth be either absolute path or path related to tendermint's config directory.
+# Migth be either absolute path or path related to dojimamint's config directory.
 # If the certificate is signed by a certificate authority,
 # the certFile should be the concatenation of the server's certificate, any intermediates,
 # and the CA's certificate.
@@ -177,7 +177,7 @@ max_header_bytes = 1048576
 tls_cert_file = ""
 
 # The path to a file containing matching private key that is used to create the HTTPS server.
-# Migth be either absolute path or path related to tendermint's config directory.
+# Migth be either absolute path or path related to dojimamint's config directory.
 # NOTE: both tls_cert_file and tls_key_file must be present for Tendermint to create HTTPS server.
 # Otherwise, HTTP server is run.
 tls_key_file = ""

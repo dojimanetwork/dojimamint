@@ -11,7 +11,7 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/crypto/merkle"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 const (

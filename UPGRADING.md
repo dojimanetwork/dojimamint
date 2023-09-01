@@ -8,7 +8,7 @@ This guide provides instructions for upgrading to specific versions of Tendermin
 This release is not compatible with previous blockchains due to changes to
 the encoding format (see "Protocol Buffers," below) and the block header (see "Blockchain Protocol").
 
-Note also that Tendermint 0.34 also requires Go 1.15 or higher. 
+Note also that Tendermint 0.34 also requires Go 1.15 or higher.
 
 ### ABCI Changes
 
@@ -112,7 +112,7 @@ Tendermint 0.34 includes new and updated consensus parameters.
 
 #### Evidence Parameters
 
-* `MaxBytes`, which caps the total amount of evidence. The default is 1048576 (1 MB). 
+* `MaxBytes`, which caps the total amount of evidence. The default is 1048576 (1 MB).
 
 ### Crypto
 
@@ -188,15 +188,15 @@ blockchains, we recommend that you check the chain ID.
 
 ### Version
 
-Version is now set through Go linker flags `ld_flags`. Applications that are using tendermint as a library should set this at compile time. 
+Version is now set through Go linker flags `ld_flags`. Applications that are using tendermint as a library should set this at compile time.
 
 Example:
 
 ```sh
-go install -mod=readonly -ldflags "-X github.com/tendermint/tendermint/version.TMCoreSemVer=$(go list -m github.com/tendermint/tendermint | sed  's/ /\@/g') -s -w " -trimpath ./cmd
+go install -mod=readonly -ldflags "-X github.com/tendermint/tendermint/version.TMCoreSemVer=$(go list -m github.com/dojimamint/dojimamint | sed  's/ /\@/g') -s -w " -trimpath ./cmd
 ```
 
-Additionally, the exported constant `version.Version` is now `version.TMCoreSemVer`. 
+Additionally, the exported constant `version.Version` is now `version.TMCoreSemVer`.
 
 ## v0.33.4
 
@@ -607,7 +607,7 @@ old data to be compatible with the new version.
 To reset the state do:
 
 ```sh
-tendermint unsafe_reset_all
+dojimamint unsafe_reset_all
 ```
 
 Here we summarize some other notable changes to be mindful of.
@@ -693,7 +693,7 @@ old data to be compatible with the new version.
 To reset the state do:
 
 ```sh
-tendermint unsafe_reset_all
+dojimamint unsafe_reset_all
 ```
 
 Here we summarize some other notable changes to be mindful of.
