@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.abci;
+package dojimamint.abci;
 
 option go_package = "github.com/dojimanetwork/dojimamint/abci/types";
 
@@ -38,7 +38,7 @@ message Request {
     RequestApplySnapshotChunk apply_snapshot_chunk = 15;
 
     RequestBeginSideBlock begin_side_block = 21;
-    RequestDeliverSideTx deliver_side_tx = 22;
+    RequestDeliverSideTx  deliver_side_tx  = 22;
   }
 }
 
@@ -79,7 +79,7 @@ message RequestQuery {
 
 message RequestBeginBlock {
   bytes                   hash                 = 1;
-  tendermint.types.Header header               = 2 [(gogoproto.nullable) = false];
+  dojimamint.types.Header header               = 2 [(gogoproto.nullable) = false];
   LastCommitInfo          last_commit_info     = 3 [(gogoproto.nullable) = false];
   repeated Evidence       byzantine_validators = 4 [(gogoproto.nullable) = false];
 }
@@ -133,15 +133,14 @@ message RequestApplySnapshotChunk {
 //
 
 message RequestBeginSideBlock {
-  bytes hash = 1;
-  tendermint.types.Header header = 2 [(gogoproto.nullable)=false];
-  repeated tendermint.types.SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
+  bytes                   hash                           = 1;
+  dojimamint.types.Header header                         = 2 [(gogoproto.nullable) = false];
+  repeated dojimamint.types.SideTxResult side_tx_results = 3 [(gogoproto.nullable) = false];
 }
 
 message RequestDeliverSideTx {
   bytes tx = 1;
 }
-
 
 //----------------------------------------
 // Response types
@@ -166,7 +165,7 @@ message Response {
     ResponseApplySnapshotChunk apply_snapshot_chunk = 16;
 
     ResponseBeginSideBlock begin_side_block = 21;
-    ResponseDeliverSideTx deliver_side_tx = 22;
+    ResponseDeliverSideTx  deliver_side_tx  = 22;
   }
 }
 
@@ -213,7 +212,7 @@ message ResponseQuery {
   int64                      index     = 5;
   bytes                      key       = 6;
   bytes                      value     = 7;
-  tendermint.crypto.ProofOps proof_ops = 8;
+  dojimamint.crypto.ProofOps proof_ops = 8;
   int64                      height    = 9;
   string                     codespace = 10;
 }
@@ -243,7 +242,7 @@ message ResponseDeliverTx {
   int64          gas_wanted = 5 [json_name = "gas_wanted"];
   int64          gas_used   = 6 [json_name = "gas_used"];
   repeated Event events     = 7
-      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"]; // nondeterministic
+      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];  // nondeterministic
   string codespace = 8;
 }
 
@@ -302,14 +301,14 @@ message ResponseApplySnapshotChunk {
 //
 
 message ResponseBeginSideBlock {
-  repeated Event events = 1 [(gogoproto.nullable)=false, (gogoproto.jsontag)="events,omitempty"];
+  repeated Event events = 1 [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
 }
 
 message ResponseDeliverSideTx {
-  uint32 code = 1;
-  string codespace = 2;
-  tendermint.types.SideTxResultType result = 4;
-  bytes data = 3;
+  uint32                            code      = 1;
+  string                            codespace = 2;
+  dojimamint.types.SideTxResultType result    = 4;
+  bytes                             data      = 3;
 }
 
 //----------------------------------------
@@ -318,10 +317,10 @@ message ResponseDeliverSideTx {
 // ConsensusParams contains all consensus-relevant parameters
 // that can be adjusted by the abci app
 message ConsensusParams {
-  tendermint.types.BlockParams     block     = 1;
-  tendermint.types.EvidenceParams  evidence  = 2;
-  tendermint.types.ValidatorParams validator = 3;
-  tendermint.types.VersionParams   version   = 4;
+  dojimamint.types.BlockParams     block     = 1;
+  dojimamint.types.EvidenceParams  evidence  = 2;
+  dojimamint.types.ValidatorParams validator = 3;
+  dojimamint.types.VersionParams   version   = 4;
 }
 
 message LastCommitInfo {
@@ -357,7 +356,6 @@ message TxResult {
   ResponseDeliverTx result = 4 [(gogoproto.nullable) = false];
 }
 
-
 // Validator
 message Validator {
   bytes address = 1;  // The first 20 bytes of SHA256(public key)
@@ -367,7 +365,7 @@ message Validator {
 
 // ValidatorUpdate
 message ValidatorUpdate {
-  tendermint.crypto.PublicKey pub_key = 1 [(gogoproto.nullable) = false];
+  dojimamint.crypto.PublicKey pub_key = 1 [(gogoproto.nullable) = false];
   int64                       power   = 2;
 }
 

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.types;
+package dojimamint.types;
 
 option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/types";
 
@@ -14,12 +14,12 @@ message ValidatorSet {
 
 message Validator {
   bytes                       address           = 1;
-  tendermint.crypto.PublicKey pub_key           = 2 [(gogoproto.nullable) = false];
+  dojimamint.crypto.PublicKey pub_key           = 2 [(gogoproto.nullable) = false];
   int64                       voting_power      = 3;
   int64                       proposer_priority = 4;
 }
 
 message SimpleValidator {
-  tendermint.crypto.PublicKey pub_key      = 1;
+  dojimamint.crypto.PublicKey pub_key      = 1;
   int64                       voting_power = 2;
 }

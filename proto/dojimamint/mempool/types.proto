@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.mempool;
+package dojimamint.mempool;
 
 option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/mempool";
 

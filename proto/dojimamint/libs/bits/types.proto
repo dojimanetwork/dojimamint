@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.libs.bits;
+package dojimamint.libs.bits;
 
 option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/libs/bits";
 

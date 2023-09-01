@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.blockchain;
+package dojimamint.blockchain;
 
 option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/blockchain";
 
@@ -17,7 +17,7 @@ message NoBlockResponse {
 
 // BlockResponse returns block to the requested
 message BlockResponse {
-  tendermint.types.Block block = 1;
+  dojimamint.types.Block block = 1;
 }
 
 // StatusRequest requests the status of a peer.

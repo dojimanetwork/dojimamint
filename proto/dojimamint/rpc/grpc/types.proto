@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.rpc.grpc;
+package dojimamint.rpc.grpc;
 option  go_package = "github.com/dojimanetwork/dojimamint/rpc/grpc;coregrpc";
 
 import "dojimamint/abci/types.proto";
@@ -19,8 +19,8 @@ message RequestBroadcastTx {
 message ResponsePing {}
 
 message ResponseBroadcastTx {
-  tendermint.abci.ResponseCheckTx   check_tx   = 1;
-  tendermint.abci.ResponseDeliverTx deliver_tx = 2;
+  dojimamint.abci.ResponseCheckTx   check_tx   = 1;
+  dojimamint.abci.ResponseDeliverTx deliver_tx = 2;
 }
 
 //----------------------------------------

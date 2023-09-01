@@ -1,5 +1,5 @@
 syntax = "proto3";
-package tendermint.types;
+package dojimamint.types;
 
 option go_package = "github.com/dojimanetwork/dojimamint/proto/dojimamint/types";
 
@@ -43,7 +43,7 @@ message PartSetHeader {
 message Part {
   uint32                  index = 1;
   bytes                   bytes = 2;
-  tendermint.crypto.Proof proof = 3 [(gogoproto.nullable) = false];
+  dojimamint.crypto.Proof proof = 3 [(gogoproto.nullable) = false];
 }
 
 // BlockID
@@ -55,33 +55,32 @@ message BlockID {
 //----------------------------------------
 // Blockchain Types
 
-
 message Header {
   // basic block info
-  tendermint.version.Consensus version = 1 [(gogoproto.nullable)=false];
-  string chain_id = 2 [(gogoproto.customname)="ChainID"];
-  int64 height = 3;
-  google.protobuf.Timestamp time = 4 [(gogoproto.nullable)=false, (gogoproto.stdtime)=true];
-  int64 num_txs = 5;
-  int64 total_txs = 6;
+  dojimamint.version.Consensus version   = 1 [(gogoproto.nullable) = false];
+  string                       chain_id  = 2 [(gogoproto.customname) = "ChainID"];
+  int64                        height    = 3;
+  google.protobuf.Timestamp    time      = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  int64                        num_txs   = 5;
+  int64                        total_txs = 6;
 
   // prev block info
-  BlockID last_block_id = 7 [(gogoproto.nullable)=false];
+  BlockID last_block_id = 7 [(gogoproto.nullable) = false];
 
   // hashes of block data
-  bytes last_commit_hash = 8; // commit from validators from the last block
-  bytes data_hash = 9;        // transactions
+  bytes last_commit_hash = 8;  // commit from validators from the last block
+  bytes data_hash        = 9;  // transactions
 
   // hashes from the app output from the prev block
-  bytes validators_hash = 10;   // validators for the current block
-  bytes next_validators_hash = 11;   // validators for the next block
-  bytes consensus_hash = 12;   // consensus params for current block
-  bytes app_hash = 13;         // state after txs from the previous block
-  bytes last_results_hash = 14;// root hash of all results from the txs from the previous block
+  bytes validators_hash      = 10;  // validators for the current block
+  bytes next_validators_hash = 11;  // validators for the next block
+  bytes consensus_hash       = 12;  // consensus params for current block
+  bytes app_hash             = 13;  // state after txs from the previous block
+  bytes last_results_hash    = 14;  // root hash of all results from the txs from the previous block
 
   // consensus info
-  bytes evidence_hash = 15;    // evidence included in the block
-  bytes proposer_address = 16; // original proposer of the block
+  bytes evidence_hash    = 15;  // evidence included in the block
+  bytes proposer_address = 16;  // original proposer of the block
 }
 
 // Data contains the set of transactions included in the block
@@ -102,18 +101,18 @@ message Vote {
       [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];  // zero if vote is nil.
   google.protobuf.Timestamp timestamp = 5
       [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
-  bytes validator_address = 6;
-  int32 validator_index   = 7;
-  bytes signature         = 8;
-  repeated SideTxResult side_tx_results = 9;
+  bytes                 validator_address = 6;
+  int32                 validator_index   = 7;
+  bytes                 signature         = 8;
+  repeated SideTxResult side_tx_results   = 9;
 }
 
 // Commit contains the evidence that a block was committed by a set of validators.
 message Commit {
-  int64                         height     = 1;
-  int32                         round      = 2;
-  BlockID                       block_id   = 3 [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];
-  repeated CommitSig            signatures = 4 [(gogoproto.nullable) = false];
+  int64              height     = 1;
+  int32              round      = 2;
+  BlockID            block_id   = 3 [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];
+  repeated CommitSig signatures = 4 [(gogoproto.nullable) = false];
 }
 
 // CommitSig is a part of the Vote included in a Commit.
@@ -122,7 +121,7 @@ message CommitSig {
   bytes                     validator_address = 2;
   google.protobuf.Timestamp timestamp         = 3
       [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
-  bytes signature = 4;
+  bytes                 signature       = 4;
   repeated SideTxResult side_tx_results = 7 [(gogoproto.nullable) = false];
 }
 
@@ -144,7 +143,7 @@ message SignedHeader {
 
 message LightBlock {
   SignedHeader                  signed_header = 1;
-  tendermint.types.ValidatorSet validator_set = 2;
+  dojimamint.types.ValidatorSet validator_set = 2;
 }
 
 message BlockMeta {
@@ -158,25 +157,25 @@ message BlockMeta {
 message TxProof {
   bytes                   root_hash = 1;
   bytes                   data      = 2;
-  tendermint.crypto.Proof proof     = 3;
+  dojimamint.crypto.Proof proof     = 3;
 }
 
 // Side-tx result type
 enum SideTxResultType {
   Skip = 0;
-  Yes = 1;
-  No = 2;
+  Yes  = 1;
+  No   = 2;
 }
 
 // Side-tx sig
 message SideTxSig {
-  SideTxResultType result = 1;
-  bytes sig = 2;
-  bytes address = 3;
+  SideTxResultType result  = 1;
+  bytes            sig     = 2;
+  bytes            address = 3;
 }
 
 // Side tx results
 message SideTxResult {
-  bytes tx_hash = 1;
-  repeated SideTxSig sigs = 2 [(gogoproto.nullable)=false];
+  bytes              tx_hash = 1;
+  repeated SideTxSig sigs    = 2 [(gogoproto.nullable) = false];
 }
