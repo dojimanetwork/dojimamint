@@ -1,7 +1,7 @@
 package state
 
 import (
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 //------------------------------------------------------

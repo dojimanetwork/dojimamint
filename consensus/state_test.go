@@ -10,15 +10,15 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/abci/example/counter"
-	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
-	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	p2pmock "github.com/dojimanetwork/dojimamint/p2p/mock"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/abci/example/counter"
+	cstypes "github.com/tendermint/tendermint/consensus/types"
+	"github.com/tendermint/tendermint/crypto/tmhash"
+	"github.com/tendermint/tendermint/libs/log"
+	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
+	p2pmock "github.com/tendermint/tendermint/p2p/mock"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 /*

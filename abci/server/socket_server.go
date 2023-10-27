@@ -8,11 +8,11 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmlog "github.com/dojimanetwork/dojimamint/libs/log"
-	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/tendermint/tendermint/abci/types"
+	tmlog "github.com/tendermint/tendermint/libs/log"
+	tmnet "github.com/tendermint/tendermint/libs/net"
+	"github.com/tendermint/tendermint/libs/service"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
 )
 
 // var maxNumberConnections = 2

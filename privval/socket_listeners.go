@@ -4,8 +4,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
-	p2pconn "github.com/dojimanetwork/dojimamint/p2p/conn"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	p2pconn "github.com/tendermint/tendermint/p2p/conn"
 )
 
 const (

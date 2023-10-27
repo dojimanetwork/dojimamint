@@ -8,17 +8,17 @@ import (
 	"sync"
 	"sync/atomic"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	cfg "github.com/dojimanetwork/dojimamint/config"
-	auto "github.com/dojimanetwork/dojimamint/libs/autofile"
-	"github.com/dojimanetwork/dojimamint/libs/clist"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	"github.com/dojimanetwork/dojimamint/proxy"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	cfg "github.com/tendermint/tendermint/config"
+	auto "github.com/tendermint/tendermint/libs/autofile"
+	"github.com/tendermint/tendermint/libs/clist"
+	"github.com/tendermint/tendermint/libs/log"
+	tmmath "github.com/tendermint/tendermint/libs/math"
+	tmos "github.com/tendermint/tendermint/libs/os"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/p2p"
+	"github.com/tendermint/tendermint/proxy"
+	"github.com/tendermint/tendermint/types"
 )
 
 // TxKeySize is the size of the transaction key index

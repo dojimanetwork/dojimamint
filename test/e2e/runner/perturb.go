@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	rpctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
-	e2e "github.com/dojimanetwork/dojimamint/test/e2e/pkg"
+	rpctypes "github.com/tendermint/tendermint/rpc/core/types"
+	e2e "github.com/tendermint/tendermint/test/e2e/pkg"
 )
 
 // Perturbs a running testnet.

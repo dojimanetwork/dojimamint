@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/tendermint/tendermint/libs/log"
 
-	"github.com/dojimanetwork/dojimamint/libs/pubsub"
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	"github.com/tendermint/tendermint/libs/pubsub"
+	"github.com/tendermint/tendermint/libs/pubsub/query"
 )
 
 const (

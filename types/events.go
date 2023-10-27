@@ -3,10 +3,10 @@ package types
 import (
 	"fmt"
 
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
-	tmquery "github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	abci "github.com/tendermint/tendermint/abci/types"
+	tmjson "github.com/tendermint/tendermint/libs/json"
+	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
+	tmquery "github.com/tendermint/tendermint/libs/pubsub/query"
 )
 
 // Reserved event types (alphabetically sorted).

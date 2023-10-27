@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/light/provider"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/light/provider"
+	"github.com/tendermint/tendermint/types"
 )
 
 // The detector component of the light client detects and handles attacks on the light client.

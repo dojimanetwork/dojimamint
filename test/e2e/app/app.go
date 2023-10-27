@@ -9,10 +9,10 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/dojimanetwork/dojimamint/abci/example/code"
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	"github.com/dojimanetwork/dojimamint/version"
+	"github.com/tendermint/tendermint/abci/example/code"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/version"
 )
 
 const appVersion = 1

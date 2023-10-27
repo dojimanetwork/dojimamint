@@ -3,8 +3,8 @@ package v2
 import (
 	"fmt"
 
-	"github.com/dojimanetwork/dojimamint/state"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/state"
+	"github.com/tendermint/tendermint/types"
 )
 
 type processorContext interface {

@@ -3,8 +3,8 @@ package consensus
 import (
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/tendermint/tendermint/libs/log"
+	"github.com/tendermint/tendermint/libs/service"
 )
 
 var (

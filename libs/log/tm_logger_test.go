@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/tendermint/tendermint/libs/log"
 )
 
 func TestLoggerLogsItsErrors(t *testing.T) {

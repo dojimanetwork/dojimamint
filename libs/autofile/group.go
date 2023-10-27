@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/tendermint/tendermint/libs/service"
 )
 
 const (

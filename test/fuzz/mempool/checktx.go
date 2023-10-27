@@ -1,10 +1,10 @@
 package checktx
 
 import (
-	"github.com/dojimanetwork/dojimamint/abci/example/kvstore"
-	"github.com/dojimanetwork/dojimamint/config"
-	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	"github.com/dojimanetwork/dojimamint/proxy"
+	"github.com/tendermint/tendermint/abci/example/kvstore"
+	"github.com/tendermint/tendermint/config"
+	mempl "github.com/tendermint/tendermint/mempool"
+	"github.com/tendermint/tendermint/proxy"
 )
 
 var mempool mempl.Mempool

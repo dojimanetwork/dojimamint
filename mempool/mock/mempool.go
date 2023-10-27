@@ -1,10 +1,10 @@
 package mock
 
 import (
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/clist"
-	mempl "github.com/dojimanetwork/dojimamint/mempool"
-	"github.com/dojimanetwork/dojimamint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/clist"
+	mempl "github.com/tendermint/tendermint/mempool"
+	"github.com/tendermint/tendermint/types"
 )
 
 // Mempool is an empty implementation of a Mempool, useful for testing.

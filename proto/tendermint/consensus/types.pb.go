@@ -5,8 +5,8 @@ package consensus
 
 import (
 	fmt "fmt"
-	bits "github.com/dojimanetwork/dojimamint/proto/tendermint/libs/bits"
-	types "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	bits "github.com/tendermint/tendermint/proto/tendermint/libs/bits"
+	types "github.com/tendermint/tendermint/proto/tendermint/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"

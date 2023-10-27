@@ -5,9 +5,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
-	p2pconn "github.com/dojimanetwork/dojimamint/p2p/conn"
+	"github.com/tendermint/tendermint/crypto"
+	tmnet "github.com/tendermint/tendermint/libs/net"
+	p2pconn "github.com/tendermint/tendermint/p2p/conn"
 )
 
 // Socket errors.

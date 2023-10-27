@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/dojimanetwork/dojimamint/libs/tempfile"
+	"github.com/tendermint/tendermint/libs/tempfile"
 )
 
 /* Loading & Saving */

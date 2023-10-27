@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
-	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/crypto"
+	tmbytes "github.com/tendermint/tendermint/libs/bytes"
+	"github.com/tendermint/tendermint/libs/protoio"
+	tenderTypes "github.com/tendermint/tendermint/proto/tendermint/types"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
 const (

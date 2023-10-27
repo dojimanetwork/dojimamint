@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
+	"github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/service"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
 )
 
 const (

@@ -11,8 +11,8 @@ import (
 	secp256k1 "github.com/btcsuite/btcd/btcec"
 	"golang.org/x/crypto/ripemd160" // nolint: staticcheck // necessary for Bitcoin address format
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
+	"github.com/tendermint/tendermint/crypto"
+	tmjson "github.com/tendermint/tendermint/libs/json"
 )
 
 // -------------------------------------

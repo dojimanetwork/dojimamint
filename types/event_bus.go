@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
-	"github.com/dojimanetwork/dojimamint/libs/service"
+	"github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/libs/log"
+	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
+	"github.com/tendermint/tendermint/libs/service"
 )
 
 const defaultCapacity = 0

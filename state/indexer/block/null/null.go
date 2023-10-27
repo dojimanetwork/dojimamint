@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/dojimanetwork/dojimamint/libs/pubsub/query"
-	"github.com/dojimanetwork/dojimamint/state/indexer"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/libs/pubsub/query"
+	"github.com/tendermint/tendermint/state/indexer"
+	"github.com/tendermint/tendermint/types"
 )
 
 var _ indexer.BlockIndexer = (*BlockerIndexer)(nil)

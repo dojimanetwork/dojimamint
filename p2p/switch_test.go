@@ -18,11 +18,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/dojimanetwork/dojimamint/config"
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/p2p/conn"
+	"github.com/tendermint/tendermint/config"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/tendermint/tendermint/libs/log"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/p2p/conn"
 )
 
 var (

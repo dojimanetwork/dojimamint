@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/dojimanetwork/dojimamint/version"
+	"github.com/tendermint/tendermint/version"
 )
 
 // VersionCmd ...

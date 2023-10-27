@@ -4,8 +4,8 @@ import (
 	"sync"
 	"testing"
 
-	bh "github.com/dojimanetwork/dojimamint/behaviour"
-	"github.com/dojimanetwork/dojimamint/p2p"
+	bh "github.com/tendermint/tendermint/behaviour"
+	"github.com/tendermint/tendermint/p2p"
 )
 
 // TestMockReporter tests the MockReporter's ability to store reported

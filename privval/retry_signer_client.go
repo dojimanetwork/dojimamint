@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/crypto"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 // RetrySignerClient wraps SignerClient adding retry for each operation (except
@@ -97,6 +97,6 @@ func (sc *RetrySignerClient) SignProposal(chainID string, proposal *tmproto.Prop
 
 func (sc *RetrySignerClient) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
 
-	sig := sc.next.SignSideTxResult(sideTxResult)	
+	sig := sc.next.SignSideTxResult(sideTxResult)
 	return sig
 }

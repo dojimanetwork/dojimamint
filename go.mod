@@ -1,4 +1,4 @@
-module github.com/dojimanetwork/dojimamint
+module github.com/tendermint/tendermint
 
 go 1.16
 

@@ -1,12 +1,12 @@
 package types
 
 import (
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
-	cryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
-	"github.com/dojimanetwork/dojimamint/crypto/secp256k1"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	cryptoenc "github.com/tendermint/tendermint/crypto/encoding"
+	"github.com/tendermint/tendermint/crypto/secp256k1"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
 //-------------------------------------------------------

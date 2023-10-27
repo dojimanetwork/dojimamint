@@ -7,16 +7,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/libs/bytes"
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmpubsub "github.com/dojimanetwork/dojimamint/libs/pubsub"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	rpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
-	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
-	jsonrpcclient "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/client"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/libs/bytes"
+	tmjson "github.com/tendermint/tendermint/libs/json"
+	"github.com/tendermint/tendermint/libs/log"
+	tmpubsub "github.com/tendermint/tendermint/libs/pubsub"
+	"github.com/tendermint/tendermint/libs/service"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	rpcclient "github.com/tendermint/tendermint/rpc/client"
+	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	jsonrpcclient "github.com/tendermint/tendermint/rpc/jsonrpc/client"
+	"github.com/tendermint/tendermint/types"
 )
 
 /*

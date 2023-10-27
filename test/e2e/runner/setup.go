@@ -19,12 +19,12 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"github.com/dojimanetwork/dojimamint/config"
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	"github.com/dojimanetwork/dojimamint/privval"
-	e2e "github.com/dojimanetwork/dojimamint/test/e2e/pkg"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/config"
+	"github.com/tendermint/tendermint/crypto/ed25519"
+	"github.com/tendermint/tendermint/p2p"
+	"github.com/tendermint/tendermint/privval"
+	e2e "github.com/tendermint/tendermint/test/e2e/pkg"
+	"github.com/tendermint/tendermint/types"
 )
 
 const (

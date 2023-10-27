@@ -8,12 +8,12 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
-	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/tendermint/tendermint/crypto"
+	tmbytes "github.com/tendermint/tendermint/libs/bytes"
+	tmjson "github.com/tendermint/tendermint/libs/json"
+	tmos "github.com/tendermint/tendermint/libs/os"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	tmtime "github.com/tendermint/tendermint/types/time"
 )
 
 const (

@@ -10,11 +10,11 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/abci/types"
-	tmnet "github.com/dojimanetwork/dojimamint/libs/net"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/libs/timer"
+	"github.com/tendermint/tendermint/abci/types"
+	tmnet "github.com/tendermint/tendermint/libs/net"
+	"github.com/tendermint/tendermint/libs/service"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/libs/timer"
 )
 
 const (

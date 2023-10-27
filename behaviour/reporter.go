@@ -3,8 +3,8 @@ package behaviour
 import (
 	"errors"
 
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	"github.com/dojimanetwork/dojimamint/p2p"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	"github.com/tendermint/tendermint/p2p"
 )
 
 // Reporter provides an interface for reactors to report the behaviour

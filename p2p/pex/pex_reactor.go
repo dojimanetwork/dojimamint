@@ -8,13 +8,13 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	"github.com/dojimanetwork/dojimamint/libs/cmap"
-	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
-	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	"github.com/dojimanetwork/dojimamint/p2p"
-	"github.com/dojimanetwork/dojimamint/p2p/conn"
-	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	"github.com/tendermint/tendermint/libs/cmap"
+	tmmath "github.com/tendermint/tendermint/libs/math"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
+	"github.com/tendermint/tendermint/libs/service"
+	"github.com/tendermint/tendermint/p2p"
+	"github.com/tendermint/tendermint/p2p/conn"
+	tmp2p "github.com/tendermint/tendermint/proto/tendermint/p2p"
 )
 
 type Peer = p2p.Peer

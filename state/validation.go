@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/tendermint/tendermint/crypto"
+	"github.com/tendermint/tendermint/types"
 )
 
 //-----------------------------------------------------

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dojimanetwork/dojimamint/crypto/ed25519"
+	"github.com/tendermint/tendermint/crypto/ed25519"
 )
 
 //-------------------------------------------

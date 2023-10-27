@@ -7,10 +7,10 @@ import (
 	"github.com/gogo/protobuf/proto"
 	dbm "github.com/tendermint/tm-db"
 
-	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
-	tmstore "github.com/dojimanetwork/dojimamint/proto/tendermint/store"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/dojimanetwork/dojimamint/types"
+	tmsync "github.com/tendermint/tendermint/libs/sync"
+	tmstore "github.com/tendermint/tendermint/proto/tendermint/store"
+	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/tendermint/tendermint/types"
 )
 
 /*

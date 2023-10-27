@@ -11,14 +11,14 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
-	// tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	tmcon "github.com/dojimanetwork/dojimamint/consensus"
-	auto "github.com/dojimanetwork/dojimamint/libs/autofile"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmos "github.com/dojimanetwork/dojimamint/libs/os"
-	"github.com/dojimanetwork/dojimamint/libs/service"
-	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
-	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	// tmjson "github.com/tendermint/tendermint/libs/json"
+	tmcon "github.com/tendermint/tendermint/consensus"
+	auto "github.com/tendermint/tendermint/libs/autofile"
+	"github.com/tendermint/tendermint/libs/log"
+	tmos "github.com/tendermint/tendermint/libs/os"
+	"github.com/tendermint/tendermint/libs/service"
+	tmcons "github.com/tendermint/tendermint/proto/tendermint/consensus"
+	tmtime "github.com/tendermint/tendermint/types/time"
 )
 
 const (
@@ -177,7 +177,7 @@ func (wal *BaseWAL) WriteSync(msg tmcon.WALMessage) error {
 	}
 
 	if err := wal.FlushAndSync(); err != nil {
-		wal.Logger.Error(`WriteSync failed to flush consensus wal. 
+		wal.Logger.Error(`WriteSync failed to flush consensus wal.
 		WARNING: may result in creating alternative proposals / votes for the current height iff the node restarted`,
 			"err", err)
 		return err
