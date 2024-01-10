@@ -42,7 +42,7 @@ type BlockExecutor struct {
 
 	metrics *Metrics
 
-	// [peppermint] fast sync
+	// [dojimamint] fast sync
 	fastSyncFunc func() bool
 }
 
@@ -443,12 +443,12 @@ func getBeginBlockValidatorInfo(block *types.Block, store Store,
 		if commitSize != valSetLen {
 			panic(fmt.Sprintf(
 				"commit size (%d) doesn't match valset length (%d) at height %d\n\n%v\n\n%v",
-				commitSize, valSetLen, block.Height, block.LastCommit.Signatures, lastValSet.Validators,
+				commitSize, valSetLen, block.Height, block.LastCommit.Precommits, lastValSet.Validators,
 			))
 		}
 
 		for i, val := range lastValSet.Validators {
-			commitSig := block.LastCommit.Signatures[i]
+			commitSig := block.LastCommit.Precommits[i]
 			voteInfos[i] = abci.VoteInfo{
 				Validator:       types.TM2PB.Validator(val),
 				SignedLastBlock: !commitSig.Absent(),
@@ -622,7 +622,7 @@ func ExecCommitBlock(
 	store Store,
 	initialHeight int64,
 ) ([]byte, error) {
-	logger.Info("[Peppermint] Exec commit block", "height", block.Height)
+	logger.Info("[dojimamint] Exec commit block", "height", block.Height)
 	_, _, err := execBlockOnProxyApp(logger, appConnConsensus, block, store, initialHeight, false)
 	if err != nil {
 		logger.Error("Error executing block on proxy app", "height", block.Height, "err", err)
@@ -666,7 +666,7 @@ func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResu
 	}
 
 	// iterate all votes
-	for _, vote := range block.LastCommit.Signatures {
+	for _, vote := range block.LastCommit.Precommits {
 		if !vote.Absent() {
 			txMapping := make(map[int]bool)
 			for _, sideTxResult := range vote.SideTxResults {

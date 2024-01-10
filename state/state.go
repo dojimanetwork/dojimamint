@@ -79,7 +79,6 @@ type State struct {
 	// the latest AppHash we've received from calling abci.Commit()
 	AppHash []byte
 
-
 	// [dojimamint] side tx responses
 	SideTxResponses []*types.SideTxResultWithData
 }
@@ -275,10 +274,10 @@ func (state State) MakeBlock(
 // the votes sent by honest processes, i.e., a faulty processes can not arbitrarily increase or decrease the
 // computed value.
 func MedianTime(commit *types.Commit, validators *types.ValidatorSet) time.Time {
-	weightedTimes := make([]*tmtime.WeightedTime, len(commit.Signatures))
+	weightedTimes := make([]*tmtime.WeightedTime, len(commit.Precommits))
 	totalVotingPower := int64(0)
 
-	for i, commitSig := range commit.Signatures {
+	for i, commitSig := range commit.Precommits {
 		if commitSig.Absent() {
 			continue
 		}

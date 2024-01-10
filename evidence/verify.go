@@ -210,7 +210,7 @@ func VerifyDuplicateVote(e *types.DuplicateVoteEvidence, chainID string, valSet 
 
 	va := e.VoteA.ToProto()
 	vb := e.VoteB.ToProto()
-	// Signatures must be valid
+	// Precommits must be valid
 	if !pubKey.VerifySignature(types.VoteSignBytes(chainID, va), e.VoteA.Signature) {
 		return fmt.Errorf("verifying VoteA: %w", types.ErrVoteInvalidSignature)
 	}
