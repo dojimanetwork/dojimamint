@@ -99,14 +99,21 @@ message Vote {
   int64         height   = 2;
   int32         round    = 3;
   BlockID       block_id = 4
-      [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID",(gogoproto.customtype) = "github.com/dojimanetwork/dojimamint/types.BlockID"];  // zero if vote is nil.
+      [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];  // zero if vote is nil.
   google.protobuf.Timestamp timestamp = 5
       [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
   bytes validator_address = 6;
   int32 validator_index   = 7;
   bytes signature         = 8;
-  repeated SideTxResult side_tx_results = 9 [(gogoproto.nullable) = false,(gogoproto.customtype) = "github.com/dojimanetwork/dojimamint/types.SideTxResult"];
+  repeated VoteSideTxResult side_tx_results = 9;
 }
+
+message VoteSideTxResult {
+  bytes tx_hash = 1;
+  int32 result = 2;
+  bytes sig = 3;
+}
+
 
 // Commit contains the evidence that a block was committed by a set of validators.
 message Commit {

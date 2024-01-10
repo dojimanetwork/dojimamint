@@ -240,16 +240,26 @@ func (vote *Vote) ToProto() *tmproto.Vote {
 		return nil
 	}
 
+	var voteSideTxResults []*tmproto.VoteSideTxResult
+	for _, result := range vote.SideTxResults {
+		resultCopy := tmproto.VoteSideTxResult{
+			TxHash: result.TxHash,
+			Result: result.Result,
+			Sig:    result.Sig,
+		} // create a copy to avoid pointer to loop variable issue
+		voteSideTxResults = append(voteSideTxResults, &resultCopy)
+	}
+
 	return &tmproto.Vote{
 		Type:             vote.Type,
 		Height:           vote.Height,
 		Round:            vote.Round,
-		BlockID:          vote.BlockID,
+		BlockID:          vote.BlockID.ToProto(),
 		Timestamp:        vote.Timestamp,
 		ValidatorAddress: vote.ValidatorAddress,
 		ValidatorIndex:   vote.ValidatorIndex,
 		Signature:        vote.Signature,
-		SideTxResults:    vote.SideTxResults,
+		SideTxResults:    voteSideTxResults,
 	}
 }
 
@@ -260,21 +270,32 @@ func VoteFromProto(pv *tmproto.Vote) (*Vote, error) {
 		return nil, errors.New("nil vote")
 	}
 
-	//blockID, err := BlockIDFromProto(&pv.BlockID)
-	//if err != nil {
-	//	return nil, err
-	//}
+	blockID, err := BlockIDFromProto(&pv.BlockID)
+	if err != nil {
+		return nil, err
+	}
+
+	var sideTxResults []SideTxResult
+	for _, result := range pv.SideTxResults {
+		if result != nil {
+			sideTxResults = append(sideTxResults, SideTxResult{
+				TxHash: result.TxHash,
+				Result: result.Result,
+				Sig:    result.Sig,
+			})
+		}
+	}
 
 	vote := new(Vote)
 	vote.Type = pv.Type
 	vote.Height = pv.Height
 	vote.Round = pv.Round
-	vote.BlockID = pv.BlockID
+	vote.BlockID = *blockID
 	vote.Timestamp = pv.Timestamp
 	vote.ValidatorAddress = pv.ValidatorAddress
 	vote.ValidatorIndex = pv.ValidatorIndex
 	vote.Signature = pv.Signature
-	vote.SideTxResults = pv.SideTxResults
+	vote.SideTxResults = sideTxResults
 
 	return vote, vote.ValidateBasic()
 }
