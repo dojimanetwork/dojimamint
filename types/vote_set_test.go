@@ -466,7 +466,7 @@ func TestVoteSet_MakeCommit(t *testing.T) {
 	commit := voteSet.MakeCommit()
 
 	// Commit should have 10 elements
-	assert.Equal(t, 10, len(commit.Signatures))
+	assert.Equal(t, 10, len(commit.Precommits))
 
 	// Ensure that Commit is good.
 	if err := commit.ValidateBasic(); err != nil {

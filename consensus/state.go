@@ -1741,7 +1741,7 @@ func (cs *State) recordMetrics(height int64, block *types.Block) {
 		)
 		if commitSize != valSetLen {
 			panic(fmt.Sprintf("commit size (%d) doesn't match valset length (%d) at height %d\n\n%v\n\n%v",
-				commitSize, valSetLen, block.Height, block.LastCommit.Signatures, cs.LastValidators.Validators))
+				commitSize, valSetLen, block.Height, block.LastCommit.Precommits, cs.LastValidators.Validators))
 		}
 
 		if cs.privValidator != nil {
@@ -1754,7 +1754,7 @@ func (cs *State) recordMetrics(height int64, block *types.Block) {
 		}
 
 		for i, val := range cs.LastValidators.Validators {
-			commitSig := block.LastCommit.Signatures[i]
+			commitSig := block.LastCommit.Precommits[i]
 			if commitSig.Absent() {
 				missingValidators++
 				missingValidatorsPower += val.VotingPower
@@ -2216,10 +2216,8 @@ func (cs *State) signVote(
 		vote.SideTxResults = sideTxResults
 	}
 
-	v := vote.ToProto()
-	err := cs.privValidator.SignVote(cs.state.ChainID, v)
-	vote.Signature = v.Signature
-	vote.Timestamp = v.Timestamp
+	err := cs.privValidator.SignVote(cs.state.ChainID, vote.ToProto())
+	cs.Logger.Info("[dojimamint] vote sign with data", "signBytes", vote.SideTxResults)
 
 	return vote, err
 }
@@ -2300,7 +2298,7 @@ func (cs *State) checkDoubleSigningRisk(height int64) error {
 		for i := int64(1); i < doubleSignCheckHeight; i++ {
 			lastCommit := cs.blockStore.LoadSeenCommit(height - i)
 			if lastCommit != nil {
-				for sigIdx, s := range lastCommit.Signatures {
+				for sigIdx, s := range lastCommit.Precommits {
 					if s.BlockIDFlag == types.BlockIDFlagCommit && bytes.Equal(s.ValidatorAddress, valAddr) {
 						cs.Logger.Info("found signature from the same key", "sig", s, "idx", sigIdx, "height", height-i)
 						return ErrSignatureFoundInPastBlocks

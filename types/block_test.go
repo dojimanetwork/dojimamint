@@ -73,7 +73,7 @@ func TestBlockValidateBasic(t *testing.T) {
 		{"Make Block w/ proposer Addr", func(blk *Block) { blk.ProposerAddress = valSet.GetProposer().Address }, false},
 		{"Negative Height", func(blk *Block) { blk.Height = -1 }, true},
 		{"Remove 1/2 the commits", func(blk *Block) {
-			blk.LastCommit.Signatures = commit.Signatures[:commit.Size()/2]
+			blk.LastCommit.Precommits = commit.Precommits[:commit.Size()/2]
 			blk.LastCommit.hash = nil // clear hash or change wont be noticed
 		}, true},
 		{"Remove LastCommitHash", func(blk *Block) { blk.LastCommitHash = []byte("something else") }, true},
@@ -243,7 +243,7 @@ func TestCommitValidateBasic(t *testing.T) {
 		expectErr      bool
 	}{
 		{"Random Commit", func(com *Commit) {}, false},
-		{"Incorrect signature", func(com *Commit) { com.Signatures[0].Signature = []byte{0} }, false},
+		{"Incorrect signature", func(com *Commit) { com.Precommits[0].Signature = []byte{0} }, false},
 		{"Incorrect height", func(com *Commit) { com.Height = int64(-100) }, true},
 		{"Incorrect round", func(com *Commit) { com.Round = -100 }, true},
 	}
@@ -284,7 +284,7 @@ func TestMaxCommitBytes(t *testing.T) {
 				Hash:  tmhash.Sum([]byte("blockID_part_set_header_hash")),
 			},
 		},
-		Signatures: []CommitSig{cs},
+		Precommits: []CommitSig{cs},
 	}
 
 	pb := commit.ToProto()
@@ -293,7 +293,7 @@ func TestMaxCommitBytes(t *testing.T) {
 
 	// check the upper bound of the commit size
 	for i := 1; i < MaxVotesCount; i++ {
-		commit.Signatures = append(commit.Signatures, cs)
+		commit.Precommits = append(commit.Precommits, cs)
 	}
 
 	pb = commit.ToProto()
@@ -629,7 +629,7 @@ func TestBlockIDValidateBasic(t *testing.T) {
 func TestBlockProtoBuf(t *testing.T) {
 	h := tmrand.Int63()
 	c1 := randCommit(time.Now())
-	b1 := MakeBlock(h, []Tx{Tx([]byte{1})}, &Commit{Signatures: []CommitSig{}}, []Evidence{})
+	b1 := MakeBlock(h, []Tx{Tx([]byte{1})}, &Commit{Precommits: []CommitSig{}}, []Evidence{})
 	b1.ProposerAddress = tmrand.Bytes(crypto.AddressSize)
 
 	b2 := MakeBlock(h, []Tx{Tx([]byte{1})}, c1, []Evidence{})

@@ -236,7 +236,7 @@ func (l *LightClientAttackEvidence) GetByzantineValidators(commonVals *Validator
 	// First check if the header is invalid. This means that it is a lunatic attack and therefore we take the
 	// validators who are in the commonVals and voted for the lunatic header
 	if l.ConflictingHeaderIsInvalid(trusted.Header) {
-		for _, commitSig := range l.ConflictingBlock.Commit.Signatures {
+		for _, commitSig := range l.ConflictingBlock.Commit.Precommits {
 			if !commitSig.ForBlock() {
 				continue
 			}
@@ -255,13 +255,13 @@ func (l *LightClientAttackEvidence) GetByzantineValidators(commonVals *Validator
 		// from the conflicting light block validator set that voted in both headers.
 		// Validator hashes are the same therefore the indexing order of validators are the same and thus we
 		// only need a single loop to find the validators that voted twice.
-		for i := 0; i < len(l.ConflictingBlock.Commit.Signatures); i++ {
-			sigA := l.ConflictingBlock.Commit.Signatures[i]
+		for i := 0; i < len(l.ConflictingBlock.Commit.Precommits); i++ {
+			sigA := l.ConflictingBlock.Commit.Precommits[i]
 			if sigA.Absent() {
 				continue
 			}
 
-			sigB := trusted.Commit.Signatures[i]
+			sigB := trusted.Commit.Precommits[i]
 			if sigB.Absent() {
 				continue
 			}
@@ -318,10 +318,10 @@ func (l *LightClientAttackEvidence) Height() int64 {
 // String returns a string representation of LightClientAttackEvidence
 func (l *LightClientAttackEvidence) String() string {
 	return fmt.Sprintf(`LightClientAttackEvidence{
-		ConflictingBlock: %v, 
-		CommonHeight: %d, 
-		ByzatineValidators: %v, 
-		TotalVotingPower: %d, 
+		ConflictingBlock: %v,
+		CommonHeight: %d,
+		ByzatineValidators: %v,
+		TotalVotingPower: %d,
 		Timestamp: %v}#%X`,
 		l.ConflictingBlock.String(), l.CommonHeight, l.ByzantineValidators,
 		l.TotalVotingPower, l.Timestamp, l.Hash())

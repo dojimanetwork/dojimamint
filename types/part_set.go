@@ -2,6 +2,7 @@ package types
 
 import (
 	"bytes"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"io"
@@ -102,6 +103,36 @@ type PartSetHeader struct {
 // 2. first 6 bytes of the hash
 func (psh PartSetHeader) String() string {
 	return fmt.Sprintf("%v:%X", psh.Total, tmbytes.Fingerprint(psh.Hash))
+}
+
+func (m *PartSetHeader) Size() int {
+	size := 0
+	size += 4           // Size of Total (uint32)
+	size += len(m.Hash) // Size of Hash (tmbytes.HexBytes)
+
+	return size
+}
+
+func (m *PartSetHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	var idx int
+	if len(dAtA) < m.Size() {
+		return 0, errors.New("buffer too small")
+	}
+
+	// Marshal Total
+	binary.BigEndian.PutUint32(dAtA[idx:], m.Total)
+	idx += 4
+
+	// Marshal Hash
+	copy(dAtA[idx:], m.Hash)
+	idx += len(m.Hash)
+
+	return idx, nil
+}
+
+func (m *PartSetHeader) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (psh PartSetHeader) IsZero() bool {

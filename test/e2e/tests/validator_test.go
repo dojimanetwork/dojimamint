@@ -98,7 +98,7 @@ func TestValidator_Sign(t *testing.T) {
 		signCount := 0
 		for _, block := range blocks[1:] { // Skip first block, since it has no signatures
 			signed := false
-			for _, sig := range block.LastCommit.Signatures {
+			for _, sig := range block.LastCommit.Precommits {
 				if bytes.Equal(sig.ValidatorAddress, address) {
 					signed = true
 					break

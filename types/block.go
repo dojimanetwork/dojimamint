@@ -2,6 +2,7 @@ package types
 
 import (
 	"bytes"
+	"encoding/binary"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -771,7 +772,7 @@ type Commit struct {
 	Height     int64       `json:"height"`
 	Round      int32       `json:"round"`
 	BlockID    BlockID     `json:"block_id"`
-	Signatures []CommitSig `json:"signatures"`
+	Precommits []CommitSig `json:"signatures"`
 
 	// Memoized in first call to corresponding method.
 	// NOTE: can't memoize in constructor because constructor isn't used for
@@ -786,7 +787,7 @@ func NewCommit(height int64, round int32, blockID BlockID, commitSigs []CommitSi
 		Height:     height,
 		Round:      round,
 		BlockID:    blockID,
-		Signatures: commitSigs,
+		Precommits: commitSigs,
 	}
 }
 
@@ -795,7 +796,7 @@ func NewCommit(height int64, round int32, blockID BlockID, commitSigs []CommitSi
 // Inverse of VoteSet.MakeCommit().
 func CommitToVoteSet(chainID string, commit *Commit, vals *ValidatorSet) *VoteSet {
 	voteSet := NewVoteSet(chainID, commit.Height, commit.Round, tmproto.PrecommitType, vals)
-	for idx, commitSig := range commit.Signatures {
+	for idx, commitSig := range commit.Precommits {
 		if commitSig.Absent() {
 			continue // OK, some precommits can be missing.
 		}
@@ -811,7 +812,7 @@ func CommitToVoteSet(chainID string, commit *Commit, vals *ValidatorSet) *VoteSe
 // Returns nil if the precommit at valIdx is nil.
 // Panics if valIdx >= commit.Size().
 func (commit *Commit) GetVote(valIdx int32) *Vote {
-	commitSig := commit.Signatures[valIdx]
+	commitSig := commit.Precommits[valIdx]
 	return &Vote{
 		Type:             tmproto.PrecommitType,
 		Height:           commit.Height,
@@ -862,15 +863,15 @@ func (commit *Commit) Size() int {
 	if commit == nil {
 		return 0
 	}
-	return len(commit.Signatures)
+	return len(commit.Precommits)
 }
 
 // BitArray returns a BitArray of which validators voted for BlockID or nil in this commit.
 // Implements VoteSetReader.
 func (commit *Commit) BitArray() *bits.BitArray {
 	if commit.bitArray == nil {
-		commit.bitArray = bits.NewBitArray(len(commit.Signatures))
-		for i, commitSig := range commit.Signatures {
+		commit.bitArray = bits.NewBitArray(len(commit.Precommits))
+		for i, commitSig := range commit.Precommits {
 			// TODO: need to check the BlockID otherwise we could be counting conflicts,
 			// not just the one with +2/3 !
 			commit.bitArray.SetIndex(i, !commitSig.Absent())
@@ -889,7 +890,7 @@ func (commit *Commit) GetByIndex(valIdx int32) *Vote {
 // IsCommit returns true if there is at least one signature.
 // Implements VoteSetReader.
 func (commit *Commit) IsCommit() bool {
-	return len(commit.Signatures) != 0
+	return len(commit.Precommits) != 0
 }
 
 // ValidateBasic performs basic validation that doesn't involve state data.
@@ -907,10 +908,10 @@ func (commit *Commit) ValidateBasic() error {
 			return errors.New("commit cannot be for nil block")
 		}
 
-		if len(commit.Signatures) == 0 {
+		if len(commit.Precommits) == 0 {
 			return errors.New("no signatures in commit")
 		}
-		for i, commitSig := range commit.Signatures {
+		for i, commitSig := range commit.Precommits {
 			if err := commitSig.ValidateBasic(); err != nil {
 				return fmt.Errorf("wrong CommitSig #%d: %v", i, err)
 			}
@@ -925,8 +926,8 @@ func (commit *Commit) Hash() tmbytes.HexBytes {
 		return nil
 	}
 	if commit.hash == nil {
-		bs := make([][]byte, len(commit.Signatures))
-		for i, commitSig := range commit.Signatures {
+		bs := make([][]byte, len(commit.Precommits))
+		for i, commitSig := range commit.Precommits {
 			pbcs := commitSig.ToProto()
 			bz, err := pbcs.Marshal()
 			if err != nil {
@@ -945,15 +946,15 @@ func (commit *Commit) StringIndented(indent string) string {
 	if commit == nil {
 		return "nil-Commit"
 	}
-	commitSigStrings := make([]string, len(commit.Signatures))
-	for i, commitSig := range commit.Signatures {
+	commitSigStrings := make([]string, len(commit.Precommits))
+	for i, commitSig := range commit.Precommits {
 		commitSigStrings[i] = commitSig.String()
 	}
 	return fmt.Sprintf(`Commit{
 %s  Height:     %d
 %s  Round:      %d
 %s  BlockID:    %v
-%s  Signatures:
+%s  Precommits:
 %s    %v
 %s}#%v`,
 		indent, commit.Height,
@@ -971,9 +972,9 @@ func (commit *Commit) ToProto() *tmproto.Commit {
 	}
 
 	c := new(tmproto.Commit)
-	sigs := make([]tmproto.CommitSig, len(commit.Signatures))
-	for i := range commit.Signatures {
-		sigs[i] = *commit.Signatures[i].ToProto()
+	sigs := make([]tmproto.CommitSig, len(commit.Precommits))
+	for i := range commit.Precommits {
+		sigs[i] = *commit.Precommits[i].ToProto()
 	}
 	c.Signatures = sigs
 
@@ -1006,7 +1007,7 @@ func CommitFromProto(cp *tmproto.Commit) (*Commit, error) {
 			return nil, err
 		}
 	}
-	commit.Signatures = sigs
+	commit.Precommits = sigs
 
 	commit.Height = cp.Height
 	commit.Round = cp.Round
@@ -1221,6 +1222,95 @@ func (blockID BlockID) ValidateBasic() error {
 	if err := blockID.PartSetHeader.ValidateBasic(); err != nil {
 		return fmt.Errorf("wrong PartSetHeader: %v", err)
 	}
+	return nil
+}
+
+func (m *BlockID) Size() int {
+	size := 0
+	size += len(m.Hash) // Size of Hash byte slice
+
+	// Add size of PartSetHeader, assuming PartSetHeader has a Size method
+	size += m.PartSetHeader.Size()
+
+	return size
+}
+
+func (m *BlockID) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	var idx int
+	if len(dAtA) < m.Size() {
+		return 0, errors.New("buffer too small")
+	}
+
+	// Marshal PartSetHeader
+	n, err := m.PartSetHeader.MarshalToSizedBuffer(dAtA[idx:])
+	if err != nil {
+		return 0, err
+	}
+	idx += n
+
+	// Marshal Hash
+	copy(dAtA[idx:], m.Hash)
+	idx += len(m.Hash)
+
+	return idx, nil
+}
+
+func (m *BlockID) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BlockID) Unmarshal(dAtA []byte) error {
+	// Assuming Hash has prefixed length
+	if len(dAtA) < 4 {
+		return errors.New("buffer too small for Hash length")
+	}
+	hashLength := binary.BigEndian.Uint32(dAtA)
+	currentIndex := 4
+
+	if len(dAtA) < currentIndex+int(hashLength) {
+		return errors.New("buffer too small for Hash")
+	}
+	m.Hash = make([]byte, hashLength)
+	copy(m.Hash, dAtA[currentIndex:currentIndex+int(hashLength)])
+	currentIndex += int(hashLength)
+
+	// Unmarshal PartSetHeader, assuming it has its own Unmarshal method
+	if err := m.PartSetHeader.Unmarshal(dAtA[currentIndex:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *PartSetHeader) Unmarshal(dAtA []byte) error {
+	// Ensure there's enough data for 'Total'
+	if len(dAtA) < 4 {
+		return errors.New("buffer too small for Total")
+	}
+
+	// Unmarshal 'Total'
+	m.Total = binary.BigEndian.Uint32(dAtA[:4])
+	currentIndex := 4
+
+	// Assuming 'Hash' is of variable length with a prefixed length
+	// Ensure there's enough data for the length of 'Hash'
+	if len(dAtA) < currentIndex+4 {
+		return errors.New("buffer too small for Hash length")
+	}
+
+	hashLength := binary.BigEndian.Uint32(dAtA[currentIndex:])
+	currentIndex += 4
+
+	// Ensure there's enough data for 'Hash' itself
+	if len(dAtA) < currentIndex+int(hashLength) {
+		return errors.New("buffer too small for Hash")
+	}
+
+	m.Hash = make([]byte, hashLength)
+	copy(m.Hash, dAtA[currentIndex:currentIndex+int(hashLength)])
+	// No further currentIndex update needed as we're at the end
+
 	return nil
 }
 
