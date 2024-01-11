@@ -109,6 +109,16 @@ func (vote *Vote) Copy() *Vote {
 	return &voteCopy
 }
 
+
+func (vote *Vote) SignBytes(chainID string) []byte {
+	// [peppermint] converted from amino to rlp
+	bz, err := cdc.MarshalBinaryLengthPrefixed(CanonicalizeVote(chainID, vote.ToProto()))
+	if err != nil {
+		panic(err)
+	}
+	return bz
+}
+
 // String returns a string representation of Vote.
 //
 // 1. validator index

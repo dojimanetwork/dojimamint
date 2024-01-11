@@ -33,6 +33,7 @@ require (
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.10.1
 	github.com/stretchr/testify v1.7.1
+	github.com/tendermint/go-amino v0.16.0
 	github.com/tendermint/tm-db v0.6.6
 	golang.org/x/crypto v0.0.0-20210915214749-c084706c2272
 	golang.org/x/net v0.0.0-20211208012354-db4efeb81f4b

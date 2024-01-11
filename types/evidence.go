@@ -9,12 +9,19 @@ import (
 	"strings"
 	"time"
 
+	amino "github.com/tendermint/go-amino"
+
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/crypto/merkle"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+)
+
+const (
+	// MaxEvidenceBytes is a maximum size of any evidence (including amino overhead).
+	MaxEvidenceBytes int64 = 484
 )
 
 // Evidence represents any provable malicious activity by a validator.
@@ -457,6 +464,28 @@ func (evl EvidenceList) Has(evidence Evidence) bool {
 		}
 	}
 	return false
+}
+
+//-------------------------------------------
+
+func RegisterEvidences(cdc *amino.Codec) {
+	cdc.RegisterInterface((*Evidence)(nil), nil)
+	cdc.RegisterConcrete(&DuplicateVoteEvidence{}, "tendermint/DuplicateVoteEvidence", nil)
+}
+
+const (
+	MaxEvidenceBytesDenominator = 10
+)
+
+// MaxEvidencePerBlock returns the maximum number of evidences
+// allowed in the block and their maximum total size (limitted to 1/10th
+// of the maximum block size).
+// TODO: change to a constant, or to a fraction of the validator set size.
+// See https://github.com/tendermint/tendermint/issues/2590
+func MaxEvidencePerBlock(blockMaxBytes int64) (int64, int64) {
+	maxBytes := blockMaxBytes / MaxEvidenceBytesDenominator
+	maxNum := maxBytes / MaxEvidenceBytes
+	return maxNum, maxBytes
 }
 
 //------------------------------------------ PROTO --------------------------------------

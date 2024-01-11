@@ -30,6 +30,7 @@ type Proposal struct {
 	BlockID   BlockID   `json:"block_id"`
 	Timestamp time.Time `json:"timestamp"`
 	Signature []byte    `json:"signature"`
+	Data      []byte    `json:"data"` // [dojimamint] tx data
 }
 
 // NewProposal returns a new Proposal.
@@ -158,4 +159,13 @@ func ProposalFromProto(pp *tmproto.Proposal) (*Proposal, error) {
 	p.Signature = pp.Signature
 
 	return p, p.ValidateBasic()
+}
+
+// SignBytes returns the Proposal bytes for signing
+func (p *Proposal) SignBytes(chainID string) []byte {
+	bz, err := cdc.MarshalBinaryLengthPrefixed(CanonicalizeProposal(chainID, p.ToProto()))
+	if err != nil {
+		panic(err)
+	}
+	return bz
 }
