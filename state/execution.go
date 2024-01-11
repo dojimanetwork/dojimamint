@@ -42,7 +42,7 @@ type BlockExecutor struct {
 
 	metrics *Metrics
 
-	// [peppermint] fast sync
+	// [dojimamint] fast sync
 	fastSyncFunc func() bool
 }
 
@@ -135,6 +135,7 @@ func (blockExec *BlockExecutor) ValidateBlock(state State, block *types.Block) e
 func (blockExec *BlockExecutor) ApplyBlock(
 	state State, blockID types.BlockID, block *types.Block,
 ) (State, int64, error) {
+	blockExec.logger.Debug("[dojimamint] Applying block", "height", block.Height, "numTxs", block.Header.ToProto().NumTxs)
 
 	if err := validateBlock(state, block); err != nil {
 		return state, 0, ErrInvalidBlock(err)
@@ -374,7 +375,7 @@ func execBlockOnProxyApp(
 					txReq := vreq.DeliverSideTx
 					txRes := vres.DeliverSideTx
 
-					if txRes.Code == abci.CodeTypeOK && txRes.Result != tmproto.SideTxResultType_Skip {
+					if txRes.Code == abci.CodeTypeOK && txRes.Result != abci.SideTxResultType_Skip {
 						tx := types.Tx(txReq.Tx)
 						// add into side tx responses
 						sideTxResponses = append(sideTxResponses, &types.SideTxResultWithData{
@@ -622,7 +623,7 @@ func ExecCommitBlock(
 	store Store,
 	initialHeight int64,
 ) ([]byte, error) {
-	logger.Info("[Peppermint] Exec commit block", "height", block.Height)
+	logger.Info("[dojimamint] Exec commit block", "height", block.Height)
 	_, _, err := execBlockOnProxyApp(logger, appConnConsensus, block, store, initialHeight, false)
 	if err != nil {
 		logger.Error("Error executing block on proxy app", "height", block.Height, "err", err)
@@ -642,7 +643,7 @@ func ExecCommitBlock(
 // Side channel utils
 //
 
-func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResult {
+func getBeginSideBlockData(block *types.Block, store Store) []abci.SideTxResult {
 	// returns [
 	//   {
 	//     txHash: txHash,
@@ -658,11 +659,11 @@ func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResu
 	// ]
 
 	// prepare result
-	result := make([]tmproto.SideTxResult, 0)
+	result := make([]abci.SideTxResult, 0)
 
 	// return if prev block is empty result (mostly block 0)
 	if block == nil || block.Height <= 2 {
-		return make([]tmproto.SideTxResult, 0)
+		return make([]abci.SideTxResult, 0)
 	}
 
 	// iterate all votes
@@ -681,9 +682,9 @@ func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResu
 
 				// create tx-hash based object, if not found yet
 				if resultIndex == -1 {
-					result = append(result, tmproto.SideTxResult{
+					result = append(result, abci.SideTxResult{
 						TxHash: sideTxResult.TxHash,
-						Sigs:   make([]tmproto.SideTxSig, 0),
+						Sigs:   make([]abci.SideTxSig, 0),
 					})
 					// set new result index
 					resultIndex = len(result) - 1
@@ -692,8 +693,8 @@ func getBeginSideBlockData(block *types.Block, store Store) []tmproto.SideTxResu
 				// if tx is not processed for current vote, add it into sigs for particular side-tx result
 				if _, ok := txMapping[resultIndex]; !ok {
 					// get result object from result index
-					result[resultIndex].Sigs = append(result[resultIndex].Sigs, tmproto.SideTxSig{
-						Result:  tmproto.SideTxResultType(sideTxResult.Result),
+					result[resultIndex].Sigs = append(result[resultIndex].Sigs, abci.SideTxSig{
+						Result:  abci.SideTxResultType(sideTxResult.Result),
 						Sig:     sideTxResult.Sig,
 						Address: vote.ValidatorAddress,
 					})

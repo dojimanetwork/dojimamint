@@ -108,6 +108,13 @@ message Vote {
   repeated SideTxResult side_tx_results = 9;
 }
 
+//Side-Tx-Result structure inside vote
+message SideTxResult {
+  bytes tx_hash = 1; // Corresponds to TxHash in Go
+  int32 result = 2;  // Corresponds to Result in Go
+  bytes sig = 3;     // Corresponds to Sig in Go
+}
+
 // Commit contains the evidence that a block was committed by a set of validators.
 message Commit {
   int64                         height     = 1;
@@ -160,24 +167,4 @@ message TxProof {
   bytes                   root_hash = 1;
   bytes                   data      = 2;
   tendermint.crypto.Proof proof     = 3;
-}
-
-// Side-tx result type
-enum SideTxResultType {
-  Skip = 0;
-  Yes = 1;
-  No = 2;
-}
-
-// Side-tx sig
-message SideTxSig {
-  SideTxResultType result = 1;
-  bytes sig = 2;
-  bytes address = 3;
-}
-
-// Side tx results
-message SideTxResult {
-  bytes tx_hash = 1;
-  repeated SideTxSig sigs = 2 [(gogoproto.nullable)=false];
 }

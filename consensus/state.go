@@ -1150,7 +1150,7 @@ func (cs *State) defaultDecideProposal(height int64, round int32) {
 	// Make proposal
 	propBlockID := types.BlockID{Hash: block.Hash(), PartSetHeader: blockParts.Header()}
 	proposal := types.NewProposal(height, round, cs.ValidRound, propBlockID)
-	proposal.Data = block.DataHash // [peppermint] add data hash to proposal
+	proposal.Data = block.DataHash // [dojimamint] add data hash to proposal
 	d := proposal.SignBytes(cs.state.ChainID)
 	cs.Logger.Info("[dojimamint] New proposal", "signBytes", d)
 	p := proposal.ToProto()

@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"time"
 
+	abciTypes "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/crypto"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/protoio"
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
 
@@ -109,9 +109,8 @@ func (vote *Vote) Copy() *Vote {
 	return &voteCopy
 }
 
-
 func (vote *Vote) SignBytes(chainID string) []byte {
-	// [peppermint] converted from amino to rlp
+	// [dojimamint] converted from amino to rlp
 	bz, err := cdc.MarshalBinaryLengthPrefixed(CanonicalizeVote(chainID, vote.ToProto()))
 	if err != nil {
 		panic(err)
@@ -229,7 +228,7 @@ func (vote *Vote) ValidateBasic() error {
 				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
 			}
 
-			if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+			if _, ok := abciTypes.SideTxResultType_name[s.Result]; !ok {
 				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
 			}
 

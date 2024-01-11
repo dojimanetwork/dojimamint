@@ -135,7 +135,7 @@ message RequestApplySnapshotChunk {
 message RequestBeginSideBlock {
   bytes hash = 1;
   tendermint.types.Header header = 2 [(gogoproto.nullable)=false];
-  repeated tendermint.types.SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
+  repeated SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
 }
 
 message RequestDeliverSideTx {
@@ -308,7 +308,7 @@ message ResponseBeginSideBlock {
 message ResponseDeliverSideTx {
   uint32 code = 1;
   string codespace = 2;
-  tendermint.types.SideTxResultType result = 4;
+  SideTxResultType result = 4;
   bytes data = 3;
 }
 
@@ -399,6 +399,30 @@ message Evidence {
   // https://github.com/dojimanetwork/dojimamint/issues/4581
   int64 total_voting_power = 5;
 }
+
+//---------------Side-Tx-Types-----------
+
+// Side-tx result type
+enum SideTxResultType {
+  Skip = 0;
+  Yes = 1;
+  No = 2;
+}
+
+// Side-tx sig
+message SideTxSig {
+  SideTxResultType result = 1;
+  bytes sig = 2;
+  bytes address = 3;
+}
+
+// Side tx results
+message SideTxResult {
+  bytes tx_hash = 1;
+  repeated SideTxSig sigs = 2 [(gogoproto.nullable)=false];
+}
+
+
 
 //----------------------------------------
 // State Sync Types

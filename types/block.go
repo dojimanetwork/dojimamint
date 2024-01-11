@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	tenderTypes "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	abciTypes "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/gogo/protobuf/proto"
 	gogotypes "github.com/gogo/protobuf/types"
 
@@ -701,7 +701,7 @@ func (cs CommitSig) ValidateBasic() error {
 					return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
 				}
 
-				if _, ok := tenderTypes.SideTxResultType_name[s.Result]; !ok {
+				if _, ok := abciTypes.SideTxResultType_name[s.Result]; !ok {
 					return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
 				}
 
