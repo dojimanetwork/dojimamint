@@ -249,12 +249,6 @@ func (vote *Vote) ToProto() *tmproto.Vote {
 		return nil
 	}
 
-	var sideTxResults []*tmproto.SideTxResult
-	for _, result := range vote.SideTxResults {
-		resultCopy := SideTxResultProto(result) // create a copy to avoid pointer to loop variable issue
-		sideTxResults = append(sideTxResults, &resultCopy)
-	}
-
 	return &tmproto.Vote{
 		Type:             vote.Type,
 		Height:           vote.Height,
@@ -264,7 +258,6 @@ func (vote *Vote) ToProto() *tmproto.Vote {
 		ValidatorAddress: vote.ValidatorAddress,
 		ValidatorIndex:   vote.ValidatorIndex,
 		Signature:        vote.Signature,
-		SideTxResults:    sideTxResults,
 	}
 }
 
@@ -291,13 +284,4 @@ func VoteFromProto(pv *tmproto.Vote) (*Vote, error) {
 	vote.Signature = pv.Signature
 
 	return vote, vote.ValidateBasic()
-}
-
-// function to convert SideTxResults into proto
-func SideTxResultProto(str SideTxResult) tmproto.SideTxResult {
-	return tmproto.SideTxResult{
-		TxHash: str.TxHash,
-		Result: str.Result,
-		Sig:    str.Sig,
-	}
 }
