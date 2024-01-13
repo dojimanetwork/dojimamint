@@ -768,8 +768,21 @@ func (cs *CommitSig) FromProto(csp tmproto.CommitSig) error {
 	cs.ValidatorAddress = csp.ValidatorAddress
 	cs.Timestamp = csp.Timestamp
 	cs.Signature = csp.Signature
+	cs.SideTxResults = convertProtoSideTxResults(csp.SideTxResults) //[dojimamint]
 
 	return cs.ValidateBasic()
+}
+
+func convertProtoSideTxResults(protoStxResults []*tmproto.SideTxResult) []SideTxResult {
+	var stxResults []SideTxResult
+	for _, protoStxResult := range protoStxResults {
+		stxResults = append(stxResults, SideTxResult{
+			TxHash: protoStxResult.TxHash,
+			Result: protoStxResult.Result,
+			Sig:    protoStxResult.Sig,
+		})
+	}
+	return stxResults
 }
 
 //-------------------------------------
