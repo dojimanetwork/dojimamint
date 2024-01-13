@@ -744,7 +744,20 @@ func (cs *CommitSig) ToProto() *tmproto.CommitSig {
 		ValidatorAddress: cs.ValidatorAddress,
 		Timestamp:        cs.Timestamp,
 		Signature:        cs.Signature,
+		SideTxResults:    convertSideTxResults(cs.SideTxResults), //[dojimamint]
 	}
+}
+
+func convertSideTxResults(stxResults []SideTxResult) []*tmproto.SideTxResult {
+	var protoStxResults []*tmproto.SideTxResult
+	for _, stxResult := range stxResults {
+		protoStxResults = append(protoStxResults, &tmproto.SideTxResult{
+			TxHash: stxResult.TxHash,
+			Result: stxResult.Result,
+			Sig:    stxResult.Sig,
+		})
+	}
+	return protoStxResults
 }
 
 // FromProto sets a protobuf CommitSig to the given pointer.
