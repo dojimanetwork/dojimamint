@@ -625,7 +625,7 @@ func (voteSet *VoteSet) MakeCommit() *Commit {
 	commitSigs := make([]CommitSig, len(voteSet.votes))
 	for i, v := range voteSet.votes {
 		commitSig := v.CommitSig()
-		if len(v.SideTxResults) > 0 {
+		if v != nil && v.SideTxResults != nil && len(v.SideTxResults) > 0 {
 			commitSig.SideTxResults = v.SideTxResults //[dojimamint]
 		}
 
