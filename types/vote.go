@@ -258,6 +258,7 @@ func (vote *Vote) ToProto() *tmproto.Vote {
 		ValidatorAddress: vote.ValidatorAddress,
 		ValidatorIndex:   vote.ValidatorIndex,
 		Signature:        vote.Signature,
+		SideTxResults:    convertSideTxResults(vote.SideTxResults),
 	}
 }
 
@@ -282,6 +283,7 @@ func VoteFromProto(pv *tmproto.Vote) (*Vote, error) {
 	vote.ValidatorAddress = pv.ValidatorAddress
 	vote.ValidatorIndex = pv.ValidatorIndex
 	vote.Signature = pv.Signature
+	vote.SideTxResults = convertProtoSideTxResults(pv.SideTxResults)
 
 	return vote, vote.ValidateBasic()
 }
