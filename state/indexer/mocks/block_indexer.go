@@ -7,7 +7,7 @@ import (
 
 	mock "github.com/stretchr/testify/mock"
 
-	query github.com/dojimanetwork/dojimamint/libs/pubsub/query"
+	query "github.com/dojimanetwork/dojimamint/libs/pubsub/query"
 
 	types "github.com/dojimanetwork/dojimamint/types"
 )

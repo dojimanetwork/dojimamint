@@ -7,10 +7,11 @@ import (
 	"github.com/google/uuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/dojimanetwork/dojimamint/test/loadtime/payload"
+	"github.com/dojimanetwork/dojimamint/test/loadtime/report"
 	"github.com/dojimanetwork/dojimamint/types"
-github.com/dojimanetwork/dojimamint/test/loadtime/payload"
-github.com/dojimanetwork/dojimamint/test/loadtime/report"
 )
+
 type mockBlockStore struct {
 	base   int64
 	blocks []*types.Block
