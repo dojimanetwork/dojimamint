@@ -17,6 +17,7 @@ import (
 	"github.com/minio/highwayhash"
 
 	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/libs/service"
@@ -739,7 +740,7 @@ func (a *addrBook) expireNew(bucketIdx int) {
 	for addrStr, ka := range a.bucketsNew[bucketIdx] {
 		// If an entry is bad, throw it away
 		if ka.isBad() {
-			a.Logger.Info(fmt.Sprintf("expiring bad address %v", addrStr))
+			a.Logger.Info("expire new", "msg", log.NewLazySprintf("expiring bad address %v", addrStr))
 			a.removeFromBucket(ka, bucketTypeNew, bucketIdx)
 			return
 		}

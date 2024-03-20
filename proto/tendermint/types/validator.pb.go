@@ -5,9 +5,9 @@ package types
 
 import (
 	fmt "fmt"
+	proto "github.com/cosmos/gogoproto/proto"
 	crypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -584,10 +584,7 @@ func (m *ValidatorSet) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValidator
 			}
 			if (iNdEx + skippy) > l {
@@ -742,10 +739,7 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValidator
 			}
 			if (iNdEx + skippy) > l {
@@ -850,10 +844,7 @@ func (m *SimpleValidator) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValidator
 			}
 			if (iNdEx + skippy) > l {

@@ -353,7 +353,7 @@ func (c *MConnection) Send(chID byte, msgBytes []byte) bool {
 		return false
 	}
 
-	c.Logger.Debug("Send", "channel", chID, "conn", c, "msgBytes", fmt.Sprintf("%X", msgBytes))
+	c.Logger.Debug("Send", "channel", chID, "conn", c, "msgBytes", log.NewLazySprintf("%X", msgBytes))
 
 	// Send message to channel.
 	channel, ok := c.channelsIdx[chID]
@@ -370,7 +370,7 @@ func (c *MConnection) Send(chID byte, msgBytes []byte) bool {
 		default:
 		}
 	} else {
-		c.Logger.Debug("Send failed", "channel", chID, "conn", c, "msgBytes", fmt.Sprintf("%X", msgBytes))
+		c.Logger.Debug("Send failed", "channel", chID, "conn", c, "msgBytes", log.NewLazySprintf("%X", msgBytes))
 	}
 	return success
 }
@@ -382,7 +382,7 @@ func (c *MConnection) TrySend(chID byte, msgBytes []byte) bool {
 		return false
 	}
 
-	c.Logger.Debug("TrySend", "channel", chID, "conn", c, "msgBytes", fmt.Sprintf("%X", msgBytes))
+	c.Logger.Debug("TrySend", "channel", chID, "conn", c, "msgBytes", log.NewLazySprintf("%X", msgBytes))
 
 	// Send message to channel.
 	channel, ok := c.channelsIdx[chID]
@@ -724,6 +724,7 @@ type ChannelDescriptor struct {
 	SendQueueCapacity   int
 	RecvBufferCapacity  int
 	RecvMessageCapacity int
+	MessageType         proto.Message
 }
 
 func (chDesc ChannelDescriptor) FillDefaults() (filled ChannelDescriptor) {

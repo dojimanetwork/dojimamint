@@ -5,9 +5,9 @@ package p2p
 
 import (
 	fmt "fmt"
+	proto "github.com/cosmos/gogoproto/proto"
 	crypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -158,6 +158,7 @@ func (m *PacketMsg) GetData() []byte {
 
 type Packet struct {
 	// Types that are valid to be assigned to Sum:
+	//
 	//	*Packet_PacketPing
 	//	*Packet_PacketPong
 	//	*Packet_PacketMsg
@@ -724,10 +725,7 @@ func (m *PacketPing) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthConn
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthConn
 			}
 			if (iNdEx + skippy) > l {
@@ -777,10 +775,7 @@ func (m *PacketPong) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthConn
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthConn
 			}
 			if (iNdEx + skippy) > l {
@@ -903,10 +898,7 @@ func (m *PacketMsg) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthConn
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthConn
 			}
 			if (iNdEx + skippy) > l {
@@ -1061,10 +1053,7 @@ func (m *Packet) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthConn
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthConn
 			}
 			if (iNdEx + skippy) > l {
@@ -1181,10 +1170,7 @@ func (m *AuthSigMessage) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthConn
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthConn
 			}
 			if (iNdEx + skippy) > l {

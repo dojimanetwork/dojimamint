@@ -7,6 +7,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/require"
 
+	"github.com/dojimanetwork/dojimamint/p2p"
 	ssproto "github.com/dojimanetwork/dojimamint/proto/tendermint/statesync"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )
@@ -99,8 +100,9 @@ func TestStateSyncVectors(t *testing.T) {
 
 	for _, tc := range testCases {
 		tc := tc
-
-		bz := mustEncodeMsg(tc.msg)
+		w := tc.msg.(p2p.Wrapper).Wrap()
+		bz, err := proto.Marshal(w)
+		require.NoError(t, err)
 
 		require.Equal(t, tc.expBytes, hex.EncodeToString(bz), tc.testName)
 	}

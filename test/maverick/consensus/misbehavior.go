@@ -5,6 +5,9 @@ import (
 
 	tmcon "github.com/dojimanetwork/dojimamint/consensus"
 	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/dojimanetwork/dojimamint/types"
 )
@@ -97,9 +100,19 @@ func DoublePrevoteMisbehavior() Misbehavior {
 		// there has to be at least two other peers connected else this behavior works normally
 		for idx, peer := range peers {
 			if idx%2 == 0 { // sign the proposal block
-				peer.Send(VoteChannel, tmcon.MustEncode(&tmcon.VoteMessage{Vote: prevote}))
+				p2p.SendEnvelopeShim(peer, p2p.Envelope{ //nolint: staticcheck
+					ChannelID: VoteChannel,
+					Message: &tmcons.Vote{
+						Vote: prevote.ToProto(),
+					},
+				}, cs.Logger)
 			} else { // sign a nil block
-				peer.Send(VoteChannel, tmcon.MustEncode(&tmcon.VoteMessage{Vote: nilPrevote}))
+				p2p.SendEnvelopeShim(peer, p2p.Envelope{ //nolint: staticcheck
+					ChannelID: VoteChannel,
+					Message: &tmcons.Vote{
+						Vote: nilPrevote.ToProto(),
+					},
+				}, cs.Logger)
 			}
 		}
 	}
@@ -300,7 +313,7 @@ func defaultReceivePrevote(cs *State, vote *types.Vote) {
 			} else {
 				cs.Logger.Info(
 					"valid block we do not know about; set ProposalBlock=nil",
-					"proposal", cs.ProposalBlock.Hash(),
+					"proposal", log.NewLazyBlockHash(cs.ProposalBlock),
 					"blockID", blockID.Hash,
 				)
 
