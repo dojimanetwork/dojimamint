@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gogo/protobuf/proto"
 	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
 	"github.com/dojimanetwork/dojimamint/libs/bits"
 	tmmath "github.com/dojimanetwork/dojimamint/libs/math"
@@ -12,6 +11,7 @@ import (
 	tmcons "github.com/dojimanetwork/dojimamint/proto/tendermint/consensus"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/gogo/protobuf/proto"
 )
 
 // MsgToProto takes a consensus message type and returns the proto defined consensus message.

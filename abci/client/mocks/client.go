@@ -734,3 +734,23 @@ func (_m *Client) String() string {
 
 	return r0
 }
+
+func (_m *Client) BeginSideBlockAsync(block types.RequestBeginSideBlock) *abcicli.ReqRes {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (_m *Client) BeginSideBlockSync(block types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (_m *Client) DeliverSideTxAsync(tx types.RequestDeliverSideTx) *abcicli.ReqRes {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (_m *Client) DeliverSideTxSync(tx types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
+	// TODO implement me
+	panic("implement me")
+}

@@ -114,7 +114,7 @@ func (cli *socketClient) SetResponseCallback(resCb Callback) {
 	cli.mtx.Unlock()
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 func (cli *socketClient) sendRequestsRoutine(conn io.Writer) {
 	w := bufio.NewWriter(conn)
@@ -217,7 +217,7 @@ func (cli *socketClient) didRecvResponse(res *types.Response) error {
 	return nil
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 func (cli *socketClient) EchoAsync(msg string) *ReqRes {
 	return cli.queueRequest(types.ToRequestEcho(msg))
@@ -279,7 +279,7 @@ func (cli *socketClient) ApplySnapshotChunkAsync(req types.RequestApplySnapshotC
 	return cli.queueRequest(types.ToRequestApplySnapshotChunk(req))
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 func (cli *socketClient) FlushSync() error {
 	reqRes := cli.queueRequest(types.ToRequestFlush())
@@ -427,7 +427,9 @@ func (cli *socketClient) BeginSideBlockAsync(req types.RequestBeginSideBlock) *R
 
 func (cli *socketClient) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
 	reqres := cli.queueRequest(types.ToRequestBeginSideBlock(req))
-	cli.FlushSync()
+	if err := cli.FlushSync(); err != nil {
+		return nil, err
+	}
 	return reqres.Response.GetBeginSideBlock(), cli.Error()
 }
 
@@ -437,11 +439,13 @@ func (cli *socketClient) DeliverSideTxAsync(req types.RequestDeliverSideTx) *Req
 
 func (cli *socketClient) DeliverSideTxSync(req types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
 	reqres := cli.queueRequest(types.ToRequestDeliverSideTx(req))
-	cli.FlushSync()
+	if err := cli.FlushSync(); err != nil {
+		return nil, err
+	}
 	return reqres.Response.GetDeliverSideTx(), cli.Error()
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 func (cli *socketClient) queueRequest(req *types.Request) *ReqRes {
 	reqres := NewReqRes(req)
@@ -482,7 +486,7 @@ LOOP:
 	}
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 func resMatchesReq(req *types.Request, res *types.Response) (ok bool) {
 	switch req.Value.(type) {

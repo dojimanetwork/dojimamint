@@ -97,6 +97,6 @@ func (sc *RetrySignerClient) SignProposal(chainID string, proposal *tmproto.Prop
 
 func (sc *RetrySignerClient) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
 
-	sig := sc.next.SignSideTxResult(sideTxResult)	
+	sig := sc.next.SignSideTxResult(sideTxResult)
 	return sig
 }

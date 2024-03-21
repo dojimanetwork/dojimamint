@@ -6,12 +6,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
 	"github.com/dojimanetwork/dojimamint/config"
 	"github.com/dojimanetwork/dojimamint/libs/cmap"
 	"github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/libs/service"
 	"github.com/dojimanetwork/dojimamint/p2p/conn"
+	"github.com/gogo/protobuf/proto"
 )
 
 const (

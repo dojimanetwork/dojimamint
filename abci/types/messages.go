@@ -175,7 +175,6 @@ func ToRequestDeliverSideTx(req RequestDeliverSideTx) *Request {
 	}
 }
 
-
 //----------------------------------------
 
 func ToResponseException(errStr string) *Response {
@@ -289,4 +288,3 @@ func ToResponseDeliverSideTx(req ResponseDeliverSideTx) *Response {
 		Value: &Response_DeliverSideTx{&req},
 	}
 }
-

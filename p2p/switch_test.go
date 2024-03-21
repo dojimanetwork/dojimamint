@@ -25,7 +25,6 @@ import (
 	tmsync "github.com/dojimanetwork/dojimamint/libs/sync"
 	"github.com/dojimanetwork/dojimamint/p2p/conn"
 	p2pproto "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
-
 )
 
 var cfg *config.P2PConfig

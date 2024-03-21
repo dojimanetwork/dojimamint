@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
 	clist "github.com/dojimanetwork/dojimamint/libs/clist"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/gogo/protobuf/proto"
 )
 
 const (

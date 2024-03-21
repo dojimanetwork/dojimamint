@@ -276,7 +276,6 @@ func (pv *FilePV) SignSideTxResult(sideTxResult *types.SideTxResultWithData) err
 	return nil
 }
 
-
 // Save persists the FilePV to disk.
 func (pv *FilePV) Save() {
 	pv.Key.Save()

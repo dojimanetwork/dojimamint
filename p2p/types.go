@@ -1,9 +1,9 @@
 package p2p
 
 import (
-	"github.com/gogo/protobuf/proto"
 	"github.com/dojimanetwork/dojimamint/p2p/conn"
 	tmp2p "github.com/dojimanetwork/dojimamint/proto/tendermint/p2p"
+	"github.com/gogo/protobuf/proto"
 )
 
 type ChannelDescriptor = conn.ChannelDescriptor

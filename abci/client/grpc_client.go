@@ -449,4 +449,3 @@ func (cli *grpcClient) DeliverSideTxSync(params types.RequestDeliverSideTx) (*ty
 	reqres := cli.DeliverSideTxAsync(params)
 	return reqres.Response.GetDeliverSideTx(), cli.Error()
 }
-

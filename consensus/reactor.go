@@ -7,7 +7,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
 	cstypes "github.com/dojimanetwork/dojimamint/consensus/types"
 	"github.com/dojimanetwork/dojimamint/libs/bits"
 	tmevents "github.com/dojimanetwork/dojimamint/libs/events"
@@ -20,6 +19,7 @@ import (
 	sm "github.com/dojimanetwork/dojimamint/state"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/gogo/protobuf/proto"
 )
 
 const (

@@ -79,7 +79,6 @@ type State struct {
 	// the latest AppHash we've received from calling abci.Commit()
 	AppHash []byte
 
-
 	// [dojimamint] side tx responses
 	SideTxResponses []*types.SideTxResultWithData
 }
