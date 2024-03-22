@@ -4108,7 +4108,7 @@ func (*UnimplementedABCIApplicationServer) DeliverSideTx(ctx context.Context, re
 	return nil, status.Errorf(codes.Unimplemented, "method DeliverSideTx not implemented")
 }
 
-func RegisterABCIApplicationServer(s grpc.Server, srv ABCIApplicationServer) {
+func RegisterABCIApplicationServer(s *grpc.Server, srv ABCIApplicationServer) {
 	s.RegisterService(&_ABCIApplication_serviceDesc, srv)
 }
 
