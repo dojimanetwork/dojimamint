@@ -36,6 +36,9 @@ message Request {
     RequestOfferSnapshot      offer_snapshot       = 13;
     RequestLoadSnapshotChunk  load_snapshot_chunk  = 14;
     RequestApplySnapshotChunk apply_snapshot_chunk = 15;
+
+    RequestBeginSideBlock begin_side_block = 21;
+    RequestDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -124,6 +127,21 @@ message RequestApplySnapshotChunk {
   string sender = 3;
 }
 
+//
+// Side channel requests
+//
+
+message RequestBeginSideBlock {
+  bytes hash = 1;
+  tendermint.types.Header header = 2 [(gogoproto.nullable)=false];
+  repeated SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
+}
+
+message RequestDeliverSideTx {
+  bytes tx = 1;
+}
+
+
 //----------------------------------------
 // Response types
 
@@ -145,6 +163,9 @@ message Response {
     ResponseOfferSnapshot      offer_snapshot       = 14;
     ResponseLoadSnapshotChunk  load_snapshot_chunk  = 15;
     ResponseApplySnapshotChunk apply_snapshot_chunk = 16;
+
+    ResponseBeginSideBlock begin_side_block = 21;
+    ResponseDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -282,13 +303,28 @@ message ResponseApplySnapshotChunk {
   }
 }
 
+//
+// Side channel response
+//
+
+message ResponseBeginSideBlock {
+  repeated Event events = 1 [(gogoproto.nullable)=false, (gogoproto.jsontag)="events,omitempty"];
+}
+
+message ResponseDeliverSideTx {
+  uint32 code = 1;
+  string codespace = 2;
+  SideTxResultType result = 4;
+  bytes data = 3;
+}
+
 //----------------------------------------
 // Misc.
 
 // ConsensusParams contains all consensus-relevant parameters
 // that can be adjusted by the abci app
 message ConsensusParams {
-  BlockParams                      block     = 1;
+  tendermint.types.BlockParams     block     = 1;
   tendermint.types.EvidenceParams  evidence  = 2;
   tendermint.types.ValidatorParams validator = 3;
   tendermint.types.VersionParams   version   = 4;
@@ -378,6 +414,30 @@ message Evidence {
   int64 total_voting_power = 5;
 }
 
+//---------------Side-Tx-Types-----------
+
+// Side-tx result type
+enum SideTxResultType {
+  Skip = 0;
+  Yes = 1;
+  No = 2;
+}
+
+// Side-tx sig
+message SideTxSig {
+  SideTxResultType result = 1;
+  bytes sig = 2;
+  bytes address = 3;
+}
+
+// Side tx results
+message SideTxResult {
+  bytes tx_hash = 1;
+  repeated SideTxSig sigs = 2 [(gogoproto.nullable)=false];
+}
+
+
+
 //----------------------------------------
 // State Sync Types
 
@@ -410,4 +470,6 @@ service ABCIApplication {
       returns (ResponseLoadSnapshotChunk);
   rpc ApplySnapshotChunk(RequestApplySnapshotChunk)
       returns (ResponseApplySnapshotChunk);
+  rpc BeginSideBlock(RequestBeginSideBlock) returns (ResponseBeginSideBlock);
+  rpc DeliverSideTx(RequestDeliverSideTx) returns (ResponseDeliverSideTx);
 }

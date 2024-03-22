@@ -4,12 +4,12 @@ import (
 	"github.com/tendermint/tendermint/types"
 )
 
-//------------------------------------------------------
+// ------------------------------------------------------
 // blockchain services types
 // NOTE: Interfaces used by RPC must be thread safe!
-//------------------------------------------------------
+// ------------------------------------------------------
 
-//------------------------------------------------------
+// ------------------------------------------------------
 // blockstore
 
 //go:generate ../scripts/mockery_generate.sh BlockStore
@@ -35,7 +35,7 @@ type BlockStore interface {
 	LoadSeenCommit(height int64) *types.Commit
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // evidence pool
 
 //go:generate ../scripts/mockery_generate.sh EvidencePool

@@ -257,7 +257,7 @@ func (txi *TxIndex) Search(ctx context.Context, q *query.Query) ([]*abci.TxResul
 	// extract ranges
 	// if both upper and lower bounds exist, it's better to get them in order not
 	// no iterate over kvs that are not within range.
-	//If we have a query range over height and want to still look for
+	// If we have a query range over height and want to still look for
 	// specific event values we do not want to simply return all
 	// transactios in this height range. We remember the height range info
 	// and pass it on to match() to take into account when processing events.

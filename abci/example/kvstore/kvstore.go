@@ -59,7 +59,7 @@ func prefixKey(key []byte) []byte {
 	return append(kvPairPrefixKey, key...)
 }
 
-//---------------------------------------------------
+// ---------------------------------------------------
 
 var _ types.Application = (*Application)(nil)
 

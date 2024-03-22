@@ -149,6 +149,11 @@ type FilePV struct {
 	LastSignState FilePVLastSignState
 }
 
+// SignSideTxResult implements types.PrivValidator
+func (*FilePV) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
+	panic("unimplemented")
+}
+
 // GenFilePV generates a new validator with randomly generated private key
 // and sets the filePaths, but does not call Save().
 func GenFilePV(keyFilePath, stateFilePath string) *FilePV {

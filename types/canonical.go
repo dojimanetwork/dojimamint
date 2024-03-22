@@ -61,6 +61,8 @@ func CanonicalizeVote(chainID string, vote *cmtproto.Vote) cmtproto.CanonicalVot
 		BlockID:   CanonicalizeBlockID(vote.BlockID),
 		Timestamp: vote.Timestamp,
 		ChainID:   chainID,
+
+		SideTxResults: vote.SideTxResults,
 	}
 }
 

@@ -18,7 +18,7 @@ type timeoutError interface {
 	Timeout() bool
 }
 
-//------------------------------------------------------------------
+// ------------------------------------------------------------------
 // TCP Listener
 
 // TCPListenerOption sets an optional parameter on the tcpListener.
@@ -84,7 +84,7 @@ func (ln *TCPListener) Accept() (net.Conn, error) {
 	return secretConn, nil
 }
 
-//------------------------------------------------------------------
+// ------------------------------------------------------------------
 // Unix Listener
 
 // unixListener implements net.Listener.
@@ -145,7 +145,7 @@ func (ln *UnixListener) Accept() (net.Conn, error) {
 	return conn, nil
 }
 
-//------------------------------------------------------------------
+// ------------------------------------------------------------------
 // Connection
 
 // timeoutConn implements net.Conn.

@@ -20,7 +20,7 @@ const (
 	ValidatorSetChangePrefix string = "val:"
 )
 
-//-----------------------------------------
+// -----------------------------------------
 
 var _ types.Application = (*PersistentKVStoreApplication)(nil)
 
@@ -173,7 +173,19 @@ func (app *PersistentKVStoreApplication) ApplySnapshotChunk(
 	return types.ResponseApplySnapshotChunk{Result: types.ResponseApplySnapshotChunk_ABORT}
 }
 
-//---------------------------------------------
+//
+// Side channel functions
+//
+
+func (app *PersistentKVStoreApplication) BeginSideBlock(req types.RequestBeginSideBlock) types.ResponseBeginSideBlock {
+	return app.app.BeginSideBlock(req)
+}
+
+func (app *PersistentKVStoreApplication) DeliverSideTx(req types.RequestDeliverSideTx) types.ResponseDeliverSideTx {
+	return app.app.DeliverSideTx(req)
+}
+
+// ---------------------------------------------
 // update validators
 
 func (app *PersistentKVStoreApplication) Validators() (validators []types.ValidatorUpdate) {

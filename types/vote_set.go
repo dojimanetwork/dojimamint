@@ -625,6 +625,10 @@ func (voteSet *VoteSet) MakeCommit() *Commit {
 	commitSigs := make([]CommitSig, len(voteSet.votes))
 	for i, v := range voteSet.votes {
 		commitSig := v.CommitSig()
+		if v != nil && v.SideTxResults != nil && len(v.SideTxResults) > 0 {
+			commitSig.SideTxResults = v.SideTxResults //[dojimamint]
+		}
+
 		// if block ID exists but doesn't match, exclude sig
 		if commitSig.ForBlock() && !v.BlockID.Equals(*voteSet.maj23) {
 			commitSig = NewCommitSigAbsent()

@@ -2,10 +2,12 @@ package types
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"time"
 
+	abciTypes "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/crypto"
 	cmtbytes "github.com/tendermint/tendermint/libs/bytes"
 	"github.com/tendermint/tendermint/libs/protoio"
@@ -56,6 +58,8 @@ type Vote struct {
 	ValidatorAddress Address                `json:"validator_address"`
 	ValidatorIndex   int32                  `json:"validator_index"`
 	Signature        []byte                 `json:"signature"`
+	SideTxResults    []SideTxResult         `json:"side_tx_results"` // side-tx result [dojimamint]
+
 }
 
 // CommitSig converts the Vote to a CommitSig.
@@ -105,6 +109,15 @@ func (vote *Vote) Copy() *Vote {
 	return &voteCopy
 }
 
+func (vote *Vote) SignBytes(chainID string) []byte {
+	// [dojimamint] converted from amino to rlp
+	bz, err := cdc.MarshalBinaryLengthPrefixed(CanonicalizeVote(chainID, vote.ToProto()))
+	if err != nil {
+		panic(err)
+	}
+	return bz
+}
+
 // String returns a string representation of Vote.
 //
 // 1. validator index
@@ -131,7 +144,16 @@ func (vote *Vote) String() string {
 		panic("Unknown vote type")
 	}
 
-	return fmt.Sprintf("Vote{%v:%X %v/%02d/%v(%v) %X %X @ %s}",
+	sideTxResults := "Proposals "
+	if len(vote.SideTxResults) > 0 {
+		for _, s := range vote.SideTxResults {
+			sideTxResults += s.String()
+		}
+	} else {
+		sideTxResults = "no-proposals"
+	}
+
+	return fmt.Sprintf("Vote{%v:%X %v/%02d/%v(%v) %X %X @ %s [%s]}",
 		vote.ValidatorIndex,
 		cmtbytes.Fingerprint(vote.ValidatorAddress),
 		vote.Height,
@@ -141,6 +163,7 @@ func (vote *Vote) String() string {
 		cmtbytes.Fingerprint(vote.BlockID.Hash),
 		cmtbytes.Fingerprint(vote.Signature),
 		CanonicalTime(vote.Timestamp),
+		sideTxResults,
 	)
 }
 
@@ -198,6 +221,24 @@ func (vote *Vote) ValidateBasic() error {
 		return fmt.Errorf("signature is too big (max: %d)", MaxSignatureSize)
 	}
 
+	if len(vote.SideTxResults) > 0 {
+		for _, s := range vote.SideTxResults {
+			// side-tx response sig should be empty or valid 65 bytes
+			if len(s.Sig) != 0 && len(s.Sig) != 65 {
+				return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+			}
+
+			if _, ok := abciTypes.SideTxResultType_name[s.Result]; !ok {
+				return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+			}
+
+			// tx-hash must be 32 bytes
+			if len(s.TxHash) != 32 {
+				return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -217,10 +258,11 @@ func (vote *Vote) ToProto() *cmtproto.Vote {
 		ValidatorAddress: vote.ValidatorAddress,
 		ValidatorIndex:   vote.ValidatorIndex,
 		Signature:        vote.Signature,
+		SideTxResults:    convertSideTxResults(vote.SideTxResults),
 	}
 }
 
-// FromProto converts a proto generetad type to a handwritten type
+// VoteFromProto converts a proto generated type to a handwritten type
 // return type, nil if everything converts safely, otherwise nil, error
 func VoteFromProto(pv *cmtproto.Vote) (*Vote, error) {
 	if pv == nil {
@@ -241,6 +283,7 @@ func VoteFromProto(pv *cmtproto.Vote) (*Vote, error) {
 	vote.ValidatorAddress = pv.ValidatorAddress
 	vote.ValidatorIndex = pv.ValidatorIndex
 	vote.Signature = pv.Signature
+	vote.SideTxResults = convertProtoSideTxResults(pv.SideTxResults)
 
 	return vote, vote.ValidateBasic()
 }

@@ -2,6 +2,7 @@ package types
 
 import (
 	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"strings"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	gogotypes "github.com/gogo/protobuf/types"
+	abciTypes "github.com/tendermint/tendermint/abci/types"
 
 	"github.com/tendermint/tendermint/crypto"
 	"github.com/tendermint/tendermint/crypto/merkle"
@@ -270,7 +272,7 @@ func BlockFromProto(bp *cmtproto.Block) (*Block, error) {
 	return b, b.ValidateBasic()
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // MaxDataBytes returns the maximum size of block's data.
 //
@@ -315,7 +317,7 @@ func MaxDataBytesNoEvidence(maxBytes int64, valsCount int) int64 {
 	return maxDataBytes
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Header defines the structure of a CometBFT block header.
 // NOTE: changes to the Header should be duplicated in:
@@ -569,7 +571,7 @@ func HeaderFromProto(ph *cmtproto.Header) (Header, error) {
 	return *h, h.ValidateBasic()
 }
 
-//-------------------------------------
+// -------------------------------------
 
 // BlockIDFlag indicates which BlockID the signature is for.
 type BlockIDFlag byte
@@ -597,6 +599,8 @@ type CommitSig struct {
 	ValidatorAddress Address     `json:"validator_address"`
 	Timestamp        time.Time   `json:"timestamp"`
 	Signature        []byte      `json:"signature"`
+
+	SideTxResults []SideTxResult `json:"side_tx_results"` // side-tx result [dojimamint]
 }
 
 // NewCommitSigForBlock returns new CommitSig with BlockIDFlagCommit.
@@ -621,6 +625,7 @@ func NewCommitSigAbsent() CommitSig {
 	return CommitSig{
 		BlockIDFlag: BlockIDFlagAbsent,
 	}
+
 }
 
 // ForBlock returns true if CommitSig is for the block.
@@ -640,11 +645,22 @@ func (cs CommitSig) Absent() bool {
 // 3. block ID flag
 // 4. timestamp
 func (cs CommitSig) String() string {
-	return fmt.Sprintf("CommitSig{%X by %X on %v @ %s}",
+	sideTxResults := "Proposals "
+	if len(cs.SideTxResults) > 0 {
+		for _, s := range cs.SideTxResults {
+			sideTxResults += s.String()
+		}
+	} else {
+		sideTxResults = "no-proposals"
+	}
+
+	return fmt.Sprintf("CommitSig{%X by %X on %v @ %s [%s]}",
 		cmtbytes.Fingerprint(cs.Signature),
 		cmtbytes.Fingerprint(cs.ValidatorAddress),
 		cs.BlockIDFlag,
-		CanonicalTime(cs.Timestamp))
+		CanonicalTime(cs.Timestamp),
+		sideTxResults,
+	)
 }
 
 // BlockID returns the Commit's BlockID if CommitSig indicates signing,
@@ -668,14 +684,6 @@ func (cs CommitSig) BlockID(commitBlockID BlockID) BlockID {
 func (cs CommitSig) ValidateBasic() error {
 	switch cs.BlockIDFlag {
 	case BlockIDFlagAbsent:
-	case BlockIDFlagCommit:
-	case BlockIDFlagNil:
-	default:
-		return fmt.Errorf("unknown BlockIDFlag: %v", cs.BlockIDFlag)
-	}
-
-	switch cs.BlockIDFlag {
-	case BlockIDFlagAbsent:
 		if len(cs.ValidatorAddress) != 0 {
 			return errors.New("validator address is present")
 		}
@@ -685,6 +693,26 @@ func (cs CommitSig) ValidateBasic() error {
 		if len(cs.Signature) != 0 {
 			return errors.New("signature is present")
 		}
+
+		if len(cs.SideTxResults) > 0 {
+			for _, s := range cs.SideTxResults {
+				// side-tx response sig should be empty or valid 65 bytes
+				if len(s.Sig) != 0 && len(s.Sig) != 65 {
+					return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+				}
+
+				if _, ok := abciTypes.SideTxResultType_name[s.Result]; !ok {
+					return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
+				}
+
+				// tx-hash must be 32 bytes
+				if len(s.TxHash) != 32 {
+					return fmt.Errorf("Invalid side-tx tx hash. TxHash: %v", hex.EncodeToString(s.TxHash))
+				}
+			}
+		}
+	case BlockIDFlagCommit:
+	case BlockIDFlagNil:
 	default:
 		if len(cs.ValidatorAddress) != crypto.AddressSize {
 			return fmt.Errorf("expected ValidatorAddress size to be %d bytes, got %d bytes",
@@ -699,6 +727,7 @@ func (cs CommitSig) ValidateBasic() error {
 		if len(cs.Signature) > MaxSignatureSize {
 			return fmt.Errorf("signature is too big (max: %d)", MaxSignatureSize)
 		}
+		return fmt.Errorf("unknown BlockIDFlag: %v", cs.BlockIDFlag)
 	}
 
 	return nil
@@ -715,7 +744,20 @@ func (cs *CommitSig) ToProto() *cmtproto.CommitSig {
 		ValidatorAddress: cs.ValidatorAddress,
 		Timestamp:        cs.Timestamp,
 		Signature:        cs.Signature,
+		SideTxResults:    convertSideTxResults(cs.SideTxResults), // [dojimamint]
 	}
+}
+
+func convertSideTxResults(stxResults []SideTxResult) []*cmtproto.SideTxResult {
+	var protoStxResults []*cmtproto.SideTxResult
+	for _, stxResult := range stxResults {
+		protoStxResults = append(protoStxResults, &cmtproto.SideTxResult{
+			TxHash: stxResult.TxHash,
+			Result: stxResult.Result,
+			Sig:    stxResult.Sig,
+		})
+	}
+	return protoStxResults
 }
 
 // FromProto sets a protobuf CommitSig to the given pointer.
@@ -726,11 +768,24 @@ func (cs *CommitSig) FromProto(csp cmtproto.CommitSig) error {
 	cs.ValidatorAddress = csp.ValidatorAddress
 	cs.Timestamp = csp.Timestamp
 	cs.Signature = csp.Signature
+	cs.SideTxResults = convertProtoSideTxResults(csp.SideTxResults) // [dojimamint]
 
 	return cs.ValidateBasic()
 }
 
-//-------------------------------------
+func convertProtoSideTxResults(protoStxResults []*cmtproto.SideTxResult) []SideTxResult {
+	var stxResults []SideTxResult
+	for _, protoStxResult := range protoStxResults {
+		stxResults = append(stxResults, SideTxResult{
+			TxHash: protoStxResult.TxHash,
+			Result: protoStxResult.Result,
+			Sig:    protoStxResult.Sig,
+		})
+	}
+	return stxResults
+}
+
+// -------------------------------------
 
 // Commit contains the evidence that a block was committed by a set of validators.
 // NOTE: Commit is empty for height 1, but never nil.
@@ -792,6 +847,7 @@ func (commit *Commit) GetVote(valIdx int32) *Vote {
 		ValidatorAddress: commitSig.ValidatorAddress,
 		ValidatorIndex:   valIdx,
 		Signature:        commitSig.Signature,
+		SideTxResults:    commitSig.SideTxResults,
 	}
 }
 
@@ -986,7 +1042,7 @@ func CommitFromProto(cp *cmtproto.Commit) (*Commit, error) {
 	return commit, commit.ValidateBasic()
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Data contains the set of transactions included in the block
 type Data struct {
@@ -1067,7 +1123,7 @@ func DataFromProto(dp *cmtproto.Data) (Data, error) {
 	return *data, nil
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // EvidenceData contains any evidence of malicious wrong-doing by validators
 type EvidenceData struct {
@@ -1158,7 +1214,7 @@ func (data *EvidenceData) FromProto(eviData *cmtproto.EvidenceList) error {
 	return nil
 }
 
-//--------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
 
 // BlockID
 type BlockID struct {

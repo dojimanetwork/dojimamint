@@ -9,12 +9,18 @@ import (
 	"strings"
 	"time"
 
+	"github.com/tendermint/go-amino"
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/crypto/merkle"
 	"github.com/tendermint/tendermint/crypto/tmhash"
 	cmtjson "github.com/tendermint/tendermint/libs/json"
 	cmtrand "github.com/tendermint/tendermint/libs/rand"
 	cmtproto "github.com/tendermint/tendermint/proto/tendermint/types"
+)
+
+const (
+	// MaxEvidenceBytes is a maximum size of any evidence (including amino overhead).
+	MaxEvidenceBytes int64 = 484
 )
 
 // Evidence represents any provable malicious activity by a validator.
@@ -29,7 +35,7 @@ type Evidence interface {
 	ValidateBasic() error  // basic consistency check
 }
 
-//--------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
 
 // DuplicateVoteEvidence contains evidence of a single validator signing two conflicting votes.
 type DuplicateVoteEvidence struct {
@@ -180,7 +186,7 @@ func DuplicateVoteEvidenceFromProto(pb *cmtproto.DuplicateVoteEvidence) (*Duplic
 	return dve, dve.ValidateBasic()
 }
 
-//------------------------------------ LIGHT EVIDENCE --------------------------------------
+// ------------------------------------ LIGHT EVIDENCE --------------------------------------
 
 // LightClientAttackEvidence is a generalized evidence that captures all forms of known attacks on
 // a light client such that a full node can verify, propose and commit the evidence on-chain for
@@ -318,10 +324,10 @@ func (l *LightClientAttackEvidence) Height() int64 {
 // String returns a string representation of LightClientAttackEvidence
 func (l *LightClientAttackEvidence) String() string {
 	return fmt.Sprintf(`LightClientAttackEvidence{
-		ConflictingBlock: %v, 
-		CommonHeight: %d, 
-		ByzatineValidators: %v, 
-		TotalVotingPower: %d, 
+		ConflictingBlock: %v,
+		CommonHeight: %d,
+		ByzatineValidators: %v,
+		TotalVotingPower: %d,
 		Timestamp: %v}#%X`,
 		l.ConflictingBlock.String(), l.CommonHeight, l.ByzantineValidators,
 		l.TotalVotingPower, l.Timestamp, l.Hash())
@@ -422,7 +428,7 @@ func LightClientAttackEvidenceFromProto(lpb *cmtproto.LightClientAttackEvidence)
 	return l, l.ValidateBasic()
 }
 
-//------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 
 // EvidenceList is a list of Evidence. Evidences is not a word.
 type EvidenceList []Evidence
@@ -459,7 +465,29 @@ func (evl EvidenceList) Has(evidence Evidence) bool {
 	return false
 }
 
-//------------------------------------------ PROTO --------------------------------------
+// -------------------------------------------
+
+func RegisterEvidences(cdc *amino.Codec) {
+	cdc.RegisterInterface((*Evidence)(nil), nil)
+	cdc.RegisterConcrete(&DuplicateVoteEvidence{}, "tendermint/DuplicateVoteEvidence", nil)
+}
+
+const (
+	MaxEvidenceBytesDenominator = 10
+)
+
+// MaxEvidencePerBlock returns the maximum number of evidences
+// allowed in the block and their maximum total size (limitted to 1/10th
+// of the maximum block size).
+// TODO: change to a constant, or to a fraction of the validator set size.
+// See https://github.com/tendermint/tendermint/issues/2590
+func MaxEvidencePerBlock(blockMaxBytes int64) (int64, int64) {
+	maxBytes := blockMaxBytes / MaxEvidenceBytesDenominator
+	maxNum := maxBytes / MaxEvidenceBytes
+	return maxNum, maxBytes
+}
+
+// ------------------------------------------ PROTO --------------------------------------
 
 // EvidenceToProto is a generalized function for encoding evidence that conforms to the
 // evidence interface to protobuf
@@ -515,7 +543,7 @@ func init() {
 	cmtjson.RegisterType(&LightClientAttackEvidence{}, "tendermint/LightClientAttackEvidence")
 }
 
-//-------------------------------------------- ERRORS --------------------------------------
+// -------------------------------------------- ERRORS --------------------------------------
 
 // ErrInvalidEvidence wraps a piece of evidence and the error denoting how or why it is invalid.
 type ErrInvalidEvidence struct {
@@ -549,7 +577,7 @@ func (err *ErrEvidenceOverflow) Error() string {
 	return fmt.Sprintf("Too much evidence: Max %d, got %d", err.Max, err.Got)
 }
 
-//-------------------------------------------- MOCKING --------------------------------------
+// -------------------------------------------- MOCKING --------------------------------------
 
 // unstable - use only for testing
 

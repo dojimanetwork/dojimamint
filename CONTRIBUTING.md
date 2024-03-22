@@ -105,7 +105,7 @@ specify exactly the dependency you want to update.
 ## Protobuf
 
 We use [Protocol Buffers](https://developers.google.com/protocol-buffers) along
-with [`gogoproto`](https://github.com/cosmos/gogoproto) to generate code for use
+with [`gogoproto`](https://google.golang.org/protobuf) to generate code for use
 across CometBFT.
 
 To generate proto stubs, lint, and check protos for breaking changes, you will

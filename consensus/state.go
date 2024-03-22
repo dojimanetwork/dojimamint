@@ -1153,6 +1153,9 @@ func (cs *State) defaultDecideProposal(height int64, round int32) {
 	// Make proposal
 	propBlockID := types.BlockID{Hash: block.Hash(), PartSetHeader: blockParts.Header()}
 	proposal := types.NewProposal(height, round, cs.ValidRound, propBlockID)
+	proposal.Data = block.DataHash // [dojimamint] add data hash to proposal
+	d := proposal.SignBytes(cs.state.ChainID)
+	cs.Logger.Info("[dojimamint] New proposal", "signBytes", d)
 	p := proposal.ToProto()
 	if err := cs.privValidator.SignProposal(cs.state.ChainID, p); err == nil {
 		proposal.Signature = p.Signature
@@ -2207,6 +2210,22 @@ func (cs *State) signVote(
 		Timestamp:        cs.voteTime(),
 		Type:             msgType,
 		BlockID:          types.BlockID{Hash: hash, PartSetHeader: header},
+	}
+
+	if len(cs.state.SideTxResponses) > 0 {
+		cs.Logger.Debug("[dojimamint] Setting side tx results to vote")
+		sideTxResults := make([]types.SideTxResult, 0)
+		for _, sideTxResponse := range cs.state.SideTxResponses {
+			// sign if data is available on side tx response
+			if len(sideTxResponse.Data) > 0 {
+				err := cs.privValidator.SignSideTxResult(sideTxResponse)
+				if err != nil {
+					return nil, err
+				}
+			}
+			sideTxResults = append(sideTxResults, sideTxResponse.SideTxResult)
+		}
+		vote.SideTxResults = sideTxResults
 	}
 
 	v := vote.ToProto()

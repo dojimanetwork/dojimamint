@@ -94,3 +94,9 @@ func (sc *RetrySignerClient) SignProposal(chainID string, proposal *cmtproto.Pro
 	}
 	return fmt.Errorf("exhausted all attempts to sign proposal: %w", err)
 }
+
+func (sc *RetrySignerClient) SignSideTxResult(sideTxResult *types.SideTxResultWithData) error {
+
+	sig := sc.next.SignSideTxResult(sideTxResult)
+	return sig
+}

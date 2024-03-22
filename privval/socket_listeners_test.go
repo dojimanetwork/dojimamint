@@ -9,14 +9,14 @@ import (
 	"github.com/tendermint/tendermint/crypto/ed25519"
 )
 
-//-------------------------------------------
+// -------------------------------------------
 // helper funcs
 
 func newPrivKey() ed25519.PrivKey {
 	return ed25519.GenPrivKey()
 }
 
-//-------------------------------------------
+// -------------------------------------------
 // tests
 
 type listenerTestCase struct {

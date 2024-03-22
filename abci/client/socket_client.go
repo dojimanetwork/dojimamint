@@ -417,6 +417,30 @@ func (cli *socketClient) ApplySnapshotChunkSync(
 	return reqres.Response.GetApplySnapshotChunk(), cli.Error()
 }
 
+//
+// Side channel
+//
+
+func (cli *socketClient) BeginSideBlockAsync(req types.RequestBeginSideBlock) *ReqRes {
+	return cli.queueRequest(types.ToRequestBeginSideBlock(req))
+}
+
+func (cli *socketClient) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	reqres := cli.queueRequest(types.ToRequestBeginSideBlock(req))
+	cli.FlushSync()
+	return reqres.Response.GetBeginSideBlock(), cli.Error()
+}
+
+func (cli *socketClient) DeliverSideTxAsync(req types.RequestDeliverSideTx) *ReqRes {
+	return cli.queueRequest(types.ToRequestDeliverSideTx(req))
+}
+
+func (cli *socketClient) DeliverSideTxSync(req types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
+	reqres := cli.queueRequest(types.ToRequestDeliverSideTx(req))
+	cli.FlushSync()
+	return reqres.Response.GetDeliverSideTx(), cli.Error()
+}
+
 //----------------------------------------
 
 func (cli *socketClient) queueRequest(req *types.Request) *ReqRes {

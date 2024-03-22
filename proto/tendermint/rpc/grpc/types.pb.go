@@ -245,10 +245,10 @@ type BroadcastAPIClient interface {
 }
 
 type broadcastAPIClient struct {
-	cc *grpc.ClientConn
+	cc grpc.ClientConn
 }
 
-func NewBroadcastAPIClient(cc *grpc.ClientConn) BroadcastAPIClient {
+func NewBroadcastAPIClient(cc grpc.ClientConn) BroadcastAPIClient {
 	return &broadcastAPIClient{cc}
 }
 
@@ -287,7 +287,7 @@ func (*UnimplementedBroadcastAPIServer) BroadcastTx(ctx context.Context, req *Re
 	return nil, status.Errorf(codes.Unimplemented, "method BroadcastTx not implemented")
 }
 
-func RegisterBroadcastAPIServer(s *grpc.Server, srv BroadcastAPIServer) {
+func RegisterBroadcastAPIServer(s grpc.Server, srv BroadcastAPIServer) {
 	s.RegisterService(&_BroadcastAPI_serviceDesc, srv)
 }
 

@@ -70,7 +70,7 @@ func (s *SnapshotStore) saveMetadata() error {
 	// save the file to a new file and move it to make saving atomic.
 	newFile := filepath.Join(s.dir, "metadata.json.new")
 	file := filepath.Join(s.dir, "metadata.json")
-	err = os.WriteFile(newFile, bz, 0o644) //nolint: gosec
+	err = os.WriteFile(newFile, bz, 0o644) // nolint: gosec
 	if err != nil {
 		return err
 	}
