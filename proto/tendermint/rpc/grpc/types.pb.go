@@ -6,7 +6,8 @@ package coregrpc
 import (
 	context "context"
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
+
+	"github.com/gogo/protobuf/proto"
 	types "github.com/tendermint/tendermint/abci/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -287,7 +288,7 @@ func (*UnimplementedBroadcastAPIServer) BroadcastTx(ctx context.Context, req *Re
 	return nil, status.Errorf(codes.Unimplemented, "method BroadcastTx not implemented")
 }
 
-func RegisterBroadcastAPIServer(s grpc.Server, srv BroadcastAPIServer) {
+func RegisterBroadcastAPIServer(s *grpc.Server, srv BroadcastAPIServer) {
 	s.RegisterService(&_BroadcastAPI_serviceDesc, srv)
 }
 

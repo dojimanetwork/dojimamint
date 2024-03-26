@@ -9,7 +9,7 @@ import (
 	cmtproto "github.com/tendermint/tendermint/proto/tendermint/types"
 )
 
-//-------------------------------------------------------
+// -------------------------------------------------------
 // Use strings to distinguish types in ABCI messages
 
 const (
@@ -24,7 +24,7 @@ var ABCIPubKeyTypesToNames = map[string]string{
 	ABCIPubKeyTypeSecp256k1: secp256k1.PubKeyName,
 }
 
-//-------------------------------------------------------
+// -------------------------------------------------------
 
 // TM2PB is used for converting CometBFT ABCI to protobuf ABCI.
 // UNSTABLE
@@ -99,10 +99,9 @@ func (tm2pb) ValidatorUpdates(vals *ValidatorSet) []abci.ValidatorUpdate {
 
 func (tm2pb) ConsensusParams(params *cmtproto.ConsensusParams) *abci.ConsensusParams {
 	return &abci.ConsensusParams{
-		Block: &cmtproto.BlockParams{
-			MaxBytes:   params.Block.MaxBytes,
-			MaxGas:     params.Block.MaxGas,
-			TimeIotaMs: params.Block.TimeIotaMs,
+		Block: &abci.BlockParams{
+			MaxBytes: params.Block.MaxBytes,
+			MaxGas:   params.Block.MaxGas,
 		},
 		Evidence:  &params.Evidence,
 		Validator: &params.Validator,
@@ -121,7 +120,7 @@ func (tm2pb) NewValidatorUpdate(pubkey crypto.PubKey, power int64) abci.Validato
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // PB2TM is used for converting protobuf ABCI to CometBFT ABCI.
 // UNSTABLE

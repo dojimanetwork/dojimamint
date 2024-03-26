@@ -5,10 +5,12 @@ package statesync
 
 import (
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
+
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	"github.com/gogo/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

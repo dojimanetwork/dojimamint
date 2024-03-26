@@ -5,10 +5,11 @@ package types
 
 import (
 	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
-	_ "github.com/gogo/protobuf/types"
+
+	"github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
+	_ "github.com/gogo/protobuf/gogoproto"
+	_ "github.com/gogo/protobuf/types"
 	crypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 	version "github.com/tendermint/tendermint/proto/tendermint/version"
 	io "io"

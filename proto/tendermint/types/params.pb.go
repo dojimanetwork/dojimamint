@@ -5,9 +5,10 @@ package types
 
 import (
 	fmt "fmt"
-	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
+
+	"github.com/gogo/protobuf/proto"
 	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
+	_ "github.com/gogo/protobuf/gogoproto"
 	_ "github.com/golang/protobuf/ptypes/duration"
 	io "io"
 	math "math"

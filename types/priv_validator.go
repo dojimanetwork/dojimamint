@@ -43,7 +43,7 @@ func (pvs PrivValidatorsByAddress) Swap(i, j int) {
 	pvs[i], pvs[j] = pvs[j], pvs[i]
 }
 
-//----------------------------------------
+// ----------------------------------------
 // MockPV
 
 // MockPV implements PrivValidator without any safety or persistence.
@@ -54,8 +54,8 @@ type MockPV struct {
 	breakVoteSigning     bool
 }
 
-func NewMockPV() *MockPV {
-	return &MockPV{ed25519.GenPrivKey(), false, false}
+func NewMockPV() MockPV {
+	return MockPV{ed25519.GenPrivKey(), false, false}
 }
 
 // NewMockPVWithParams allows one to create a MockPV instance, but with finer

@@ -37,6 +37,29 @@ func (_m *AppConnConsensus) BeginBlockSync(_a0 types.RequestBeginBlock) (*types.
 	return r0, r1
 }
 
+// BeginSideBlockSync provides a mock function with given fields: _a0
+func (_m *AppConnConsensus) BeginSideBlockSync(_a0 types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseBeginSideBlock
+	if rf, ok := ret.Get(0).(func(types.RequestBeginSideBlock) *types.ResponseBeginSideBlock); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseBeginSideBlock)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestBeginSideBlock) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // CommitSync provides a mock function with given fields:
 func (_m *AppConnConsensus) CommitSync() (*types.ResponseCommit, error) {
 	ret := _m.Called()
@@ -58,6 +81,22 @@ func (_m *AppConnConsensus) CommitSync() (*types.ResponseCommit, error) {
 	}
 
 	return r0, r1
+}
+
+// DeliverSideTxAsync provides a mock function with given fields: _a0
+func (_m *AppConnConsensus) DeliverSideTxAsync(_a0 types.RequestDeliverSideTx) *abcicli.ReqRes {
+	ret := _m.Called(_a0)
+
+	var r0 *abcicli.ReqRes
+	if rf, ok := ret.Get(0).(func(types.RequestDeliverSideTx) *abcicli.ReqRes); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*abcicli.ReqRes)
+		}
+	}
+
+	return r0
 }
 
 // DeliverTxAsync provides a mock function with given fields: _a0
