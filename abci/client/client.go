@@ -6,7 +6,7 @@ import (
 
 	"github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/service"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	cmtsync "github.com/tendermint/tendermint/libs/sync"
 )
 
 const (
@@ -56,6 +56,11 @@ type Client interface {
 	OfferSnapshotSync(types.RequestOfferSnapshot) (*types.ResponseOfferSnapshot, error)
 	LoadSnapshotChunkSync(types.RequestLoadSnapshotChunk) (*types.ResponseLoadSnapshotChunk, error)
 	ApplySnapshotChunkSync(types.RequestApplySnapshotChunk) (*types.ResponseApplySnapshotChunk, error)
+
+	BeginSideBlockAsync(types.RequestBeginSideBlock) *ReqRes
+	BeginSideBlockSync(types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error)
+	DeliverSideTxAsync(types.RequestDeliverSideTx) *ReqRes
+	DeliverSideTxSync(types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error)
 }
 
 //----------------------------------------
@@ -81,9 +86,15 @@ type ReqRes struct {
 	*sync.WaitGroup
 	*types.Response // Not set atomically, so be sure to use WaitGroup.
 
-	mtx  tmsync.Mutex
-	done bool                  // Gets set to true once *after* WaitGroup.Done().
-	cb   func(*types.Response) // A single callback that may be set.
+	mtx cmtsync.Mutex
+
+	// callbackInvoked as a variable to track if the callback was already
+	// invoked during the regular execution of the request. This variable
+	// allows clients to set the callback simultaneously without potentially
+	// invoking the callback twice by accident, once when 'SetCallback' is
+	// called and once during the normal request.
+	callbackInvoked bool
+	cb              func(*types.Response) // A single callback that may be set.
 }
 
 func NewReqRes(req *types.Request) *ReqRes {
@@ -92,8 +103,8 @@ func NewReqRes(req *types.Request) *ReqRes {
 		WaitGroup: waitGroup1(),
 		Response:  nil,
 
-		done: false,
-		cb:   nil,
+		callbackInvoked: false,
+		cb:              nil,
 	}
 }
 
@@ -103,7 +114,7 @@ func NewReqRes(req *types.Request) *ReqRes {
 func (r *ReqRes) SetCallback(cb func(res *types.Response)) {
 	r.mtx.Lock()
 
-	if r.done {
+	if r.callbackInvoked {
 		r.mtx.Unlock()
 		cb(r.Response)
 		return
@@ -122,6 +133,7 @@ func (r *ReqRes) InvokeCallback() {
 	if r.cb != nil {
 		r.cb(r.Response)
 	}
+	r.callbackInvoked = true
 }
 
 // GetCallback returns the configured callback of the ReqRes object which may be
@@ -134,13 +146,6 @@ func (r *ReqRes) GetCallback() func(*types.Response) {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 	return r.cb
-}
-
-// SetDone marks the ReqRes object as done.
-func (r *ReqRes) SetDone() {
-	r.mtx.Lock()
-	r.done = true
-	r.mtx.Unlock()
 }
 
 func waitGroup1() (wg *sync.WaitGroup) {

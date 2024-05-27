@@ -12,12 +12,12 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/libs/log"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	cmtsync "github.com/tendermint/tendermint/libs/sync"
 	"github.com/tendermint/tendermint/p2p"
 	p2pmocks "github.com/tendermint/tendermint/p2p/mocks"
-	tmstate "github.com/tendermint/tendermint/proto/tendermint/state"
+	cmtstate "github.com/tendermint/tendermint/proto/tendermint/state"
 	ssproto "github.com/tendermint/tendermint/proto/tendermint/statesync"
-	tmversion "github.com/tendermint/tendermint/proto/tendermint/version"
+	cmtversion "github.com/tendermint/tendermint/proto/tendermint/version"
 	"github.com/tendermint/tendermint/proxy"
 	proxymocks "github.com/tendermint/tendermint/proxy/mocks"
 	sm "github.com/tendermint/tendermint/state"
@@ -50,8 +50,8 @@ func simplePeer(id string) *p2pmocks.Peer {
 func TestSyncer_SyncAny(t *testing.T) {
 	state := sm.State{
 		ChainID: "chain",
-		Version: tmstate.Version{
-			Consensus: tmversion.Consensus{
+		Version: cmtstate.Version{
+			Consensus: cmtversion.Consensus{
 				Block: version.BlockProtocol,
 				App:   testAppVersion,
 			},
@@ -96,15 +96,29 @@ func TestSyncer_SyncAny(t *testing.T) {
 	require.Error(t, err)
 
 	// Adding a couple of peers should trigger snapshot discovery messages
-	peerA := &p2pmocks.Peer{}
+	peerA := &p2pmocks.PeerEnvelopeSender{}
 	peerA.On("ID").Return(p2p.ID("a"))
-	peerA.On("Send", SnapshotChannel, mustEncodeMsg(&ssproto.SnapshotsRequest{})).Return(true)
+	peerA.On("SendEnvelope", mock.MatchedBy(func(i interface{}) bool {
+		e, ok := i.(p2p.Envelope)
+		if !ok {
+			return false
+		}
+		req, ok := e.Message.(*ssproto.SnapshotsRequest)
+		return ok && e.ChannelID == SnapshotChannel && req != nil
+	})).Return(true)
 	syncer.AddPeer(peerA)
 	peerA.AssertExpectations(t)
 
-	peerB := &p2pmocks.Peer{}
+	peerB := &p2pmocks.PeerEnvelopeSender{}
 	peerB.On("ID").Return(p2p.ID("b"))
-	peerB.On("Send", SnapshotChannel, mustEncodeMsg(&ssproto.SnapshotsRequest{})).Return(true)
+	peerB.On("SendEnvelope", mock.MatchedBy(func(i interface{}) bool {
+		e, ok := i.(p2p.Envelope)
+		if !ok {
+			return false
+		}
+		req, ok := e.Message.(*ssproto.SnapshotsRequest)
+		return ok && e.ChannelID == SnapshotChannel && req != nil
+	})).Return(true)
 	syncer.AddPeer(peerB)
 	peerB.AssertExpectations(t)
 
@@ -145,11 +159,11 @@ func TestSyncer_SyncAny(t *testing.T) {
 	}).Times(2).Return(&abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ACCEPT}, nil)
 
 	chunkRequests := make(map[uint32]int)
-	chunkRequestsMtx := tmsync.Mutex{}
+	chunkRequestsMtx := cmtsync.Mutex{}
 	onChunkRequest := func(args mock.Arguments) {
-		pb, err := decodeMsg(args[1].([]byte))
-		require.NoError(t, err)
-		msg := pb.(*ssproto.ChunkRequest)
+		e, ok := args[0].(p2p.Envelope)
+		require.True(t, ok)
+		msg := e.Message.(*ssproto.ChunkRequest)
 		require.EqualValues(t, 1, msg.Height)
 		require.EqualValues(t, 1, msg.Format)
 		require.LessOrEqual(t, msg.Index, uint32(len(chunks)))
@@ -162,8 +176,14 @@ func TestSyncer_SyncAny(t *testing.T) {
 		chunkRequests[msg.Index]++
 		chunkRequestsMtx.Unlock()
 	}
-	peerA.On("Send", ChunkChannel, mock.Anything).Maybe().Run(onChunkRequest).Return(true)
-	peerB.On("Send", ChunkChannel, mock.Anything).Maybe().Run(onChunkRequest).Return(true)
+	peerA.On("SendEnvelope", mock.MatchedBy(func(i interface{}) bool {
+		e, ok := i.(p2p.Envelope)
+		return ok && e.ChannelID == ChunkChannel
+	})).Maybe().Run(onChunkRequest).Return(true)
+	peerB.On("SendEnvelope", mock.MatchedBy(func(i interface{}) bool {
+		e, ok := i.(p2p.Envelope)
+		return ok && e.ChannelID == ChunkChannel
+	})).Maybe().Run(onChunkRequest).Return(true)
 
 	// The first time we're applying chunk 2 we tell it to retry the snapshot and discard chunk 1,
 	// which should cause it to keep the existing chunk 0 and 2, and restart restoration from

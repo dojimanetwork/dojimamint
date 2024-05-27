@@ -9,7 +9,7 @@ import (
 	"github.com/tendermint/tendermint/types"
 )
 
-//-----------------------------------------------------
+// -----------------------------------------------------
 // Validate block
 
 func validateBlock(state State, block *types.Block) error {

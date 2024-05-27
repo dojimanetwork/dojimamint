@@ -11,7 +11,7 @@ import (
 	"github.com/tendermint/tendermint/types"
 )
 
-//--------
+// --------
 // Peer
 
 // BpPeerParams stores the peer parameters that are used when creating a peer.

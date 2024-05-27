@@ -734,3 +734,78 @@ func (_m *Client) String() string {
 
 	return r0
 }
+
+func (_m *Client) BeginSideBlockAsync(_a0 types.RequestBeginSideBlock) *abcicli.ReqRes {
+	ret := _m.Called(_a0)
+
+	var r0 *abcicli.ReqRes
+	if rf, ok := ret.Get(0).(func(types.RequestBeginSideBlock) *abcicli.ReqRes); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*abcicli.ReqRes)
+		}
+	}
+
+	return r0
+}
+
+func (_m *Client) BeginSideBlockSync(_a0 types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseBeginSideBlock
+	if rf, ok := ret.Get(0).(func(types.RequestBeginSideBlock) *types.ResponseBeginSideBlock); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseBeginSideBlock)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestBeginSideBlock) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+
+	return r0, r1
+}
+
+func (_m *Client) DeliverSideTxAsync(_a0 types.RequestDeliverSideTx) *abcicli.ReqRes {
+	ret := _m.Called(_a0)
+
+	var r0 *abcicli.ReqRes
+	if rf, ok := ret.Get(0).(func(types.RequestDeliverSideTx) *abcicli.ReqRes); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*abcicli.ReqRes)
+		}
+	}
+
+	return r0
+}
+
+func (_m *Client) DeliverSideTxSync(_a0 types.RequestDeliverSideTx) (*types.ResponseDeliverSideTx, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseDeliverSideTx
+	if rf, ok := ret.Get(0).(func(types.RequestDeliverSideTx) *types.ResponseDeliverSideTx); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseDeliverSideTx)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestDeliverSideTx) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}

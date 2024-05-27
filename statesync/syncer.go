@@ -10,7 +10,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/config"
 	"github.com/tendermint/tendermint/libs/log"
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	cmtsync "github.com/tendermint/tendermint/libs/sync"
 	"github.com/tendermint/tendermint/light"
 	"github.com/tendermint/tendermint/p2p"
 	ssproto "github.com/tendermint/tendermint/proto/tendermint/statesync"
@@ -60,7 +60,7 @@ type syncer struct {
 	chunkFetchers int32
 	retryTimeout  time.Duration
 
-	mtx    tmsync.RWMutex
+	mtx    cmtsync.RWMutex
 	chunks *chunkQueue
 }
 
@@ -126,7 +126,11 @@ func (s *syncer) AddSnapshot(peer p2p.Peer, snapshot *snapshot) (bool, error) {
 // to discover snapshots, later we may want to do retries and stuff.
 func (s *syncer) AddPeer(peer p2p.Peer) {
 	s.logger.Debug("Requesting snapshots from peer", "peer", peer.ID())
-	peer.Send(SnapshotChannel, mustEncodeMsg(&ssproto.SnapshotsRequest{}))
+	e := p2p.Envelope{
+		ChannelID: SnapshotChannel,
+		Message:   &ssproto.SnapshotsRequest{},
+	}
+	p2p.SendEnvelopeShim(peer, e, s.logger) //nolint: staticcheck
 }
 
 // RemovePeer removes a peer from the pool.
@@ -144,7 +148,7 @@ func (s *syncer) SyncAny(discoveryTime time.Duration, retryHook func()) (sm.Stat
 	}
 
 	if discoveryTime > 0 {
-		s.logger.Info(fmt.Sprintf("Discovering snapshots for %v", discoveryTime))
+		s.logger.Info("sync any", "msg", log.NewLazySprintf("Discovering snapshots for %v", discoveryTime))
 		time.Sleep(discoveryTime)
 	}
 
@@ -166,7 +170,7 @@ func (s *syncer) SyncAny(discoveryTime time.Duration, retryHook func()) (sm.Stat
 				return sm.State{}, nil, errNoSnapshots
 			}
 			retryHook()
-			s.logger.Info(fmt.Sprintf("Discovering snapshots for %v", discoveryTime))
+			s.logger.Info("sync any", "msg", log.NewLazySprintf("Discovering snapshots for %v", discoveryTime))
 			time.Sleep(discoveryTime)
 			continue
 		}
@@ -280,7 +284,7 @@ func (s *syncer) Sync(snapshot *snapshot, chunks *chunkQueue) (sm.State, *types.
 	// Optimistically build new state, so we don't discover any light client failures at the end.
 	state, err := s.stateProvider.State(pctx, snapshot.Height)
 	if err != nil {
-		s.logger.Info("failed to fetch and verify tendermint state", "err", err)
+		s.logger.Info("failed to fetch and verify CometBFT state", "err", err)
 		if err == light.ErrNoWitnesses {
 			return sm.State{}, nil, err
 		}
@@ -467,11 +471,14 @@ func (s *syncer) requestChunk(snapshot *snapshot, chunk uint32) {
 	}
 	s.logger.Debug("Requesting snapshot chunk", "height", snapshot.Height,
 		"format", snapshot.Format, "chunk", chunk, "peer", peer.ID())
-	peer.Send(ChunkChannel, mustEncodeMsg(&ssproto.ChunkRequest{
-		Height: snapshot.Height,
-		Format: snapshot.Format,
-		Index:  chunk,
-	}))
+	p2p.SendEnvelopeShim(peer, p2p.Envelope{ //nolint: staticcheck
+		ChannelID: ChunkChannel,
+		Message: &ssproto.ChunkRequest{
+			Height: snapshot.Height,
+			Format: snapshot.Format,
+			Index:  chunk,
+		},
+	}, s.logger)
 }
 
 // verifyApp verifies the sync, checking the app hash, last block height and app version

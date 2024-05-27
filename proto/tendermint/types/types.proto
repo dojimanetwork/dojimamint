@@ -54,7 +54,7 @@ message BlockID {
 
 // --------------------------------
 
-// Header defines the structure of a Tendermint block header.
+// Header defines the structure of a block header.
 message Header {
   // basic block info
   tendermint.version.Consensus version  = 1 [(gogoproto.nullable) = false];
@@ -79,6 +79,9 @@ message Header {
   // consensus info
   bytes evidence_hash    = 13;  // evidence included in the block
   bytes proposer_address = 14;  // original proposer of the block
+
+  int64 num_txs = 15;
+  int64 total_txs = 16;
 }
 
 // Data contains the set of transactions included in the block
@@ -102,14 +105,22 @@ message Vote {
   bytes validator_address = 6;
   int32 validator_index   = 7;
   bytes signature         = 8;
+  repeated SideTxResult side_tx_results = 9;
+}
+
+//Side-Tx-Result structure inside vote
+message SideTxResult {
+  bytes tx_hash = 1; // Corresponds to TxHash in Go
+  int32 result = 2;  // Corresponds to Result in Go
+  bytes sig = 3;     // Corresponds to Sig in Go
 }
 
 // Commit contains the evidence that a block was committed by a set of validators.
 message Commit {
-  int64                         height     = 1;
-  int32                         round      = 2;
-  BlockID                       block_id   = 3 [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];
-  repeated CommitSig            signatures = 4 [(gogoproto.nullable) = false];
+  int64              height     = 1;
+  int32              round      = 2;
+  BlockID            block_id   = 3 [(gogoproto.nullable) = false, (gogoproto.customname) = "BlockID"];
+  repeated CommitSig signatures = 4 [(gogoproto.nullable) = false];
 }
 
 // CommitSig is a part of the Vote included in a Commit.
@@ -119,6 +130,7 @@ message CommitSig {
   google.protobuf.Timestamp timestamp         = 3
       [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
   bytes signature = 4;
+  repeated SideTxResult side_tx_results = 5;
 }
 
 message Proposal {
@@ -130,6 +142,7 @@ message Proposal {
   google.protobuf.Timestamp timestamp = 6
       [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
   bytes signature = 7;
+  bytes data = 8;
 }
 
 message SignedHeader {

@@ -3,7 +3,7 @@ package pubsub
 import (
 	"errors"
 
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	cmtsync "github.com/tendermint/tendermint/libs/sync"
 )
 
 var (
@@ -24,7 +24,7 @@ type Subscription struct {
 	out chan Message
 
 	canceled chan struct{}
-	mtx      tmsync.RWMutex
+	mtx      cmtsync.RWMutex
 	err      error
 }
 
@@ -43,7 +43,6 @@ func (s *Subscription) Out() <-chan Message {
 	return s.out
 }
 
-// nolint: misspell
 // Cancelled returns a channel that's closed when the subscription is
 // terminated and supposed to be used in a select statement.
 func (s *Subscription) Cancelled() <-chan struct{} {
@@ -54,7 +53,8 @@ func (s *Subscription) Cancelled() <-chan struct{} {
 // If the channel is closed, Err returns a non-nil error explaining why:
 //   - ErrUnsubscribed if the subscriber choose to unsubscribe,
 //   - ErrOutOfCapacity if the subscriber is not pulling messages fast enough
-//   and the channel returned by Out became full,
+//     and the channel returned by Out became full,
+//
 // After Err returns a non-nil error, successive calls to Err return the same
 // error.
 func (s *Subscription) Err() error {

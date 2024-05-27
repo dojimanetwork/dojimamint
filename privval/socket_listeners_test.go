@@ -1,7 +1,6 @@
 package privval
 
 import (
-	"io/ioutil"
 	"net"
 	"os"
 	"testing"
@@ -10,14 +9,14 @@ import (
 	"github.com/tendermint/tendermint/crypto/ed25519"
 )
 
-//-------------------------------------------
+// -------------------------------------------
 // helper funcs
 
 func newPrivKey() ed25519.PrivKey {
 	return ed25519.GenPrivKey()
 }
 
-//-------------------------------------------
+// -------------------------------------------
 // tests
 
 type listenerTestCase struct {
@@ -29,7 +28,7 @@ type listenerTestCase struct {
 // testUnixAddr will attempt to obtain a platform-independent temporary file
 // name for a Unix socket
 func testUnixAddr() (string, error) {
-	f, err := ioutil.TempFile("", "tendermint-privval-test-*")
+	f, err := os.CreateTemp("", "cometbft-privval-test-*")
 	if err != nil {
 		return "", err
 	}

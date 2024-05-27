@@ -6,8 +6,10 @@ package crypto
 import (
 	bytes "bytes"
 	fmt "fmt"
+
 	_ "github.com/gogo/protobuf/gogoproto"
-	proto "github.com/gogo/protobuf/proto"
+	"github.com/gogo/protobuf/proto"
+
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -24,9 +26,10 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// PublicKey defines the keys available for use with Tendermint Validators
+// PublicKey defines the keys available for use with Validators
 type PublicKey struct {
 	// Types that are valid to be assigned to Sum:
+	//
 	//	*PublicKey_Ed25519
 	//	*PublicKey_Secp256K1
 	Sum isPublicKey_Sum `protobuf_oneof:"sum"`

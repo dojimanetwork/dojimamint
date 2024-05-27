@@ -5,9 +5,9 @@ import (
 	"github.com/tendermint/tendermint/abci/types"
 )
 
-//go:generate mockery --case underscore --name AppConnConsensus|AppConnMempool|AppConnQuery|AppConnSnapshot
+//go:generate ../scripts/mockery_generate.sh AppConnConsensus|AppConnMempool|AppConnQuery|AppConnSnapshot
 
-//----------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------
 // Enforce which abci msgs can be sent on a connection at the type level
 
 type AppConnConsensus interface {
@@ -20,6 +20,9 @@ type AppConnConsensus interface {
 	DeliverTxAsync(types.RequestDeliverTx) *abcicli.ReqRes
 	EndBlockSync(types.RequestEndBlock) (*types.ResponseEndBlock, error)
 	CommitSync() (*types.ResponseCommit, error)
+
+	BeginSideBlockSync(types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error)
+	DeliverSideTxAsync(types.RequestDeliverSideTx) *abcicli.ReqRes
 }
 
 type AppConnMempool interface {
@@ -52,7 +55,15 @@ type AppConnSnapshot interface {
 	ApplySnapshotChunkSync(types.RequestApplySnapshotChunk) (*types.ResponseApplySnapshotChunk, error)
 }
 
-//-----------------------------------------------------------------------------------------
+func (app *appConnConsensus) BeginSideBlockSync(req types.RequestBeginSideBlock) (*types.ResponseBeginSideBlock, error) {
+	return app.appConn.BeginSideBlockSync(req)
+}
+
+func (app *appConnConsensus) DeliverSideTxAsync(req types.RequestDeliverSideTx) *abcicli.ReqRes {
+	return app.appConn.DeliverSideTxAsync(req)
+}
+
+// -----------------------------------------------------------------------------------------
 // Implements AppConnConsensus (subset of abcicli.Client)
 
 type appConnConsensus struct {
@@ -93,7 +104,7 @@ func (app *appConnConsensus) CommitSync() (*types.ResponseCommit, error) {
 	return app.appConn.CommitSync()
 }
 
-//------------------------------------------------
+// ------------------------------------------------
 // Implements AppConnMempool (subset of abcicli.Client)
 
 type appConnMempool struct {
@@ -130,7 +141,7 @@ func (app *appConnMempool) CheckTxSync(req types.RequestCheckTx) (*types.Respons
 	return app.appConn.CheckTxSync(req)
 }
 
-//------------------------------------------------
+// ------------------------------------------------
 // Implements AppConnQuery (subset of abcicli.Client)
 
 type appConnQuery struct {
@@ -159,7 +170,7 @@ func (app *appConnQuery) QuerySync(reqQuery types.RequestQuery) (*types.Response
 	return app.appConn.QuerySync(reqQuery)
 }
 
-//------------------------------------------------
+// ------------------------------------------------
 // Implements AppConnSnapshot (subset of abcicli.Client)
 
 type appConnSnapshot struct {

@@ -180,6 +180,15 @@ func (p *http) signedHeader(ctx context.Context, height *int64) (*types.SignedHe
 		commit, err := p.client.Commit(ctx, height)
 		switch {
 		case err == nil:
+			// See https://github.com/cometbft/cometbft/issues/575
+			// If the node is starting at a non-zero height, but does not yet
+			// have any blocks, it can return an empty signed header without
+			// returning an error.
+			if commit.SignedHeader.IsEmpty() {
+				// Technically this means that the provider still needs to
+				// catch up.
+				return nil, provider.ErrHeightTooHigh
+			}
 			return &commit.SignedHeader, nil
 
 		case regexpTooHigh.MatchString(err.Error()):
@@ -216,6 +225,6 @@ func validateHeight(height int64) (*int64, error) {
 // exponential backoff (with jitter)
 // 0.5s -> 2s -> 4.5s -> 8s -> 12.5 with 1s variation
 func backoffTimeout(attempt uint16) time.Duration {
-	// nolint:gosec // G404: Use of weak random number generator
+	//nolint:gosec // G404: Use of weak random number generator
 	return time.Duration(500*attempt*attempt)*time.Millisecond + time.Duration(rand.Intn(1000))*time.Millisecond
 }

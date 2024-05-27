@@ -5,10 +5,12 @@ package mempool
 
 import (
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
+
 	io "io"
 	math "math"
 	math_bits "math/bits"
+
+	"github.com/gogo/protobuf/proto"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -68,6 +70,7 @@ func (m *Txs) GetTxs() [][]byte {
 
 type Message struct {
 	// Types that are valid to be assigned to Sum:
+	//
 	//	*Message_Txs
 	Sum isMessage_Sum `protobuf_oneof:"sum"`
 }

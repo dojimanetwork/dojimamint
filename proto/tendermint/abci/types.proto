@@ -36,6 +36,9 @@ message Request {
     RequestOfferSnapshot      offer_snapshot       = 13;
     RequestLoadSnapshotChunk  load_snapshot_chunk  = 14;
     RequestApplySnapshotChunk apply_snapshot_chunk = 15;
+
+    RequestBeginSideBlock begin_side_block = 21;
+    RequestDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -102,8 +105,7 @@ message RequestEndBlock {
 message RequestCommit {}
 
 // lists available snapshots
-message RequestListSnapshots {
-}
+message RequestListSnapshots {}
 
 // offers a snapshot to the application
 message RequestOfferSnapshot {
@@ -124,6 +126,21 @@ message RequestApplySnapshotChunk {
   bytes  chunk  = 2;
   string sender = 3;
 }
+
+//
+// Side channel requests
+//
+
+message RequestBeginSideBlock {
+  bytes hash = 1;
+  tendermint.types.Header header = 2 [(gogoproto.nullable)=false];
+  repeated SideTxResult side_tx_results = 3 [(gogoproto.nullable)=false];
+}
+
+message RequestDeliverSideTx {
+  bytes tx = 1;
+}
+
 
 //----------------------------------------
 // Response types
@@ -146,6 +163,9 @@ message Response {
     ResponseOfferSnapshot      offer_snapshot       = 14;
     ResponseLoadSnapshotChunk  load_snapshot_chunk  = 15;
     ResponseApplySnapshotChunk apply_snapshot_chunk = 16;
+
+    ResponseBeginSideBlock begin_side_block = 21;
+    ResponseDeliverSideTx deliver_side_tx = 22;
   }
 }
 
@@ -212,6 +232,12 @@ message ResponseCheckTx {
   repeated Event events     = 7
       [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
   string codespace = 8;
+  string sender    = 9;
+  int64  priority  = 10;
+
+  // mempool_error is set by CometBFT.
+  // ABCI applictions creating a ResponseCheckTX should not set mempool_error.
+  string mempool_error = 11;
 }
 
 message ResponseDeliverTx {
@@ -221,16 +247,17 @@ message ResponseDeliverTx {
   string         info       = 4;  // nondeterministic
   int64          gas_wanted = 5 [json_name = "gas_wanted"];
   int64          gas_used   = 6 [json_name = "gas_used"];
-  repeated Event events     = 7
-      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"]; // nondeterministic
+  repeated Event events     = 7 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag)  = "events,omitempty"
+  ];  // nondeterministic
   string codespace = 8;
 }
 
 message ResponseEndBlock {
-  repeated ValidatorUpdate validator_updates = 1
-      [(gogoproto.nullable) = false];
-  ConsensusParams consensus_param_updates = 2;
-  repeated Event  events                  = 3
+  repeated ValidatorUpdate validator_updates       = 1 [(gogoproto.nullable) = false];
+  ConsensusParams          consensus_param_updates = 2;
+  repeated Event           events                  = 3
       [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
 }
 
@@ -276,13 +303,28 @@ message ResponseApplySnapshotChunk {
   }
 }
 
+//
+// Side channel response
+//
+
+message ResponseBeginSideBlock {
+  repeated Event events = 1 [(gogoproto.nullable)=false, (gogoproto.jsontag)="events,omitempty"];
+}
+
+message ResponseDeliverSideTx {
+  uint32 code = 1;
+  string codespace = 2;
+  SideTxResultType result = 4;
+  bytes data = 3;
+}
+
 //----------------------------------------
 // Misc.
 
 // ConsensusParams contains all consensus-relevant parameters
 // that can be adjusted by the abci app
 message ConsensusParams {
-  BlockParams                      block     = 1;
+  BlockParams     block     = 1;
   tendermint.types.EvidenceParams  evidence  = 2;
   tendermint.types.ValidatorParams validator = 3;
   tendermint.types.VersionParams   version   = 4;
@@ -364,15 +406,37 @@ message Evidence {
   // The height when the offense occurred
   int64 height = 3;
   // The corresponding time where the offense occurred
-  google.protobuf.Timestamp time = 4 [
-    (gogoproto.nullable) = false,
-    (gogoproto.stdtime)  = true
-  ];
+  google.protobuf.Timestamp time = 4
+      [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
   // Total voting power of the validator set in case the ABCI application does
   // not store historical validators.
   // https://github.com/tendermint/tendermint/issues/4581
   int64 total_voting_power = 5;
 }
+
+//---------------Side-Tx-Types-----------
+
+// Side-tx result type
+enum SideTxResultType {
+  Skip = 0;
+  Yes = 1;
+  No = 2;
+}
+
+// Side-tx sig
+message SideTxSig {
+  SideTxResultType result = 1;
+  bytes sig = 2;
+  bytes address = 3;
+}
+
+// Side tx results
+message SideTxResult {
+  bytes tx_hash = 1;
+  repeated SideTxSig sigs = 2 [(gogoproto.nullable)=false];
+}
+
+
 
 //----------------------------------------
 // State Sync Types
@@ -402,6 +466,10 @@ service ABCIApplication {
   rpc EndBlock(RequestEndBlock) returns (ResponseEndBlock);
   rpc ListSnapshots(RequestListSnapshots) returns (ResponseListSnapshots);
   rpc OfferSnapshot(RequestOfferSnapshot) returns (ResponseOfferSnapshot);
-  rpc LoadSnapshotChunk(RequestLoadSnapshotChunk) returns (ResponseLoadSnapshotChunk);
-  rpc ApplySnapshotChunk(RequestApplySnapshotChunk) returns (ResponseApplySnapshotChunk);
+  rpc LoadSnapshotChunk(RequestLoadSnapshotChunk)
+      returns (ResponseLoadSnapshotChunk);
+  rpc ApplySnapshotChunk(RequestApplySnapshotChunk)
+      returns (ResponseApplySnapshotChunk);
+  rpc BeginSideBlock(RequestBeginSideBlock) returns (ResponseBeginSideBlock);
+  rpc DeliverSideTx(RequestDeliverSideTx) returns (ResponseDeliverSideTx);
 }

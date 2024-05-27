@@ -5,13 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/url"
 	"strings"
 
-	tmsync "github.com/tendermint/tendermint/libs/sync"
+	cmtsync "github.com/tendermint/tendermint/libs/sync"
 	types "github.com/tendermint/tendermint/rpc/jsonrpc/types"
 )
 
@@ -128,7 +128,7 @@ type Client struct {
 
 	client *http.Client
 
-	mtx       tmsync.Mutex
+	mtx       cmtsync.Mutex
 	nextReqID int
 }
 
@@ -138,6 +138,8 @@ var _ HTTPClient = (*Client)(nil)
 // RPC endpoint.
 var _ Caller = (*Client)(nil)
 var _ Caller = (*RequestBatch)(nil)
+
+var _ fmt.Stringer = (*Client)(nil)
 
 // New returns a Client pointed at the given address.
 // An error is returned on invalid remote. The function panics when remote is nil.
@@ -214,15 +216,26 @@ func (c *Client) Call(
 	if err != nil {
 		return nil, fmt.Errorf("post failed: %w", err)
 	}
-
 	defer httpResponse.Body.Close()
 
-	responseBytes, err := ioutil.ReadAll(httpResponse.Body)
+	responseBytes, err := io.ReadAll(httpResponse.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read response body: %w", err)
+		return nil, fmt.Errorf("%s. Failed to read response body: %w", getHTTPRespErrPrefix(httpResponse), err)
 	}
 
-	return unmarshalResponseBytes(responseBytes, id, result)
+	res, err := unmarshalResponseBytes(responseBytes, id, result)
+	if err != nil {
+		return nil, fmt.Errorf("%s. %w", getHTTPRespErrPrefix(httpResponse), err)
+	}
+	return res, nil
+}
+
+func getHTTPRespErrPrefix(resp *http.Response) string {
+	return fmt.Sprintf("error in json rpc client, with http response metadata: (Status: %s, Protocol %s)", resp.Status, resp.Proto)
+}
+
+func (c *Client) String() string {
+	return fmt.Sprintf("&Client{user=%v, addr=%v, client=%v, nextReqID=%v}", c.username, c.address, c.client, c.nextReqID)
 }
 
 // NewRequestBatch starts a batch of requests for this client.
@@ -265,7 +278,7 @@ func (c *Client) sendBatch(ctx context.Context, requests []*jsonRPCBufferedReque
 
 	defer httpResponse.Body.Close()
 
-	responseBytes, err := ioutil.ReadAll(httpResponse.Body)
+	responseBytes, err := io.ReadAll(httpResponse.Body)
 	if err != nil {
 		return nil, fmt.Errorf("read response body: %w", err)
 	}
@@ -302,7 +315,7 @@ type jsonRPCBufferedRequest struct {
 type RequestBatch struct {
 	client *Client
 
-	mtx      tmsync.Mutex
+	mtx      cmtsync.Mutex
 	requests []*jsonRPCBufferedRequest
 }
 
