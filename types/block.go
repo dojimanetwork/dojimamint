@@ -697,9 +697,15 @@ func (cs CommitSig) ValidateBasic() error {
 		if len(cs.SideTxResults) > 0 {
 			for _, s := range cs.SideTxResults {
 				// side-tx response sig should be empty or valid 65 bytes
-				if len(s.Sig) != 0 && len(s.Sig) != 65 {
-					return fmt.Errorf("Side-tx signature is invalid. Sig length: %v", len(s.Sig))
+
+				if len(s.Sig) == 0 {
+					return errors.New("side tx signature is missing")
 				}
+
+				if len(s.Sig) > MaxSignatureSize {
+					return fmt.Errorf("side tx vote signature is too big (max: %d)", MaxSignatureSize)
+				}
+
 
 				if _, ok := abciTypes.SideTxResultType_name[s.Result]; !ok {
 					return fmt.Errorf("Invalid side-tx result. Result: %v", s.Result)
